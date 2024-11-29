@@ -1,0 +1,46 @@
+body {
+    background-color: #f0f8ff; 
+    color: #333; 
+}
+
+.navbar {
+    background-color: #004085; 
+}
+
+.navbar-brand,
+.navbar-nav .nav-link {
+    color: #ffffff !important; 
+}
+
+.navbar-toggler {
+    border-color: #ffffff; 
+}
+
+.form {
+    background-color: #ffffff; 
+    border: 1px solid #cccccc; 
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.form h2 {
+    color: #004085; 
+}
+
+.form .btn-primary {
+    background-color: #28a745; 
+    border-color: #28a745;
+}
+
+.form .btn-primary:hover {
+    background-color: #218838; 
+}
+
+.form .icons a {
+    color: #004085; 
+}
+
+.form .icons a:hover {
+    color: #007bff; 
+}
