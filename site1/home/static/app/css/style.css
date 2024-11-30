@@ -1,136 +1,56 @@
-/* Phần CSS - Sidebar */
-body {
-    font-family: 'Arial', sans-serif;
-    background: #e5e5e5; /* Màu nền nhẹ nhàng */
-    margin: 0;
-    padding: 0;
-}
-
+/* Thanh sidebar */
 .sidebar {
-    position: fixed;
-    top: 0;
-    left: -250px;
-    width: 250px;
-    height: 100%;
-    background: #34495e; /* Màu nền thanh bên */
-    transition: all 0.3s ease;
-    padding-top: 20px;
+    background-color: #2C3E50; /* Màu nền của sidebar */
+    color: white; /* Màu chữ trong sidebar */
 }
 
-.sidebar.active {
-    left: 0;
+/* Các item trong sidebar */
+.sidebar .nav_list li a {
+    color: white; /* Màu chữ của các liên kết */
 }
 
-.logo_content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    margin-bottom: 30px;
+.sidebar .nav_list li a:hover {
+    background-color: #34495E; /* Màu nền khi hover */
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    color: #fff;
+/* Nút đăng nhập, đăng ký và các button khác */
+button {
+    background-color: #5C6BC0; /* Màu nền của các nút */
+    color: white; /* Màu chữ của các nút */
 }
 
-.logo_name {
-    margin-left: 10px;
-    font-size: 20px;
-    font-weight: bold;
+button:hover {
+    background-color: #3f4d85; /* Màu nền khi hover */
 }
 
-.bx-menu {
-    font-size: 30px;
-    cursor: pointer;
-    color: #fff;
+/* Màu sắc cho modal */
+.modal-content {
+    background-color: #fff; /* Nền của modal */
+    color: #333; /* Màu chữ trong modal */
 }
 
-.nav_list {
-    list-style: none;
-    padding-left: 0;
+.modal-content h3 {
+    color: #5C6BC0; /* Màu tiêu đề modal */
 }
 
-.nav_list li {
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    transition: background 0.3s ease;
+/* Màu nút đóng */
+.close-btn {
+    color: #888; /* Màu chữ nút đóng */
 }
 
-.nav_list li:hover {
-    background: #2c3e50; /* Màu nền khi di chuột */
+.close-btn:hover {
+    background-color: #f1f1f1; /* Màu nền khi hover */
+    color: #333; /* Màu chữ khi hover */
 }
 
-.nav_list li i {
-    font-size: 20px;
-    color: #fff;
-    margin-right: 15px;
+/* Màu nền cho input fields */
+input {
+    background-color: #f9f9f9; /* Màu nền của ô nhập liệu */
+    border: 1px solid #ccc; /* Màu viền của ô nhập liệu */
+    color: #333; /* Màu chữ trong ô nhập liệu */
 }
 
-.nav_list li input {
-    width: 100%;
-    padding: 5px;
-    border: none;
-    outline: none;
-    background: #2c3e50; /* Màu nền ô tìm kiếm */
-    color: #fff;
-}
-
-.profile_content {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    padding: 20px;
-}
-
-.profile {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.profile_details {
-    display: flex;
-    align-items: center;
-}
-
-.placeholder_profile {
-    width: 40px;
-    height: 40px;
-    background-color: #ccc;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.name_job .name {
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-}
-
-.name_job .job {
-    font-size: 14px;
-    color: #bdc3c7;
-}
-
-.bx-log-out {
-    font-size: 24px;
-    color: #fff;
-    cursor: pointer;
-}
-
-/* Phần Home Content */
-.home_content {
-    margin-left: 250px;
-    padding: 20px;
-    background: #ecf0f1; /* Màu nền của nội dung trang chủ */
-    height: 100vh;
-}
-
-.home_content .text {
-    font-size: 24px;
-    font-weight: bold;
-    color: #34495e; /* Màu chữ */
+input:focus {
+    border-color: #5C6BC0; /* Màu viền khi focus vào input */
+    background-color: #f1f1f1; /* Màu nền khi focus vào input */
 }

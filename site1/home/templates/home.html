@@ -7,9 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
-    <title>Đặt Sân</title>
+    <title>BookingBadminton</title>
     <style>
-        /
         body {
             margin: 0;
             padding: 0;
@@ -18,6 +17,7 @@
             background: #f3f4f6;
         }
 
+        /* Sidebar */
         .sidebar {
             position: fixed;
             top: 0;
@@ -26,7 +26,27 @@
             width: 250px;
             background: linear-gradient(135deg, #a5c0ff, #be68ff);
             overflow: hidden;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+            transform: translateX(-250px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            background-color: transparent;
+            border: none;
+            color: #333;
+            cursor: pointer;
+            z-index: 10;
         }
 
         .sidebar .logo_content {
@@ -63,10 +83,10 @@
 
         .sidebar .nav_list li {
             position: relative;
-            list-style: none;
             height: 50px;
             line-height: 50px;
             margin: 5px 0;
+            border-radius: 10px;
         }
 
         .sidebar .nav_list li a {
@@ -89,7 +109,7 @@
         .sidebar .nav_list li .tooltip {
             position: absolute;
             top: 0;
-            left: 100%;
+            right: 100%;
             transform: translateY(-50%);
             padding: 5px 10px;
             border-radius: 5px;
@@ -106,16 +126,15 @@
         .sidebar .nav_list li:hover .tooltip {
             visibility: visible;
             opacity: 1;
-            transform: translateY(-50%) translateX(10px);
+            transform: translateY(-50%) translateX(-10px);
         }
 
-        /* Add glow effect on hover for menu items */
         .sidebar .nav_list li a:hover {
             box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
-            background-color: rgba(255, 255, 255, 0.1); /* Optional: Add a slight background color change */
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
-        /* Modal đăng nhập */
+        /* Modal login, signup and forgot password */
         .modal {
             display: none;
             position: fixed;
@@ -166,49 +185,37 @@
 
         .modal-content button:hover {
             background-color: #3f4d85;
-            box-shadow: 0 0 8px rgba(0, 0, 255, 0.4); /* Add a glow effect to button */
-        }
-
-        .modal-content a {
-            display: block;
-            margin-top: 10px;
-            text-decoration: none;
-            color: #5C6BC0;
-            font-size: 14px;
         }
 
         .close-btn {
             position: absolute;
             top: 5px;
             right: 5px;
-            font-size: 16px; /* Giảm kích thước font của dấu "x" */
-            cursor: pointer;
-            color: #333;
-            background: none;
+            font-size: 20px;
+            font-weight: bold;
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            color: #888;
             border: none;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s ease;
         }
 
-        /* Lịch sử đặt sân */
-        .booking-item {
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .booking-item p {
-            margin: 5px 0;
-        }
-
-        .booking-item hr {
-            margin-top: 10px;
-            border: 1px solid #ddd;
+        .close-btn:hover {
+            background-color: #f1f1f1;
+            color: #333;
         }
     </style>
 </head>
 
 <body>
+    
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+    <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo_content">
             <div class="logo">
@@ -230,7 +237,7 @@
                 <span class="tooltip">Đăng nhập</span>
             </li>
             <li>
-                <a href="#bookCourt">
+                <a href="javascript:void(0)" onclick="showBookingForm()">
                     <i class="bx bx-calendar"></i>
                     <span class="links_name">Đặt sân</span>
                 </a>
@@ -244,118 +251,132 @@
                 <span class="tooltip">Lịch sử đặt sân</span>
             </li>
             <li>
-                <a href="#payment">
+                <a href="#" onclick="showProfilePage()">
+                    <i class="bx bx-user-circle"></i>
+                    <span class="links_name">Hồ sơ</span>
+                </a>
+                <span class="tooltip">Hồ sơ</span>
+            </li>
+            <li>
+                <a href="#" onclick="showPaymentForm()">
                     <i class="bx bx-credit-card"></i>
                     <span class="links_name">Thanh toán</span>
                 </a>
                 <span class="tooltip">Thanh toán</span>
             </li>
-            <li>
-                <a href="#training">
-                    <i class="bx bx-sports"></i>
-                    <span class="links_name">Sân tập</span>
-                </a>
-                <span class="tooltip">Sân tập</span>
-            </li>
-            <li>
-                <a href="#contact">
-                    <i class="bx bx-phone"></i>
-                    <span class="links_name">Liên hệ</span>
-                </a>
-                <span class="tooltip">Liên hệ</span>
-            </li>
-            <li>
-                <a href="#logout">
-                    <i class="bx bx-log-out"></i>
-                    <span class="links_name">Đăng xuất</span>
-                </a>
-                <span class="tooltip">Đăng xuất</span>
-            </li>
         </ul>
     </div>
 
-    <!-- Modal đăng nhập -->
-    <div id="loginModal" class="modal">
+    <!-- Modal login -->
+    <div class="modal" id="loginModal">
         <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('loginModal')">×</button>
+            <button class="close-btn" onclick="closeLoginModal()">×</button>
             <h3>Đăng nhập</h3>
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Mật khẩu" required>
-            <button onclick="login()">Đăng nhập</button>
-            <a href="#" onclick="showRegisterModal()">Đăng ký tài khoản</a>
-            <a href="#" onclick="showForgotPasswordModal()">Quên mật khẩu</a>
+            <form id="loginForm">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Mật khẩu" required>
+                <button type="submit">Đăng nhập</button>
+            </form>
+            <div>
+                <a href="javascript:void(0)" onclick="showSignupForm()">Đăng ký</a> |
+                <a href="javascript:void(0)" onclick="showForgotPasswordForm()">Quên mật khẩu</a>
+            </div>
         </div>
     </div>
 
     <!-- Modal đăng ký -->
-    <div id="registerModal" class="modal">
+    <div class="modal" id="signupModal" style="display: none;">
         <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('registerModal')">×</button>
+            <button class="close-btn" onclick="closeSignupModal()">×</button>
             <h3>Đăng ký</h3>
-            <input type="text" id="fullName" placeholder="Họ tên" required>
-            <input type="email" id="registerEmail" placeholder="Email" required>
-            <input type="password" id="registerPassword" placeholder="Mật khẩu" required>
-            <button onclick="register()">Đăng ký</button>
+            <form id="signupForm">
+                <input type="text" placeholder="Tên đầy đủ" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Mật khẩu" required>
+                <input type="password" placeholder="Nhập lại mật khẩu" required>
+                <button type="submit">Đăng ký</button>
+            </form>
+            <div>
+                <a href="javascript:void(0)" onclick="showLoginForm()">Đã có tài khoản? Đăng nhập</a>
+            </div>
         </div>
     </div>
 
     <!-- Modal quên mật khẩu -->
-    <div id="forgotPasswordModal" class="modal">
+    <div class="modal" id="forgotPasswordModal" style="display: none;">
         <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('forgotPasswordModal')">×</button>
+            <button class="close-btn" onclick="closeForgotPasswordModal()">×</button>
             <h3>Quên mật khẩu</h3>
-            <input type="email" id="forgotEmail" placeholder="Email" required>
-            <button onclick="sendResetLink()">Gửi liên kết reset mật khẩu</button>
+            <form id="forgotPasswordForm">
+                <input type="email" placeholder="Nhập email của bạn" required>
+                <button type="submit">Gửi yêu cầu</button>
+            </form>
+            <div>
+                <a href="javascript:void(0)" onclick="showLoginForm()">Đã nhớ mật khẩu? Đăng nhập</a>
+            </div>
         </div>
     </div>
 
     <script>
+        // Show the login form and hide others
         function showLoginModal() {
-            document.getElementById("loginModal").style.display = "flex";
+            document.getElementById('loginModal').style.display = 'flex';
+            document.getElementById('signupModal').style.display = 'none';
+            document.getElementById('forgotPasswordModal').style.display = 'none';
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = "none";
+        // Show the signup form and hide others
+        function showSignupForm() {
+            document.getElementById('signupModal').style.display = 'flex';
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('forgotPasswordModal').style.display = 'none';
         }
 
-        function showRegisterModal() {
-            closeModal('loginModal');
-            document.getElementById("registerModal").style.display = "flex";
+        // Show the forgot password form and hide others
+        function showForgotPasswordForm() {
+            document.getElementById('forgotPasswordModal').style.display = 'flex';
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('signupModal').style.display = 'none';
         }
 
-        function showForgotPasswordModal() {
-            closeModal('loginModal');
-            document.getElementById("forgotPasswordModal").style.display = "flex";
+        // Close login modal
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
         }
 
-        function login() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            // Xử lý đăng nhập ở đây
-            alert("Đăng nhập thành công!");
-            closeModal('loginModal');
+        // Close signup modal
+        function closeSignupModal() {
+            document.getElementById('signupModal').style.display = 'none';
         }
 
-        function register() {
-            const fullName = document.getElementById("fullName").value;
-            const email = document.getElementById("registerEmail").value;
-            const password = document.getElementById("registerPassword").value;
-            // Xử lý đăng ký ở đây
-            alert("Đăng ký thành công!");
-            closeModal('registerModal');
+        // Close forgot password modal
+        function closeForgotPasswordModal() {
+            document.getElementById('forgotPasswordModal').style.display = 'none';
         }
 
-        function sendResetLink() {
-            const email = document.getElementById("forgotEmail").value;
-            // Gửi liên kết reset mật khẩu ở đây
-            alert("Liên kết reset mật khẩu đã được gửi!");
-            closeModal('forgotPasswordModal');
+        // Toggle sidebar visibility
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('active');
         }
 
-        function showBookingHistory() {
-            // Xử lý hiển thị lịch sử đặt sân ở đây
-            alert("Đang xem lịch sử đặt sân...");
-        }
+        // Submit logic for each form (to be added later, e.g., API call)
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Đăng nhập thành công!');
+            closeLoginModal();
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Đăng ký thành công!');
+            closeSignupModal();
+        });
+
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Yêu cầu gửi thành công!');
+            closeForgotPasswordModal();
+        });
     </script>
 </body>
 
