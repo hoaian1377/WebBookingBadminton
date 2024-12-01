@@ -1,269 +1,143 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <title>Đặt Sân Badminton</title>
+    <title>WebBookingBadminton</title>
     <style>
-        /* Toàn bộ trang */
-        body {
+        * {
             margin: 0;
-            font-family: "Roboto", sans-serif;
-            background-color: #1e3c72; /* Màu nền đơn */
-            color: #fff;
-            overflow-x: hidden;
-            padding-top: 6px; /* Giảm khoảng cách phía trên */
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 40px;
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .header .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .header nav a {
-            text-decoration: none;
-            color: #fff;
-            margin-right: 20px;
-            font-size: 16px;
-            transition: color 0.3s ease;
-        }
-
-        .header nav a:hover {
-            color: #ff9ff3;
-        }
-
-        .account-options a {
-            background: #ff9ff3;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 30px;
-            transition: background 0.3s ease, transform 0.3s ease;
-            font-size: 16px;
-            display: inline-block;
-        }
-
-        .account-options a:hover {
-            background: #f368e0;
-            transform: scale(1.05);
-        }
-
-        /* Modal chung */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+        .hero {
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal .modal-content {
-            background: linear-gradient(to right, #667eea, #764ba2);
-            padding: 25px;
-            border-radius: 15px; /* Bo tròn góc modal */
-            width: 90%;
-            max-width: 450px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            position: relative;
-            color: #fff;
-        }
-
-        .modal .modal-content h2 {
-            margin-bottom: 25px;
-            font-size: 26px;
-            font-weight: 500;
-        }
-
-        .modal .modal-content form {
+            min-height: 100vh;
+            background-image: url('https://www.ngoisaoso.vn/uploads/news/2015/03/19/Best-Website-Background-Images28.jpg');
+            background-position: center;
+            background-size: cover;
+            padding: 10px 10px;
             display: flex;
             flex-direction: column;
+            align-items: center;
+        }
+
+        .logo {
+            width: 50px; 
+            height: auto;
+        }
+
+        nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            padding: 15px 30px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        nav .menu-center {
+            display: flex;
+            list-style: none;
+            justify-content: center; 
+            flex: 1; 
+            gap: 30px; 
+        }
+
+        nav .menu-center li a {
+            text-decoration: none;
+            color: grey;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s ease, font-weight 0.3s ease;
+        }
+
+        nav .menu-center li a:hover {
+            color: #000;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            align-items: center;
             gap: 15px;
         }
 
-        .modal .modal-content input {
-            padding: 12px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 10px; /* Bo tròn ô input */
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            transition: border-color 0.3s ease;
+        .login-btn {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            background-color: transparent;
+            transition: all 0.3s ease;
         }
 
-        .modal .modal-content input:focus {
-            border-color: #ff9ff3;
+        .login-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #ccc;
         }
 
-        .modal .modal-content button {
-            background: #ff9ff3;
-            border: none;
-            color: #fff;
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 10px; /* Bo tròn nút */
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .modal .modal-content button:hover {
-            background: #f368e0;
-            transform: scale(1.05);
-        }
-
-        .modal .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        /* Nút Thoát */
-        .close-form-btn {
-            background-color: #e74c3c;
-            border: none;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 10px; /* Bo tròn nút thoát */
-            cursor: pointer;
-            margin-top: 10px;
-            font-size: 16px;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .close-form-btn:hover {
-            background-color: #c0392b;
-            transform: scale(1.05); /* Thêm hiệu ứng phóng to */
-        }
-
-        /* Các nút chính */
-        .book-court-button {
-            background: #3498db;
-            color: #fff;
+        .btn {
+            text-decoration: none;
             padding: 10px 25px;
-            border-radius: 20px; /* Bo tròn nút */
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s ease, transform 0.3s ease;
+            color: #fff;
+            background-image: linear-gradient(45deg, #df4881, #c430d7);
+            font-size: 14px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
 
-        .book-court-button:hover {
-            background: #2980b9;
-            transform: scale(1.05); /* Thêm hiệu ứng phóng to */
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .menu-center {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .button-group {
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="logo">Booking Badminton</div>
-        <div class="actions-container">
-            <button class="book-court-button" onclick="openModal('book-court-modal')">Đặt sân</button>
-            <button onclick="toggleHistory()" class="book-court-button" style="background-color: #3498db;">Lịch sử đặt sân</button>
-            <!-- Thêm nút Hồ sơ kế Đặt sân -->
-            <button id="profile-btn" onclick="showProfile()" class="book-court-button" style="background-color: #1abc9c; display: inline;">Hồ sơ</button>
-        </div>
+    <div class="hero">
         <nav>
-            <a href="#" id="profile-link" onclick="toggleForm('login-form')">Đăng nhập</a>
-            <a href="#" id="register-link" onclick="toggleForm('register-form')">Đăng ký</a>
+            <!-- Logo -->
+            <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" class="logo" alt="Logo">
+            
+            <!-- Menu Center -->
+            <ul class="menu-center">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Đặt Sân</a></li>
+                <li><a href="#">Lịch Sử Đặt Sân</a></li>
+                <li><a href="#">Hỗ Trợ</a></li>
+                <li><a href="#">Profile</a></li>
+            </ul>
+
+            <!-- Button Group -->
+            <div class="button-group">
+                <a href="#" class="login-btn">Đăng Nhập</a>
+                <a href="#" class="btn">Tải app</a>
+            </div>
         </nav>
-    </header>
-
-    <!-- Modal Đặt sân -->
-    <div class="modal" id="book-court-modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('book-court-modal')">&times;</button>
-            <h2>Đặt sân</h2>
-            <form>
-                <input type="text" placeholder="Tên người dùng" required>
-                <input type="date" required>
-                <button type="submit">Đặt sân</button>
-            </form>
-        </div>
     </div>
-
-    <!-- Modal Đăng nhập -->
-    <div class="modal" id="login-form">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('login-form')">&times;</button>
-            <h2>Đăng nhập</h2>
-            <form>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Mật khẩu" required>
-                <button type="submit">Đăng nhập</button>
-            </form>
-            <!-- Nút thoát form -->
-            <button class="close-form-btn" onclick="closeModal('login-form')">Thoát</button>
-        </div>
-    </div>
-
-    <!-- Modal Đăng ký -->
-    <div class="modal" id="register-form">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal('register-form')">&times;</button>
-            <h2>Đăng ký</h2>
-            <form>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Mật khẩu" required>
-                <button type="submit">Đăng ký</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        // Mở và đóng modal
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        // Toggle form đăng nhập và đăng ký
-        function toggleForm(formId) {
-            document.getElementById(formId).classList.toggle('active');
-        }
-
-        // Toggle lịch sử
-        function toggleHistory() {
-            alert('Đang mở lịch sử!');
-        }
-
-        // Hiển thị hồ sơ
-        function showProfile() {
-            alert('Hồ sơ người dùng');
-        }
-    </script>
 </body>
 </html>
