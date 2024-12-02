@@ -8,3 +8,5 @@ def badminton_court_booking(request):
     return render(request,'badminton_court_booking.html')
 def login(request):
     return render(request,'login.html')
+def court_history(request):
+    return render(request,'court_history.html')
