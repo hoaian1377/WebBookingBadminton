@@ -1,3 +1,4 @@
+/* Reset CSS */
 * {
     margin: 0;
     padding: 0;
@@ -5,30 +6,31 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/* Hero Section */
 .hero {
-    width: 100%;
-    min-height: 100vh;
-    background-position: center;
-    background-size: cover;
-    padding: 10px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        width: 100vw; /* Chiếm toàn bộ chiều rộng của màn hình */
+        height: 100vh; /* Chiếm toàn bộ chiều cao của màn hình */
+        position: absolute; /* Đặt vị trí tương đối */
+        top: 0; /* Bắt đầu từ đỉnh */
+        left: 0; /* Bắt đầu từ bên trái */
+        background-color: #fff; /* Màu nền */
+    }
 
+
+/* Logo */
 .logo {
-    width: 50px; 
+    width: 50px;
     height: auto;
 }
 
-
+/* Navigation Bar */
 nav {
     width: 100%;
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     padding: 15px 30px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
@@ -36,14 +38,13 @@ nav {
 nav .menu-center {
     display: flex;
     list-style: none;
-    justify-content: center; 
-    flex: 1; 
-    gap: 30px; 
+    justify-content: center;
+    gap: 30px;
 }
 
 nav .menu-center li a {
     text-decoration: none;
-    color: grey;
+    color: #626a67;
     font-weight: 500;
     font-size: 16px;
     transition: color 0.3s ease, font-weight 0.3s ease;
@@ -94,7 +95,7 @@ nav .menu-center li a:hover {
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-
+/* Responsive Design */
 @media (max-width: 768px) {
     nav {
         flex-direction: column;
@@ -109,4 +110,91 @@ nav .menu-center li a:hover {
     .button-group {
         margin-top: 10px;
     }
+}
+
+/* Banner Section */
+#banner {
+    width: 100%;
+    background-image: url("assets/banner.png");
+    height: 463px;
+    margin-top: 40px;
+    display: flex;
+    padding: 0px 133px;
+    position: relative;
+}
+
+#banner .box-left,
+#banner .box-right {
+    width: 50%;
+}
+
+#banner .box-left h2 {
+    font-size: 48px;
+    margin-top: 75px;
+    color: #fff;
+}
+
+#banner .box-left p {
+    color: #D0D0D0;
+}
+
+#banner .box-left button {
+    width: 191px;
+    height: 40px;
+    margin-top: 41px;
+    background: #1d1a1a;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 20px;
+    transition: 0.4s;
+}
+
+#banner .box-left button:hover {
+    background: linear-gradient(45deg, #df4881, #c430d7);
+}
+
+#banner .box-right {
+    padding-left: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#banner .box-right img {
+    margin: 0px 10px;
+    animation: animation 3s infinite linear;
+}
+
+#banner .box-right img:nth-child(1) {
+    animation-delay: 0.5s;
+}
+
+#banner .box-right img:nth-child(2) {
+    animation-delay: 1s;
+}
+
+@keyframes animation {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Products Section */
+#wp-products {
+    padding: 116px 134px 78px;
+}
+
+#wp-products h2 {
+    text-align: center;
+    margin-bottom: 76px;
+    font-size: 32px;
+    color:linear-gradient(45deg, #df4881, #c430d7);
 }
