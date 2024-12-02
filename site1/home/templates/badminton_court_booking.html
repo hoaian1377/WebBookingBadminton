@@ -1,57 +1,163 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="{% static 'app/css/badminton_court_booking.css' %}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Sân Cầu Lông</title>
 
-    <title>Booking</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    
-    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: #f0f2f5;
+        }
+
+        .navbar img.logo {
+            height: 50px;
+            margin-right: 1rem;
+        }
+
+        .icon-container {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+            color: #363434f3;
+        }
+
+        .icon-container img {
+            height: 40px;
+            margin-right: 0.5rem;
+        }
+
+        .timkiem {
+            display: flex;
+            align-items: center;
+            margin: 1rem;
+            gap: 1rem;
+        }
+
+        .carousel-inner img {
+            width: 10%;
+            height: 500px; /* Chỉnh kích thước chiều cao của carousel */
+            object-fit: cover;
+            
+        }
+
+        .carousel-caption h5 {
+            background: rgba(0, 0, 0, 0.5);
+            display: inline-block;
+            padding: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #2c47cb;
+            color: #f0f2f5;
+        }
+    </style>
 </head>
 <body>
-    <div><a href="{% url 'home' %}"class="home">
-    <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" alt="Logo" class="logo">
-</a></div>
-    <div class="icon-container giohang-container">
-        <img src="https://img.lovepik.com/free-png/20210926/lovepik-shopping-cart-icon-png-image_401486831_wh1200.png" alt="Giỏ hàng" class="icon">
-        <div>Giỏ hàng</div>
-    </div>
-    <div class="icon-container taikhoan-container">
-        <img src="https://cdn2.iconfinder.com/data/icons/social-messaging-productivity-black-2/21/06-256.png" alt="Tài khoản" class="icon">
-        <div>Tài khoản</div>
-    </div>
-
-    <div class="timkiem">
-        <div class="search-wrapper">
-            <i class="search-icon">&#128269;</i>
-            <input type="text" class="timkiem1" placeholder="Tìm kiếm sân bạn muốn?"> 
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="{% url 'home' %}">
+            <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" alt="Logo" class="logo">
+        </a>
+        <div class="icon-container">
+            <img src="https://img.lovepik.com/free-png/20210926/lovepik-shopping-cart-icon-png-image_401486831_wh1200.png" alt="Giỏ hàng">
+            <span>Giỏ hàng</span>
         </div>
-        <select class="select-box khuvuc" id="khuvuc"> 
-            <option value="">Chọn khu vực</option> 
-            <option value="hanoi">Hà Nội</option> 
-            <option value="hcm">Hồ Chí Minh</option> 
+        <div class="icon-container">
+            <img src="https://cdn2.iconfinder.com/data/icons/social-messaging-productivity-black-2/21/06-256.png" alt="Tài khoản">
+            <span>Tài khoản</span>
+        </div>
+    </nav>
+
+    <!-- Tìm kiếm -->
+    <div class="timkiem">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Tìm kiếm sân bạn muốn?">
+            <button class="btn btn-primary">Tìm kiếm</button>
+        </div>
+        <select class="form-select">
+            <option value="">Chọn khu vực</option>
+            <option value="hanoi">Hà Nội</option>
+            <option value="hcm">Hồ Chí Minh</option>
         </select>
-        <select class="select-box danhgia" id="danhgia"> 
-            <option value="">Chọn đánh giá</option> 
-            <option value="1">1 sao</option> 
-            <option value="2">2 sao</option> 
-            <option value="3">3 sao</option> 
-            <option value="4">4 sao</option> 
-        </select> 
-        <select class="select-box mucgia" id="mucgia">
+        <select class="form-select">
+            <option value="">Chọn đánh giá</option>
+            <option value="1">1 sao</option>
+            <option value="2">2 sao</option>
+            <option value="3">3 sao</option>
+            <option value="4">4 sao</option>
+            <option value="5">5 sao</option>
+        </select>
+        <select class="form-select">
             <option value="">Chọn mức giá</option>
-            <option value="cheap">Rẻ</option> 
-            <option value="medium">Trung bình</option>  
-            <option value="vip">Vip</option> 
+            <option value="cheap">Rẻ</option>
+            <option value="medium">Trung bình</option>
+            <option value="vip">Vip</option>
         </select>
-        <button class="search-button">Tìm kiếm</button> 
     </div>
 
-   
+    <!-- Carousel -->
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://www.hoanghagroup.vn/uploads/news/776207402_dsc05406.jpg" class="d-block w-100" alt="Slide 1">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Sân cầu lông Panda Badminton</h5>
+                    <p>65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh 00700.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.ytimg.com/vi/IFSkFVlYlQg/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFIgZShjMA8=&rs=AOn4CLBiuCVhCT6rtdu5zgoEh853MF7gHA" class="d-block w-100" alt="Slide 2">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Sân Cầu Lông Quan Nhân</h5>
+                    <p>17 Ngõ 134 Quan Nhân, Nhân Chính, Thanh Xuân, Hà Nội.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.ytimg.com/vi/Gaj14c9jXx0/maxresdefault.jpg" class="d-block w-100" alt="Slide 3">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Sân cầu lông Cao Lỗ - Quận 8</h5>
+                    <p>45 Đ. Cao Lỗ, Phường 4, Quận 8, Hồ Chí Minh.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Đặt sân cầu lông. All rights reserved.
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
