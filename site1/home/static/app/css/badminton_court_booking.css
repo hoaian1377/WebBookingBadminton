@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif; 
+
+    background-size: cover;
+    background-position: center; 
+    height: 100vh;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    position: relative;
+}
+.timkiem {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: -570px;
+}
+.search-wrapper {
+    position: relative;
+}
+.timkiem1 {
+    width: 400px; 
+    padding: 10px; 
+    border: 2px solid #ccc; 
+    border-radius: 5px; 
+    font-size: 16px;
+    margin-right: 10px; 
+    padding-left: 40px; 
+    animation: blink-caret 1s step-end infinite; 
+}
+.search-icon {
+    position: absolute;
+    left: 10px; 
+    top: 50%; 
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #ccc;
+}
+.select-box {
+    width: 200px; 
+    padding: 10px; 
+    border: 2px solid #ccc;
+    border-radius: 5px; 
+    font-size: 10px; 
+    margin-bottom: 10px;
+    margin: 10px;
+}
+.search-button { 
+    padding: 10px 15px; 
+    border: 2px solid #ccc; 
+    border-radius: 5px; 
+    background-color: pink;
+    color: white; 
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px; 
+} 
+.search-button:hover {
+    background-color: pink; 
+}
+.logo {
+    position: absolute;
+    top: 20px; 
+    left: 20px; 
+    width: 50px; /* Kích thước logo */
+    height: auto;
+}
+.icon-container {
+    position: absolute;
+    top: 5px; 
+    text-align: center;
+    width: 60px;
+}
+.giohang-container {
+    right: 20px; 
+}
+.taikhoan-container {
+    right: 90px; 
+}
+.icon {
+    width: 40px;
+    height: auto; 
+}
+@keyframes blink-caret { 
+    50% { border-color: transparent; } 
+}
+.swiper-container {
+    width: 90%; 
+    height: 200px; 
+    position: absolute;
+    bottom: 20px;
+}
+.swiper-slide {
+    background-size: cover;
+    background-position: center;
+}
