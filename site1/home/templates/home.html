@@ -1,131 +1,24 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!--css-->
+     <link href="{% static 'app/css/style.css' %}" rel="stylesheet">
+     <link href="{% static 'app/css/badminton_court_booking.css' %}" rel="stylesheet">
     <title>WebBookingBadminton</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .hero {
-            width: 100%;
-            min-height: 100vh;
-            background-image: url('https://www.ngoisaoso.vn/uploads/news/2015/03/19/Best-Website-Background-Images28.jpg');
-            background-position: center;
-            background-size: cover;
-            padding: 10px 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .logo {
-            width: 50px; 
-            height: auto;
-        }
-
-        nav {
-            width: 100%;
-            display: flex;
-            justify-content: space-between; 
-            align-items: center;
-            padding: 15px 30px;
-            background-color: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        nav .menu-center {
-            display: flex;
-            list-style: none;
-            justify-content: center; 
-            flex: 1; 
-            gap: 30px; 
-        }
-
-        nav .menu-center li a {
-            text-decoration: none;
-            color: grey;
-            font-weight: 500;
-            font-size: 16px;
-            transition: color 0.3s ease, font-weight 0.3s ease;
-        }
-
-        nav .menu-center li a:hover {
-            color: #000;
-            font-weight: bold;
-        }
-
-        .button-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .login-btn {
-            text-decoration: none;
-            color: #333;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 10px 20px;
-            border: 2px solid #ddd;
-            border-radius: 30px;
-            background-color: transparent;
-            transition: all 0.3s ease;
-        }
-
-        .login-btn:hover {
-            background-color: #f1f1f1;
-            border-color: #ccc;
-        }
-
-        .btn {
-            text-decoration: none;
-            padding: 10px 25px;
-            color: #fff;
-            background-image: linear-gradient(45deg, #df4881, #c430d7);
-            font-size: 14px;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .menu-center {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .button-group {
-                margin-top: 10px;
-            }
-        }
-    </style>
 </head>
 <body>
+  
     <div class="hero">
         <nav>
             <!-- Logo -->
             <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" class="logo" alt="Logo">
-            
+           
             <!-- Menu Center -->
             <ul class="menu-center">
-                <li><a href="#">Home</a></li>
+                <li><a href="{% url 'home' %}"class="home">Home</a></li>
                 <li><a href="{% url 'badminton_court_booking' %}" class="book-court-link">Đặt sân</a></li>    
                 <li><a href="#">Lịch Sử Đặt Sân</a></li>
                 <li><a href="#">Hỗ Trợ</a></li>
@@ -138,6 +31,11 @@
                 <a href="#" class="btn">Tải app</a>
             </div>
         </nav>
+        {% block main_content %}{% endblock main_content %}
     </div>
+  
+    <!--main body-->
+   
+  
 </body>
 </html>
