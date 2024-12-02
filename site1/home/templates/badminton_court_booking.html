@@ -1,23 +1,178 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <h1>Booking</h1>
-        
-        <script src="" async defer></script>
-    </body>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Booking</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif; 
+            background-image: url('https://www.ngoisaoso.vn/uploads/news/2015/03/19/Best-Website-Background-Images28.jpg');
+            background-size: cover;
+            background-position: center; 
+            height: 100vh;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            position: relative;
+        }
+        .timkiem {
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin-top: -570px;
+        }
+        .search-wrapper {
+            position: relative;
+        }
+        .timkiem1 {
+            width: 400px; 
+            padding: 10px; 
+            border: 2px solid #ccc; 
+            border-radius: 5px; 
+            font-size: 16px;
+            margin-right: 10px; 
+            padding-left: 40px; 
+            animation: blink-caret 1s step-end infinite; 
+        }
+        .search-icon {
+            position: absolute;
+            left: 10px; /* Vị trí của biểu tượng kính lúp */
+            top: 50%; /* Căn giữa theo chiều dọc */
+            transform: translateY(-50%); /* Điều chỉnh vị trí theo chiều dọc */
+            font-size: 20px;
+            color: #ccc;
+        }
+        .select-box {
+            width: 200px; 
+            padding: 10px; 
+            border: 2px solid #ccc;
+            border-radius: 5px; 
+            font-size: 10px; 
+            margin-bottom: 10px;
+            margin: 10px;
+        }
+        .search-button { 
+            padding: 10px 15px; 
+            border: 2px solid #ccc; 
+            border-radius: 5px; 
+            background-color: pink;
+            color: white; 
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 10px; 
+        } 
+        .search-button:hover {
+            background-color: pink; 
+        }
+        .header {
+            position: absolute;
+            top: 20px; 
+            left: 20px; 
+            color: black;
+            font-size: 30px;
+        }
+        .icon-container {
+            position: absolute;
+            top: 5px; 
+            text-align: center;
+            width: 60px;
+        }
+        .giohang-container {
+            right: 20px; 
+        }
+        .taikhoan-container {
+            right: 90px; 
+        }
+        .icon {
+            width: 40px;
+            height: auto; 
+        }
+        @keyframes blink-caret { 
+            50% { border-color: transparent; } 
+        }
+        .swiper-container {
+            width: 90%; /* Điều chỉnh chiều rộng phù hợp */
+            height: 200px; /* Điều chỉnh chiều cao phù hợp */
+            position: absolute;
+            bottom: 20px;
+        }
+        .swiper-slide {
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Booking</div> 
+    <div class="icon-container giohang-container">
+        <img src="https://img.lovepik.com/free-png/20210926/lovepik-shopping-cart-icon-png-image_401486831_wh1200.png" alt="Giỏ hàng" class="icon">
+        <div>Giỏ hàng</div>
+    </div>
+    <div class="icon-container taikhoan-container">
+        <img src="https://cdn2.iconfinder.com/data/icons/social-messaging-productivity-black-2/21/06-256.png" alt="Tài khoản" class="icon">
+        <div>Tài khoản</div>
+    </div>
+
+    <div class="timkiem">
+        <div class="search-wrapper">
+            <i class="search-icon">&#128269;</i>
+            <input type="text" class="timkiem1" placeholder="Tìm kiếm sân bạn muốn?"> 
+        </div>
+        <select class="select-box khuvuc" id="khuvuc" onchange="showDetails()"> 
+            <option value="">Chọn khu vực</option> 
+            <option value="hanoi">Hà Nội</option> 
+            <option value="hcm">Hồ Chí Minh</option> 
+        </select>
+        <select class="select-box danhgia" id="danhgia"> 
+            <option value="">Chọn đánh giá</option> 
+            <option value="">1 sao</option> 
+            <option value="">2 sao</option> 
+            <option value="">3 sao</option> 
+            <option value="">4 sao</option> 
+        </select> 
+        <select class="select-box mucgia" id="mucgia">
+            <option value="">Chọn mức giá</option>
+            <option value="">Rẻ</option> 
+            <option value="">Trung bình</option>  
+            <option value="">Vip</option> 
+        </select>
+        <button class="search-button">Tìm kiếm</button> 
+    </div>
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" style="background-image:url('https://via.placeholder.com/800x300?text=Image+1')"></div>
+            <div class="swiper-slide" style="background-image:url('https://via.placeholder.com/800x300?text=Image+2')"></div>
+            <div class="swiper-slide" style="background-image:url('https://via.placeholder.com/800x300?text=Image+3')"></div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- Add Navigation -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    </script>
+</body>
 </html>
