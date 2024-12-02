@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -12,7 +11,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif; 
-            background-image: url('https://www.ngoisaoso.vn/uploads/news/2015/03/19/Best-Website-Background-Images28.jpg');
+        
             background-size: cover;
             background-position: center; 
             height: 100vh;
@@ -43,9 +42,9 @@
         }
         .search-icon {
             position: absolute;
-            left: 10px; /* Vị trí của biểu tượng kính lúp */
-            top: 50%; /* Căn giữa theo chiều dọc */
-            transform: translateY(-50%); /* Điều chỉnh vị trí theo chiều dọc */
+            left: 10px; 
+            top: 50%; 
+            transform: translateY(-50%);
             font-size: 20px;
             color: #ccc;
         }
@@ -71,12 +70,12 @@
         .search-button:hover {
             background-color: pink; 
         }
-        .header {
+        .logo {
             position: absolute;
             top: 20px; 
             left: 20px; 
-            color: black;
-            font-size: 30px;
+            width: 50px; /* Kích thước logo */
+            height: auto;
         }
         .icon-container {
             position: absolute;
@@ -98,8 +97,8 @@
             50% { border-color: transparent; } 
         }
         .swiper-container {
-            width: 90%; /* Điều chỉnh chiều rộng phù hợp */
-            height: 200px; /* Điều chỉnh chiều cao phù hợp */
+            width: 90%; 
+            height: 200px; 
             position: absolute;
             bottom: 20px;
         }
@@ -110,7 +109,9 @@
     </style>
 </head>
 <body>
-    <div class="header">Booking</div> 
+    <div><a href="{% url 'home' %}"class="home">
+    <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" alt="Logo" class="logo">
+</a></div>
     <div class="icon-container giohang-container">
         <img src="https://img.lovepik.com/free-png/20210926/lovepik-shopping-cart-icon-png-image_401486831_wh1200.png" alt="Giỏ hàng" class="icon">
         <div>Giỏ hàng</div>
@@ -125,80 +126,27 @@
             <i class="search-icon">&#128269;</i>
             <input type="text" class="timkiem1" placeholder="Tìm kiếm sân bạn muốn?"> 
         </div>
-        <select class="select-box khuvuc" id="khuvuc" onchange="showDetails()"> 
+        <select class="select-box khuvuc" id="khuvuc"> 
             <option value="">Chọn khu vực</option> 
             <option value="hanoi">Hà Nội</option> 
             <option value="hcm">Hồ Chí Minh</option> 
         </select>
         <select class="select-box danhgia" id="danhgia"> 
             <option value="">Chọn đánh giá</option> 
-            <option value="">1 sao</option> 
-            <option value="">2 sao</option> 
-            <option value="">3 sao</option> 
-            <option value="">4 sao</option> 
+            <option value="1">1 sao</option> 
+            <option value="2">2 sao</option> 
+            <option value="3">3 sao</option> 
+            <option value="4">4 sao</option> 
         </select> 
         <select class="select-box mucgia" id="mucgia">
             <option value="">Chọn mức giá</option>
-            <option value="">Rẻ</option> 
-            <option value="">Trung bình</option>  
-            <option value="">Vip</option> 
+            <option value="cheap">Rẻ</option> 
+            <option value="medium">Trung bình</option>  
+            <option value="vip">Vip</option> 
         </select>
         <button class="search-button">Tìm kiếm</button> 
     </div>
 
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide" style="background-image:url('https://via.placeholder.com/800x300?text=Image+1')"></div>
-            <div class="swiper-slide" style="background-image:url('https://via.placeholder.com/800x300?text=Image+2')"></div>
-            <div class="swiper-slide" style="background-image:url('https://via.placeholder.com/800x300?text=Image+3')"></div>
-        </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination"></div>
-        <!-- Add Navigation -->
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-    </div>
-
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script>
-        var swiper = new Swiper('.swiper-container', {
-            slidesPerView: 1,
-            spaceBetween: 30,
-            loop: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        });
-    </script>
+   
 </body>
 </html>
-
-
-    <!DOCTYPE html>
-    <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-    <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-    <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-    <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-    <html>
-        <head>
-            <meta charset="utf-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <title></title>
-            <meta name="description" content="">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" href="app/css/badminton_court_booking.css">
-        </head>
-        <body>
-            <!--[if lt IE 7]>
-                <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-            <![endif]-->
-            
-            <script src="" async defer></script>
-        </body>
-    </html>
-
