@@ -96,3 +96,81 @@ body {
     background-size: cover;
     background-position: center;
 }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: #f0f2f5;
+            justify-content: space-between;
+        }
+
+        .navbar img.logo {
+            height: 50px;
+            margin-right: 1rem;
+        }
+
+        .icon-container {
+            display: flex;
+            align-items: center;
+            color: #363434f3;
+        }
+
+        .icon-container img {
+            height: 40px;
+            margin-right: 0.5rem;
+        }
+
+        .timkiem {
+            display: flex;
+            align-items: center;
+            margin: 1rem;
+            gap: 1rem;
+        }
+
+        .carousel {
+            margin: 0 auto;
+            padding: 50px 150px;
+            flex: 1; /* Allow carousel to take up remaining space */
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #2c47cb;
+            color: #f0f2f5;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .icon-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .icon {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+        }
+
+        .icon img {
+            height: 40px;
+            margin-right: 0.5rem;
+        }

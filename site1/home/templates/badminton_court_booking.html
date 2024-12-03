@@ -15,6 +15,9 @@
             margin: 0;
             padding: 0;
             background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         .navbar {
@@ -22,6 +25,7 @@
             align-items: center;
             padding: 1rem;
             background-color: #f0f2f5;
+            justify-content: space-between;
         }
 
         .navbar img.logo {
@@ -32,7 +36,6 @@
         .icon-container {
             display: flex;
             align-items: center;
-            margin-right: 1rem;
             color: #363434f3;
         }
 
@@ -48,17 +51,16 @@
             gap: 1rem;
         }
 
-        .carousel-inner img {
-            width: 10%;
-            height: 500px; /* Chỉnh kích thước chiều cao của carousel */
-            object-fit: cover;
-            
+        .carousel {
+            margin: 0 auto;
+            padding: 50px 150px;
+            flex: 1; /* Allow carousel to take up remaining space */
         }
 
-        .carousel-caption h5 {
-            background: rgba(0, 0, 0, 0.5);
-            display: inline-block;
-            padding: 0.5rem;
+        .carousel-inner img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
         }
 
         footer {
@@ -66,6 +68,25 @@
             padding: 1rem;
             background-color: #2c47cb;
             color: #f0f2f5;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .icon-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .icon {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+        }
+
+        .icon img {
+            height: 40px;
+            margin-right: 0.5rem;
         }
     </style>
 </head>
@@ -73,15 +94,17 @@
     <!-- Navbar -->
     <nav class="navbar">
         <a href="{% url 'home' %}">
-            <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" alt="Logo" class="logo">
+            <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" title="trở về" alt="Logo" class="logo">
         </a>
-        <div class="icon-container">
-            <img src="https://img.lovepik.com/free-png/20210926/lovepik-shopping-cart-icon-png-image_401486831_wh1200.png" alt="Giỏ hàng">
-            <span>Giỏ hàng</span>
-        </div>
-        <div class="icon-container">
-            <img src="https://cdn2.iconfinder.com/data/icons/social-messaging-productivity-black-2/21/06-256.png" alt="Tài khoản">
-            <span>Tài khoản</span>
+        <div class="icon-wrapper">
+            <div class="icon">
+                <img src="https://img.lovepik.com/free-png/20210926/lovepik-shopping-cart-icon-png-image_401486831_wh1200.png" alt="Giỏ hàng">
+                <span>Giỏ hàng</span>
+            </div>
+            <div class="icon">
+                <img src="https://cdn2.iconfinder.com/data/icons/social-messaging-productivity-black-2/21/06-256.png" alt="Tài khoản">
+                <span>Tài khoản</span>
+            </div>
         </div>
     </nav>
 
@@ -121,25 +144,31 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://www.hoanghagroup.vn/uploads/news/776207402_dsc05406.jpg" class="d-block w-100" alt="Slide 1">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Sân cầu lông Panda Badminton</h5>
-                    <p>65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh 00700.</p>
-                </div>
+                <a href="link_to_page_1.html">
+                    <img src="https://www.hoanghagroup.vn/uploads/news/776207402_dsc05406.jpg" class="d-block w-100" alt="Slide 1">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Sân cầu lông Panda Badminton</h5>
+                        <p>65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh 00700.</p>
+                    </div>
+                </a>
             </div>
             <div class="carousel-item">
-                <img src="https://i.ytimg.com/vi/IFSkFVlYlQg/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFIgZShjMA8=&rs=AOn4CLBiuCVhCT6rtdu5zgoEh853MF7gHA" class="d-block w-100" alt="Slide 2">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Sân Cầu Lông Quan Nhân</h5>
-                    <p>17 Ngõ 134 Quan Nhân, Nhân Chính, Thanh Xuân, Hà Nội.</p>
-                </div>
+                <a href="link_to_page_2.html">
+                    <img src="https://i.ytimg.com/vi/IFSkFVlYlQg/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFIgZShjMA8=&rs=AOn4CLBiuCVhCT6rtdu5zgoEh853MF7gHA" class="d-block w-100" alt="Slide 2">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Sân Cầu Lông Quan Nhân</h5>
+                        <p>17 Ngõ 134 Quan Nhân, Nhân Chính, Thanh Xuân, Hà Nội.</p>
+                    </div>
+                </a>
             </div>
             <div class="carousel-item">
-                <img src="https://i.ytimg.com/vi/Gaj14c9jXx0/maxresdefault.jpg" class="d-block w-100" alt="Slide 3">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Sân cầu lông Cao Lỗ - Quận 8</h5>
-                    <p>45 Đ. Cao Lỗ, Phường 4, Quận 8, Hồ Chí Minh.</p>
-                </div>
+                <a href="">
+                    <img src="https://i.ytimg.com/vi/Gaj14c9jXx0/maxresdefault.jpg" class="d-block w-100" alt="Slide 3">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Sân cầu lông Cao Lỗ - Quận 8</h5>
+                        <p>45 Đ. Cao Lỗ, Phường 4, Quận 8, Hồ Chí Minh.</p>
+                    </div>
+                </a>
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
