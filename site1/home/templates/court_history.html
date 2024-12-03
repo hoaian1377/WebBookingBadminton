@@ -20,6 +20,27 @@
         <div class="Heading">
             <h1>Lịch Sử Đặt Sân</h1>
         </div>
+        <div class="table">
+            <div class="row header">
+                <div class="cell">Tên Người Đặt</div>
+                <div class="cell">Thời Gian</div>
+                <div class="cell">Sân</div>
+                <div class="cell">Trạng Thái Thanh Toán</div>
+            </div>
+            {% for booking in bookings %}
+            <div class="row">
+                <div class="cell">{{ booking.customer_name }}</div>
+                <div class="cell">{{ booking.booking_time }}</div>
+                <div class="cell">{{ booking.court }}</div>
+                <div class="cell">{{ booking.payment_status }}</div>
+            </div>
+            {% empty %}
+            <div class="row">
+                <div class="cell" colspan="4">Không có dữ liệu</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
         <script src="" async defer></script>
     </body>
 </html>

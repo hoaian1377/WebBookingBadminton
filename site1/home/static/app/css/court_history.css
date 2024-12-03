@@ -11,3 +11,51 @@
     text-align: center;
     font-size: large ;
 }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.row {
+    display: table-row;
+}
+
+.cell {
+    display: table-cell;
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.header .cell {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.row:hover {
+    background-color: #f9f9f9;
+}
