@@ -4,126 +4,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <!--css-->
-     <link href="{% static 'app/css/style.css' %}" rel="stylesheet">
-     <link href="{% static 'app/css/badminton_court_booking.css' %}" rel="stylesheet">
+    <!-- CSS -->
+    <link href="{% static 'app/css/style.css' %}" rel="stylesheet">
     <title>WebBookingBadminton</title>
 </head>
 <body>
-  
-    <div class="hero">
+    <div class="hero" style="padding-top: 60px;"> <!-- Thêm padding-top -->
         <nav>
             <!-- Logo -->
             <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" class="logo" alt="Logo">
-           
             <!-- Menu Center -->
-            <ul class="menu-center">
-                <li><a href="{% url 'home' %}"class="home">Home</a></li>
+            <ul>
+                <li><a href="{% url 'home' %}" class="home">Home</a></li>
                 <li><a href="{% url 'badminton_court_booking' %}" class="book-court-link">Đặt sân</a></li>    
-                <li><a href="#">Lịch Sử Đặt Sân</a></li>
+                
+                <li><a href="{% url 'court_history' %}">Lịch Sử Đặt Sân</a></li>
                 <li><a href="#">Hỗ Trợ</a></li>
                 <li><a href="#">Profile</a></li>
             </ul>
-
-            <!-- Button Group -->
-            <div class="button-group">
-                <a href="{% url "login" %}" class="login-btn">Đăng Nhập</a>
-                <a href="#" class="btn">Tải app</a>
-            </div>
-        </nav>
-        {% block main_content %}{% endblock main_content %}
-    </div>
-  
-    <!--main body-->
-    <div id="banner">
-        <div class="box-left">
-            <h2>
-                <span>SÂN CẦU</span>
-                <br>
-                <span>THƯỢNG HẠNG</span>
-            </h2>
-            <p>Dịch vụ sân cầu lông chất lượng cao với không gian hiện đại, sạch sẽ, đạt chuẩn quốc tế. Cam kết mang đến mặt sân an toàn, ánh sáng tối ưu, môi trường thoáng mát và dịch vụ chu đáo, từ đặt sân đến thuê dụng cụ. Đồng hành cùng bạn nâng cao sức khỏe và kỹ năng thể thao!
-            </p>
-            <button>Đặt ngay</button>
             
+            <!-- Đăng ký & Đăng nhập -->
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-signup">Đăng ký</a>
+                <a href="{% url 'login' %}" class="btn login-btn">Đăng nhập</a>
+                <a href="#download" class="download-btn">Tải App</a> <!-- Nút Tải App -->
+            </div>
+            
+        </nav>
+    </div>
+    <!-- Giới thiệu dịch vụ -->
+    <div class="banner-container">
+        <section class="content">
+            <h1>Chào mừng đến với dịch vụ đặt sân cầu lông của chúng tôi</h1>
+            <p>
+                Dịch vụ của chúng tôi mang đến sự tiện lợi cho các tín đồ đam mê cầu lông. 
+                Với nền tảng đặt lịch trực tuyến dễ dàng, bạn có thể nhanh chóng tìm kiếm và đặt sân theo thời gian phù hợp. 
+                Chúng tôi cam kết cung cấp hệ thống sân bãi chất lượng, giá cả hợp lý và trải nghiệm dịch vụ tuyệt vời.
+            </p>
+            <div class="features">
+                <div class="feature">
+                    <h3>Đặt lịch dễ dàng</h3>
+                    <p>Đặt sân mọi lúc, mọi nơi với chỉ vài cú click chuột.</p>
+                </div>
+                <div class="feature">
+                    <h3>Sân chất lượng cao</h3>
+                    <p>Hệ thống sân đạt chuẩn quốc tế, phục vụ tốt nhất cho mọi cấp độ.</p>
+                </div>
+                <div class="feature">
+                    <h3>Giá cả hợp lý</h3>
+                    <p>Chúng tôi cung cấp mức giá cạnh tranh và ưu đãi hấp dẫn.</p>
+                </div>
+            </div>
+            <a href="{% url 'badminton_court_booking' %}" class="btn btn-cta">Đặt sân ngay</a>
+        </section>
+    </div>
+    
+    <div class="registration-section">
+        <div class="registration-content">
+            <h2>Bạn muốn đăng ký sử dụng <br> phần mềm quản lý sân cầu lông MIỄN PHÍ?</h2>
         </div>
-        <div class="box-right">
-            <img src="http://127.0.0.1:5500/assest/z6093194232155_ed2798d798c1057369f9c10bd44742d2.jpg" alt="">
-            <img src="http://127.0.0.1:5500/assest/z6093194241692_77de8cfbda1aab2eec586b9ee610ad82.jpg" alt="">
-            <img src="http://127.0.0.1:5500/assest/z6093194251886_795f5f02e2d6f73795a031ff5fd323f3.jpg" alt="">
+        <div class="registration-form">
+            <form action="#" method="post">
+                <input type="text" placeholder="Họ & Tên *" name="name" required>
+                <input type="text" placeholder="Số điện thoại *" name="phone" required>
+                <input type="email" placeholder="Email *" name="email" required>
+                <button type="submit">GỬI</button>
+            </form>
+        </div>
+        <div class="registration-image">
+            <img src="site1/home/static/app/image/OIP.jpg" alt="Cầu thủ cầu lông">
         </div>
         
     </div>
-    <div class="search-section">
-        <div class="search-banner">
-            <h1>HỆ THỐNG HỖ TRỢ TÌM KIẾM SÂN BÃI NHANH</h1>
-            <p>Dữ liệu được Datsan247 cập nhật thường xuyên giúp cho người dùng tìm được sân một cách nhanh nhất</p>
-            <div class="search-bar">
-                <select name="filter" id="filter">
-                    <option value="">loại sân cầu lông</option>
-                    <option value="soccer">Sân Đánh Đơn</option>
-                    <option value="badminton">Sân Đánh Đôi</option>
-                </select>
-                <input type="text" placeholder="Nhập tên sân hoặc địa chỉ">
-                <input type="text" placeholder="Nhập khu vực">
-                <button class="search-btn">Tìm kiếm</button>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>GIỚI THIỆU</h4>
+                <p>Điện thoại: <strong><a href="tel:0123456789" class="contact-link">0123.456.789</a></strong></p>
+                <p>Địa chỉ: Số 47, Đường XYZ, Phường ABC, Quận 1, Thành phố Hồ Chí Minh, Việt Nam</p>
+                <p>Chính sách bảo mật</p>
+                <p>Chính sách hoàn tiền</p>
+            </div>
+            <div class="footer-section">
+                <h4>THÔNG TIN</h4>
+                <p>Công ty Cổ phần Booking 247</p>
+                <p>Mã số thuế: <strong>0112345678</strong></p>
+                <p>Email: <strong><a href="mailto:contact@booking247.com" class="contact-link">contact@booking247.com</a></strong></p>
+            </div>
+            <div class="footer-section">
+                <h4>LIÊN HỆ</h4>
+                <button class="contact-btn" onclick="window.location.href='tel:0123456789'">Gọi ngay</button>
             </div>
         </div>
-        <div class="features">
-            <div class="feature">
-                <img src="https://cdn-icons-png.flaticon.com/512/888/888064.png" alt="Vị trí sân">
-                <h3>Tìm kiếm vị trí sân</h3>
-                <p>Dữ liệu sân đấu dồi dào, liên tục cập nhật, giúp bạn dễ dàng tìm kiếm theo khu vực mong muốn</p>
-            </div>
-            <div class="feature">
-                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Đặt lịch online">
-                <h3>Đặt lịch online</h3>
-                <p>Không cần đến trực tiếp, không cần gọi điện đặt lịch, bạn hoàn toàn có thể đặt sân ở bất kỳ đâu có internet</p>
-            </div>
-            <div class="feature">
-                <img src="https://cdn-icons-png.flaticon.com/512/3523/3523063.png" alt="Tìm đối">
-                <h3>Tìm đối, bắt cặp đấu</h3>
-                <p>Tìm kiếm, giao lưu các đội thi đấu thể thao, kết nối, xây dựng cộng đồng thể thao sôi nổi, mạnh mẽ</p>
-            </div>
+        <div class="footer-bottom">
+            <p>&copy; Copyright 2023. Tất cả quyền được bảo lưu.</p>
+            <p>Tìm chúng tôi</p>
         </div>
-    </div>
-    <!-- Footer Section -->
-<footer class="footer">
-    <div class="footer-container">
-      <div class="footer-intro">
-        <h3>Giới Thiệu</h3>
-        <p>
-          Đặt sân 247 cung cấp các tiện ích thông minh giúp cho bạn tìm sân bãi và đặt sân một cách hiệu quả nhất.
-        </p>
-        <ul>
-          <li><a href="#">Chính sách bảo mật</a></li>
-          <li><a href="#">Chính sách hủy (đổi trả)</a></li>
-          <li><a href="#">Chính sách kiểm hàng</a></li>
-          <li><a href="#">Chính sách thanh toán</a></li>
-        </ul>
-      </div>
-      <div class="footer-info">
-        <h3>Thông Tin</h3>
-        <ul>
-          <li><strong>Công ty:</strong> Công ty Cổ phần Pickaball</li>
-          <li><strong>MST:</strong> 0110175404</li>
-          <li><strong>Email:</strong> Lekhanhthien@pickaball</li>
-          <li><strong>Địa chỉ:</strong> Nhà con cho thiện và thằng nghiện quốc anh</li>
-          <li><strong>Điện thoại:</strong> hỏi em kizd</li>
-        </ul>
-      </div>
-      <div class="footer-contact">
-        <h3>Liên Hệ</h3>
-        <p>Chăm sóc khách hàng:</p>
-        <a href="tel:02473030247" class="call-now-btn">Gọi ngay cho thiện bú cu</a>
-      </div>
-    </div>
-  </footer>
-  
+    </footer>
     
-                      
-                    
-   
-  
 </body>
 </html>
