@@ -12,3 +12,5 @@ def court_history(request):
     return render(request,'court_history.html')
 def court_booking1(request):
     return render(request,'court_booking1.html')
+def register(request):
+    return render(request,'register.html')
