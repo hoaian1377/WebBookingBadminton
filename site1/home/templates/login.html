@@ -16,13 +16,15 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-    <link href="{% static 'app/image' %}" />
+    <link rel="stylesheet" href="{% static 'app/css/login.css' %}" />
   </head>
 
   <body>
-    <div class="img_background">
-      <img src="{% static 'app/image/img.jpg' %}" />
-    </div>
+    <style>
+      body {
+        background-image: url("{% static 'app/image/img.jpg' %}");
+      }
+    </style>
     <div class="wrapper">
       <form action="">
         <h1>Đăng nhập</h1>
@@ -42,8 +44,8 @@
 
         <button type="submit" class="btn">Đăng nhập</button>
 
-        <div classs="register-link">
-          <p>Bạn chưa có tài khoản?<a href="#">Đăng kí</a></p>
+        <div class="register-link">
+          <p>Bạn chưa có tài khoản?<a href="#"> Đăng kí</a></p>
         </div>
       </form>
     </div>
