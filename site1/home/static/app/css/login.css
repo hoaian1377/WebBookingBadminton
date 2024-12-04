@@ -28,7 +28,7 @@ body {
   padding: 30px 40px;
 }
 
-.wrapper h1 {
+.wrapper .frombox {
   font-size: 36px;
   text-align: center;
 }

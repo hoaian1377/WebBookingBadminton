@@ -5,18 +5,50 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href={% static "app/css/register.css" %}>
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <script src="" async defer></script>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="{% static 'app/css/login.css' %}" rel="stylesheet" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'app/css/login.css' %}" />
+  </head>
+
+  <body>
+    <style>
+      body {
+        background-image: url("{% static 'app/image/img.jpg' %}");
+      }
+    </style>
+    <div class="wrapper">
+      <form action="">
+        <h1>Đăng Kí</h1>
+        <div class="input-box">
+          <input type="text" placeholder="Tên đăng nhập" required />
+          <i class="bx bxs-user"></i>
+        </div>
+        <div class="input-box">
+          <input type="text" placeholder="Mật khẩu" required />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+
+        <div class="input-box">
+            <input type="text" placeholder="Nhập lại mật khẩu" required />
+            <i class="bx bxs-lock-alt"></i>
+          </div>
+
+        <div class="dieukhoan">
+          <label> <input type="checkbox" />Bạn có đồng ý với điều khoản và dịch vụ?</label>
+        </div>
+
+        <button type="submit" class="btn">Đăng Kí</button>
+
+      </form>
+    </div>
+  </body>
 </html>
