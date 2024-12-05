@@ -4,7 +4,7 @@ body {
 
     background-size: cover;
     background-position: center; 
-    height: 100vh;
+    min-height: 100vh;
     display: flex; 
     justify-content: center; 
     align-items: center;
@@ -73,16 +73,8 @@ body {
     text-align: center;
     width: 60px;
 }
-.giohang-container {
-    right: 20px; 
-}
-.taikhoan-container {
-    right: 90px; 
-}
-.icon {
-    width:  -600px;
-    height: auto; 
-}
+ 
+
 @keyframes blink-caret { 
     50% { border-color: transparent; } 
 }
@@ -161,7 +153,6 @@ footer {
 .footer {
     background-color: #003366; /* Màu nền đen */
     color: #fff; /* Màu chữ trắng */
-    padding: 2rem 0;
 }
 
 .footer h5 {
@@ -218,7 +209,7 @@ footer {
 
 /* Đảm bảo footer căn giữa nội dung */
 .footer .container {
-    max-width: 1200px; /* Độ rộng tối đa */
+    max-width: 120px; /* Độ rộng tối đa */
     margin: 0 auto; /* Căn giữa container */
 }
 

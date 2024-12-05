@@ -16,3 +16,5 @@ def register(request):
     return render(request,'register.html')
 def forgot_password(request):
     return render(request,'forgot_password.html')
+def support(request):
+    return render(request,'support.html')

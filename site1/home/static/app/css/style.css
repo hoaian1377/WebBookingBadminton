@@ -238,6 +238,7 @@ nav ul li a:hover {
 .registration-image {
     flex: 1;
     display: flex;
+    background-image: url("/static/app/image/oop.png") no-repeat;
     justify-content: center;
     align-items: center;
 }

@@ -11,7 +11,8 @@ urlpatterns = [
     path('court_history/',views.court_history,name='court_history'),
     path('badminton_court_booking/court_booking1/',views.court_booking1,name='court_booking1'),
     path('login/register/',views.register,name='register'),
-    path('login/forgot_password',views.forgot_password,name='forgot_password')
+    path('login/forgot_password',views.forgot_password,name='forgot_password'),
+    path('support/',views.support,name='support'),
     
 ]
 if settings.DEBUG:
