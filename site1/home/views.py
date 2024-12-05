@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 
 # Create your views here.
 def home(request):
@@ -17,4 +17,4 @@ def register(request):
 def forgot_password(request):
     return render(request,'forgot_password.html')
 def support(request):
-    return render(request,'support.html')
+    return HttpResponseRedirect("https://docs.google.com/forms/d/e/1FAIpQLSdsZGwFck63-cPDZcW8gZyyMAhf2UyYaOINuByEgwbMvtTm3A/viewform")
