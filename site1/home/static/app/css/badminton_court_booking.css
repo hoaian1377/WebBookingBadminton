@@ -1,102 +1,125 @@
+/* Body Styles */
 body {
     margin: 0;
-    font-family: Arial, sans-serif; 
-
+    font-family: Arial, sans-serif;
     background-size: cover;
-    background-position: center; 
+    background-position: center;
     min-height: 100vh;
-    display: flex; 
-    justify-content: center; 
+    display: flex;
+    justify-content: center;
     align-items: center;
     position: relative;
+    flex-direction: column;
 }
+
+/* Tìm kiếm */
 .timkiem {
-    display: flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin-top: -570px;
 }
+
 .search-wrapper {
     position: relative;
 }
+
 .timkiem1 {
-    width: 400px; 
-    padding: 10px; 
-    border: 2px solid #ccc; 
-    border-radius: 5px; 
+    width: 400px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
     font-size: 16px;
-    margin-right: 10px; 
-    padding-left: 40px; 
-    animation: blink-caret 1s step-end infinite; 
+    margin-right: 10px;
+    padding-left: 40px;
+    animation: blink-caret 1s step-end infinite;
 }
+
 .search-icon {
     position: absolute;
-    left: 10px; 
-    top: 50%; 
+    left: 10px;
+    top: 50%;
     transform: translateY(-50%);
     font-size: 20px;
     color: #ccc;
 }
+
 .select-box {
-    width: 200px; 
-    padding: 10px; 
+    width: 200px;
+    padding: 10px;
     border: 2px solid #ccc;
-    border-radius: 5px; 
-    font-size: 10px; 
+    border-radius: 5px;
+    font-size: 10px;
     margin-bottom: 10px;
     margin: 10px;
 }
-.search-button { 
-    padding: 10px 15px; 
-    border: 2px solid #ccc; 
-    border-radius: 5px; 
+
+.search-button {
+    padding: 10px 15px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
     background-color: pink;
-    color: white; 
+    color: white;
     font-size: 16px;
     cursor: pointer;
-    margin-left: 10px; 
-} 
-.search-button:hover {
-    background-color: pink; 
+    margin-left: 10px;
 }
+
+.search-button:hover {
+    background-color: pink;
+}
+
+/* Logo */
 .logo {
     position: absolute;
-    top: 20px; 
-    left: -750px; 
-    width: 50px; /* Kích thước logo */
+    top: 20px;
+    left: -750px;
+    width: 50px;
     height: auto;
 }
+
+/* Icon styles */
 .icon-container {
     position: absolute;
-    top: 5px; 
+    top: 5px;
     text-align: center;
     width: 60px;
 }
- 
 
-@keyframes blink-caret { 
-    50% { border-color: transparent; } 
+.giohang-container {
+    right: 20px;
 }
+
+.taikhoan-container {
+    right: 90px;
+}
+
+.icon {
+    width: -600px;
+    height: auto;
+}
+
+@keyframes blink-caret {
+    50% {
+        border-color: transparent;
+    }
+}
+
+/* Swiper Carousel */
 .swiper-container {
-    width: 90%; 
-    height: 200px; 
+    width: 90%;
+    height: 200px;
     position: absolute;
     bottom: 20px;
 }
+
 .swiper-slide {
     background-size: cover;
     background-position: center;
-}  body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f2f5;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
 
+/* Navbar */
 .navbar {
     display: flex;
     align-items: center;
@@ -110,17 +133,7 @@ body {
     margin-right: 1rem;
 }
 
-.icon-container {
-    display: flex;
-    align-items: center;
-    color: #363434f3;
-}
-
-.icon-container img {
-    height: 40px;
-    margin-right: 0.5rem;
-}
-
+/* Tim kiếm */
 .timkiem {
     display: flex;
     align-items: center;
@@ -128,6 +141,7 @@ body {
     gap: 1rem;
 }
 
+/* Carousel Styles */
 .carousel {
     margin: 0 auto;
     padding: 50px 150px;
@@ -136,10 +150,12 @@ body {
 
 .carousel-inner img {
     width: 100%;
-    height: 350px;
-    object-fit: cover;
+    height: 350px; /* Chiều cao cố định cho ảnh */
+    object-fit: cover; /* Đảm bảo ảnh không méo, vừa khung */
+    border-radius: 5px; /* Tùy chọn: bo tròn góc ảnh */
 }
 
+/* Footer Styles */
 footer {
     text-align: center;
     padding: 1rem;
@@ -149,10 +165,11 @@ footer {
     bottom: 0;
     width: 100%;
 }
-/* Footer styles */
+
 .footer {
     background-color: #003366; /* Màu nền đen */
     color: #fff; /* Màu chữ trắng */
+    padding: 2rem 0;
 }
 
 .footer h5 {
@@ -207,9 +224,8 @@ footer {
     margin-top: 1rem;
 }
 
-/* Đảm bảo footer căn giữa nội dung */
 .footer .container {
-    max-width: 120px; /* Độ rộng tối đa */
+    max-width: 1200px; /* Độ rộng tối đa */
     margin: 0 auto; /* Căn giữa container */
 }
 
@@ -227,4 +243,22 @@ footer {
 .icon img {
     height: 40px;
     margin-right: 0.5rem;
+}
+
+/* Gallery/Carousel Image Styles */
+img {
+    width: 100%; /* Hình ảnh chiếm toàn bộ chiều rộng */
+    height: 200px; /* Chiều cao cố định */
+    object-fit: cover; /* Cắt ảnh để vừa khung, không méo */
+    border-radius: 5px; /* Tùy chọn: bo góc nhẹ */
+}
+
+.image-container {
+    width: 300px; /* Cố định chiều rộng container */
+    height: 200px; /* Cố định chiều cao container */
+    overflow: hidden; /* Ẩn phần ảnh vượt ra ngoài container */
+    margin: 10px; /* Khoảng cách giữa các container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
