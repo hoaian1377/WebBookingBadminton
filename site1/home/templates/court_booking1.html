@@ -1,1 +1,223 @@
-html
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Sân Cầu Lông</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'app/css/court_booking1.css' %}" rel="stylesheet">
+    <link href="{% static 'app/css/badminton_court_booking.css' %}" rel="stylesheet">
+
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* Màu nền sáng hơn */
+    color: #333; /* Màu chữ tối hơn */
+    margin: 0;
+    padding: 0;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Thêm vào để điều chỉnh độ linh hoạt */
+    padding: 20px;
+    max-width: 1200px; /* Đặt kích thước tối đa cho container */
+    margin: 0 auto; /* Căn giữa container */
+}
+.poster {
+    flex: 1;
+    margin-right: 20px; /* Thêm khoảng trống giữa các phần tử */
+}
+.poster img {
+    width: 100;
+    max-width: 500px;
+    border: 3px solid #ff6347; /* Đổi màu viền thành cam sáng */
+    border-radius: 10px; /* Thêm bo tròn cho viền */
+}
+.details {
+    flex: 2;
+    padding-left: 20px;
+}
+.details h1 {
+    margin: 0;
+    font-size: 28px; /* Tăng kích thước chữ */
+    color: #333;
+}
+.details .genre {
+    font-size: 16px;
+    color: #ff6347; /* Đổi màu chữ thành cam sáng */
+}
+.details .actions {
+    margin: 10px 0;
+}
+.details .actions button {
+    background-color: #ff6347; /* Đổi màu nền thành cam sáng */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: bold;
+    border-radius: 5px; /* Thêm bo tròn cho nút */
+}
+.details .actions button:hover {
+    background-color: #ff4500; /* Màu nền khi hover */
+}
+.details .description {
+    margin: 20px 0;
+    color: #555; /* Đổi màu chữ thành màu xám nhạt */
+}
+.details .info {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+.details .info div {
+    text-align: center;
+}
+.details .info div span {
+    display: block;
+    color: #555; /* Đổi màu chữ thành màu xám nhạt */
+}
+.details .cast {
+    margin: 20px 0;
+    color: #555; /* Đổi màu chữ thành màu xám nhạt */
+}
+.details .cast span {
+    display: block;
+    margin-bottom: 5px;
+}
+.booking {
+    margin: 20px 0;
+}
+.booking label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555; /* Đổi màu chữ thành màu xám nhạt */
+}
+.booking input {
+    margin-bottom: 10px;
+    padding: 10px; /* Tăng kích thước padding */
+    width: 100%;
+    border: 1px solid #ccc; /* Đổi màu viền thành xám nhạt */
+    background-color: #fff; /* Đổi màu nền thành trắng */
+    color: #333; /* Đổi màu chữ thành đen */
+    border-radius: 5px; /* Thêm bo tròn cho viền */
+}
+.booking button {
+    background-color: #ff6347; /* Đổi màu nền thành cam sáng */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px; /* Thêm bo tròn cho nút */
+}
+.booking button:hover {
+    background-color: #ff4500; /* Màu nền khi hover */
+}
+.time-slots {
+    margin: 20px 0;
+}
+.time-slots button {
+    background-color: #ff6347; /* Đổi màu nền thành cam sáng */
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px; 
+}
+.time-slots button:hover {
+    background-color: #ff4500; 
+}
+.back-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px; /* Thêm bo tròn cho nút */
+    z-index: 1000; /* Đảm bảo nút luôn ở trên cùng */
+}
+.back-button:hover {
+    background-color: #5a6268; /* Màu nền khi hover */
+}
+</style>
+</head>
+<body>
+    <!-- Nút Trở về -->
+    <a href="{% url 'badminton_court_booking' %}" class="back-button">Trở về</a>
+
+    <div class="container">
+        <div class="poster">
+            <img src="https://i.ytimg.com/vi/Gaj14c9jXx0/maxresdefault.jpg" alt="Sân Cầu Lông">
+        </div>
+        <div class="details">
+            <h1>Sân cầu lông Cao Lỗ - Quận 8</h1>
+            <div class="genre">Sân thể thao - Cầu lông</div>
+            <div class="actions">
+                <button>Thích 99%</button>
+                <button>Đánh giá 5 sao</button>
+                <button>Lịch trống</button>
+            </div>
+            <div class="description">
+                Sân cầu lông của chúng tôi được trang bị đầy đủ tiện nghi, đảm bảo mang lại trải nghiệm tốt nhất cho quý khách.
+            </div>
+            <div class="info">
+                <div>
+                    <span>Độ hài lòng</span>
+                    <span>99%</span>
+                </div>
+                <div>
+                    <span>Khởi công</span>
+                    <span>2024</span>
+                </div>
+                <div>
+                    <span>Thời gian mở cửa</span>
+                    <span>6:00 - 22:00</span>
+                </div>
+                <div>
+                    <span>Độ tuổi</span>
+                    <span>Mọi lứa tuổi</span>
+                </div>
+            </div>
+            <div class="cast">
+                <span>Người quản lý: Phạm Thanh Tùng</span>
+                <span>Người phục vụ: Võ Quốc Anh</span>
+            </div>
+            <div class="booking">
+                <h2>Đặt sân</h2>
+                <label for="name">Tên của bạn:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="phone">Số điện thoại:</label>
+                <input type="tel" id="phone" name="phone" required>
+                <label for="date">Chọn ngày:</label>
+                <input type="date" id="date" name="date" required>
+                <div class="time-slots">
+                    <label>Chọn giờ:</label>
+                    <button>6:00</button>
+                    <button>8:00</button>
+                    <button>10:00</button>
+                    <button>12:00</button>
+                    <button>14:00</button>
+                    <button>16:00</button>
+                    <button>18:00</button>
+                    <button>20:00</button>
+                </div>
+                <label for="payment">Thông tin thanh toán:</label>
+                <input type="text" id="payment" name="payment" required>
+                <button>Đặt ngay</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
