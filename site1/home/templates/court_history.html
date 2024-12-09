@@ -1,46 +1,27 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="{% static 'app/css/court_history.css' %}" rel="stylesheet">
-    </head>
-    <body>
-        <div><a href="{% url 'home' %}"class="home">
-            <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" alt="Logo" class="logo">
-        </a></div>
-        <div class="Heading">
-            <h1>Lịch Sử Đặt Sân</h1>
+{% block contents %} 
+<link href="{% static 'app/css/court_history.css' %}" rel="stylesheet">
+<div class="table-container">
+    <div class="table">
+        <div class="row header">
+            <div class="cell">Tên Người Đặt</div>
+            <div class="cell">Thời Gian</div>
+            <div class="cell">Sân</div>
+            <div class="cell">Trạng Thái Thanh Toán</div>
         </div>
-        <div class="table">
-            <div class="row header">
-                <div class="cell">Tên Người Đặt</div>
-                <div class="cell">Thời Gian</div>
-                <div class="cell">Sân</div>
-                <div class="cell">Trạng Thái Thanh Toán</div>
-            </div>
-            {% for booking in bookings %}
-            <div class="row">
-                <div class="cell">{{ booking.customer_name }}</div>
-                <div class="cell">{{ booking.booking_time }}</div>
-                <div class="cell">{{ booking.court }}</div>
-                <div class="cell">{{ booking.payment_status }}</div>
-            </div>
-            {% empty %}
-            <div class="row">
-                <div class="cell" colspan="4">Không có dữ liệu</div>
-            </div>
-            {% endfor %}
+        {% for booking in bookings %}
+        <div class="row">
+            <div class="cell">{{ booking.customer_name }}</div>
+            <div class="cell">{{ booking.booking_time }}</div>
+            <div class="cell">{{ booking.court }}</div>
+            <div class="cell">{{ booking.payment_status }}</div>
         </div>
+        {% empty %}
+        <div class="row">
+            <div class="cell no-data" colspan="4">Không có dữ liệu</div>
+        </div>
+        {% endfor %}
     </div>
-        <script src="" async defer></script>
-    </body>
-</html>
+</div>
+{% endblock contents %}

@@ -70,14 +70,6 @@ body {
     background-color: pink;
 }
 
-/* Logo */
-.logo {
-    position: absolute;
-    top: 40px;
-    left: -750px;
-    width: 70px;
-    height: auto;
-}
 
 /* Icon styles */
 .icon-container {
@@ -119,20 +111,6 @@ body {
     background-position: center;
 }
 
-/* Navbar */
-.navbar {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    background-color: #f0f2f5;
-    justify-content: space-between;
-}
-
-.navbar img.logo {
-    height: 50px;
-    margin-right: 1rem;
-}
-
 /* Tim kiếm */
 .timkiem {
     display: flex;
@@ -153,80 +131,6 @@ body {
     height: 415px; /* Chiều cao cố định cho ảnh */
     object-fit: cover; /* Đảm bảo ảnh không méo, vừa khung */
     border-radius: 5px; /* Tùy chọn: bo tròn góc ảnh */
-}
-
-/* Footer Styles */
-footer {
-    text-align: center;
-    padding: 1rem;
-    background-color: #2c47cb;
-    color: #f0f2f5;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-.footer {
-    background-color: #003366; /* Màu nền đen */
-    color: #fff; /* Màu chữ trắng */
-    padding: 2rem 0;
-}
-
-.footer h5 {
-    font-size: 1.25rem; /* Kích thước tiêu đề */
-    margin-bottom: 1rem;
-    font-weight: bold;
-}
-
-.footer .text-warning {
-    color: #ffc107; /* Màu vàng */
-}
-
-.footer ul {
-    list-style: none; /* Loại bỏ dấu đầu dòng */
-    padding: 0;
-    margin: 0;
-}
-
-.footer ul li {
-    margin-bottom: 0.5rem; /* Khoảng cách giữa các dòng */
-    font-size: 0.95rem; /* Kích thước font nhỏ hơn */
-}
-
-.footer a.footer-link {
-    color: #fff;
-    text-decoration: none;
-}
-
-.footer a.footer-link:hover {
-    text-decoration: underline;
-    color: #ffc107;
-}
-
-.footer hr {
-    border-color: #003366; /* Đường kẻ tối hơn */
-    margin: 1rem 0;
-}
-
-.footer .btn {
-    font-weight: 700;
-    padding: 0.5rem 2rem;
-    border-radius: 5px;
-}
-
-.footer .btn:hover {
-    background-color: #e0a800; /* Màu vàng đậm khi hover */
-    color: #003366;
-}
-
-.footer .text-center {
-    font-size: 0.9rem; /* Giảm kích thước chữ của phần bản quyền */
-    margin-top: 1rem;
-}
-
-.footer .container {
-    max-width: 1200px; /* Độ rộng tối đa */
-    margin: 0 auto; /* Căn giữa container */
 }
 
 .icon-wrapper {
