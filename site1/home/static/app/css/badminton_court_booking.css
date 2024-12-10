@@ -166,3 +166,24 @@ img {
     justify-content: center;
     align-items: center;
 }
+@keyframes flash {
+    0% { background-color: #CC66FF; }
+    50% { background-color: #FF33CC; } 
+    100% { background-color: #CC66FF; }
+}
+
+.btn-primary {
+    background-color: #CC66FF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    animation: flash 1s infinite; 
+}
+
+.btn-primary:hover {
+    background-color: #FF33CC; 
+}
+

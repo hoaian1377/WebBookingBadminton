@@ -14,6 +14,7 @@ urlpatterns = [
     path('login/forgot_password',views.forgot_password,name='forgot_password'),
     path('support/',views.support,name='support'),
     
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
