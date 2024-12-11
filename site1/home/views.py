@@ -18,3 +18,5 @@ def forgot_password(request):
     return render(request,'forgot_password.html')
 def support(request):
     return HttpResponseRedirect("https://docs.google.com/forms/d/e/1FAIpQLSdsZGwFck63-cPDZcW8gZyyMAhf2UyYaOINuByEgwbMvtTm3A/viewform")
+def shop(request):
+    return render(request,'shop.html')
