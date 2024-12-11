@@ -11,8 +11,9 @@
     <div class="hero">
         <nav>
             <!-- Logo -->
-            <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" class="logo" alt="Logo">
-            
+            <a href="{% url 'home' %}">
+                <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" title="Trở về trang chủ" alt="Logo" class="logo">
+            </a>
             <!-- Menu Center -->
             <ul class="nav-links">
                 <li><a href="{% url 'home' %}" class="home">Home</a></li>
