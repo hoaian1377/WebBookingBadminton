@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% block contents %}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -8,7 +9,32 @@
     <link rel="stylesheet" href="{% static 'app/css/shop.css' %}">
 </head>
 <body>
-    <h1>Chào mừng đến với cửa hàng của chúng tôi!</h1>
-    <p>Đây là trang Shop.</p>
+        <!-- Tìm kiếm -->
+        <div class="container my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm sân bạn muốn?">
+                        <button class="btn btn-primary">Tìm kiếm</button>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select">
+                        <option value="">Chọn khu vực</option>
+                        <option value="hanoi">Hà Nội</option>
+                        <option value="hcm">Hồ Chí Minh</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select">
+                        <option value="">Chọn đánh giá</option>
+                        <option value="1">1 sao</option>
+                        <option value="2">2 sao</option>
+                        <option value="3">3 sao</option>
+                        <option value="4">4 sao</option>
+                        <option value="5">5 sao</option>
+                    </select>
+                </div>
 </body>
 </html>
+{% endblock contents %}

@@ -74,14 +74,7 @@ body {
     color: black;
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 10px 0;
-    background-color: #f1f1f1;
-    margin-top: 20px;
-    font-size: 14px;
-}
+
 /* Reset toàn bộ phần tử */
 * {
     margin: 0;
@@ -367,6 +360,7 @@ footer {
     color: #ffffff;
     margin-top: auto; /* Đẩy footer xuống cuối */
     font-size: 14px;
+    width: 100% ;
 }
 
 
