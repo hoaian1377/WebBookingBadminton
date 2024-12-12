@@ -186,4 +186,26 @@ img {
 .btn-primary:hover {
     background-color: #FF33CC; 
 }
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Căn giữa toàn bộ nội dung theo chiều ngang */
+    text-align: center;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center; /* Căn giữa các nút phân trang */
+    gap: 10px; /* Khoảng cách giữa các nút */
+    margin-bottom: 20px; /* Khoảng cách giữa các nút và chữ "Thông tin" */
+}
+
+.info {
+    margin-top: 20px; /* Đảm bảo có khoảng cách giữa phần nút và phần "Thông tin" */
+}
+
+
+
+
+
 
