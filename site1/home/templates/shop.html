@@ -5,36 +5,285 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Shop</title>
-    <link rel="stylesheet" href="{% static 'app/css/shop.css' %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Sân Cầu Lông</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'app/css/court_booking1.css' %}" rel="stylesheet">
+    <link href="{% static 'app/css/badminton_court_booking.css' %}" rel="stylesheet">
 </head>
 <body>
-        <!-- Tìm kiếm -->
-        <div class="container my-4">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm sân bạn muốn?">
-                        <button class="btn btn-primary">Tìm kiếm</button>
+    <!-- Navbar -->
+    <!-- Tìm kiếm -->
+    <div class="container my-4">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                    <button class="btn btn-primary">Tìm kiếm</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select">
+                    <option value="">Chọn khu vực</option>
+                    <option value="hanoi">Hà Nội</option>
+                    <option value="hcm">Hồ Chí Minh</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select">
+                    <option value="">Chọn đánh giá</option>
+                    <option value="1">1 sao</option>
+                    <option value="2">2 sao</option>
+                    <option value="3">3 sao</option>
+                    <option value="4">4 sao</option>
+                    <option value="5">5 sao</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-select">
+                    <option value="">Chọn mức giá</option>
+                    <option value="cheap">Rẻ</option>
+                    <option value="medium">Trung bình</option>
+                    <option value="vip">Vip</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carousel -->
+    <div class="container mt-4">
+        <div class="row g-3">
+            <!-- Carousel -->
+            <div class="col-lg-8">
+                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <a href="{% url 'court_booking1' %}">
+                                <img src="https://cdn.shopvnb.com/img/1920x640/uploads/slider/astrox88-sd-key-visual-2880x1120-_1718650445.webp" class="carousel-image d-block w-100" alt="Slide 1">
+                                <div class="carousel-caption d-none d-md-block">
+                        
+                                </div>
+                            </a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="#">
+                                <img src="https://cdn.shopvnb.com/img/1920x640/uploads/slider/1000z-launch-website-banner_1695177885.webp" class="carousel-image d-block w-100" alt="Slide 2">
+                                <div class="carousel-caption d-none d-md-block">
+                                    
+                                </div>
+                            </a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="#">
+                                <img src="https://cdn.shopvnb.com/img/1920x640/uploads/slider/65z3ltd-launch-website_1695177820.webp" class="carousel-image d-block w-100" alt="Slide 3">
+                                <div class="carousel-caption d-none d-md-block">
+                                
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+    
+            <!-- Additional Images -->
+            <div class="col-lg-4 d-flex flex-column justify-content-between">
+                <div class="text-center">
+                    <img src="https://thethaotruonggiang.com/wp-content/uploads/2017/09/cau-long-vu-700x450.jpg" 
+                         class="img-fluid rounded mb-3" 
+                         style="height: 200px; object-fit: cover;" 
+                         alt="Sân cầu lông Lan Anh">
+                </div>
+                <div class="text-center">
+                    <img src="https://th.bing.com/th/id/OIP.LFRdU8D-4HluYl_cCl28lgAAAA?rs=1&pid=ImgDetMain" 
+                         class="img-fluid rounded" 
+                         style="height: 200px; object-fit: cover;" 
+                         alt="Sân cầu lông Cây Lộc">
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- Card Section -->
+    <div class="container my-5">
+        <h3 class="text-center mb-4">Danh sách các sản phẩm</h3>
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <a href="{% url 'court_booking1' %}" target="_blank">
+                    <img src="https://static.fbshop.vn/wp-content/uploads/2024/11/Vot-cau-long-17.jpg" class="card-img-top" alt="Sân Panda">
+                </a>
+                    <div class="card-body">
+                        <h5 class="card-title">Vợt Victor Auraspeed 90k Metallic | Tấn công nhanh và vượt trội</h5>
+                        <p class="card-text">Địa chỉ: 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh.</p>
+                        <p class="card-text">Trạng thái: Còn hàng </p>
+                        <h5 class="card-title">Giá: 1.000.000vnđ</h5>
+                        <p class="card-text"></p>
+                        <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <select class="form-select">
-                        <option value="">Chọn khu vực</option>
-                        <option value="hanoi">Hà Nội</option>
-                        <option value="hcm">Hồ Chí Minh</option>
-                    </select>
+            </div>
+            <!-- Card 2 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <a href="{% url 'court_booking1' %}" target="_blank">
+                    <img src="https://static.fbshop.vn/wp-content/uploads/2024/10/Vot-cau-long-8.jpg" class="card-img-top" alt="Sân Quan Nhân">
+                </a>
+                    <div class="card-body">
+                        <h5 class="card-title">Vợt Yonex Astrox 77 Pro Limited | Phiên bản nâng cấp</h5>
+                        <p class="card-text">Địa chỉ: 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh.</p>
+                        <p class="card-text">Trạng thái: Còn hàng </p>
+                        <h5 class="card-title">Giá: 3.619.000vnđ – 4.050.000vnđ</h5>
+                        <p class="card-text"></p>
+                        <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <select class="form-select">
-                        <option value="">Chọn đánh giá</option>
-                        <option value="1">1 sao</option>
-                        <option value="2">2 sao</option>
-                        <option value="3">3 sao</option>
-                        <option value="4">4 sao</option>
-                        <option value="5">5 sao</option>
-                    </select>
+            </div>
+            <!-- Card 3 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <a href="{% url 'court_booking1' %}" target="_blank">
+                    <img src="https://static.fbshop.vn/wp-content/uploads/2024/10/Vot-cau-long-5.jpg" class="card-img-top" alt="Sân Cao Lỗ">
+                </a>
+                    <div class="card-body">
+                        <h5 class="card-title">Vợt Victor Thruster Ryuga Metallic China Open 2024| Phiên Bản Dành Cho Bạn</h5>
+                        <p class="card-text">Địa chỉ: 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh.</p>
+                        <p class="card-text">Trạng thái: Hết hàng </p>
+                        <h5 class="card-title">Giá: 3.500.000vnđ</h5>
+                        <p class="card-text"></p>
+                        <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
+                    </div>
                 </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <a href="{% url 'court_booking1' %}" target="_blank">
+                    <img src="https://static.fbshop.vn/wp-content/uploads/2024/11/2c453025927444a89eca3b31127cac28.gif" class="card-img-top" alt="Sân Lavie">
+                </a>
+                    <div class="card-body">
+                        <h5 class="card-title">Giày cầu lông Kawasaki 3322 | Êm ái và linh hoạt</h5>
+                        <p class="card-text">Địa chỉ: 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh.</p>
+                        <p class="card-text">Trạng thái: Hết hàng </p>
+                        <h5 class="card-title">Giá: 950.000vnđ</h5>
+                        <p class="card-text"></p>
+                        <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <a href="{% url 'court_booking1' %}" target="_blank">
+                    <img src="https://static.fbshop.vn/wp-content/uploads/2024/09/Vot-cau-long-97.jpg" class="card-img-top" alt="Sân Cây Lộc">
+                </a>
+                    <div class="card-body">
+                        <h5 class="card-title">Giày Yonex Aerus Z2 Wide Xám 2024 | Di chuyển nhanh nhẹn</h5>
+                        <p class="card-text">Địa chỉ: 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh.</p>
+                        <p class="card-text">Trạng thái: Còn hàng </p>
+                        <h5 class="card-title">Giá: 2.600.000vnđ</h5>
+                        <p class="card-text"></p>
+                        <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <a href="{% url 'court_booking1' %}" target="_blank">
+                    <img src="https://static.fbshop.vn/wp-content/uploads/2024/08/Vot-cau-long-75.jpg" class="card-img-top" alt="Sân Lan Anh">
+                </a>
+                    <div class="card-body">
+                        <h5 class="card-title">Giày cầu lông Lefus L85 | Mang đến trải nghiệm mới</h5>
+                        <p class="card-text">Địa chỉ: 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh.</p>
+                        <p class="card-text">Trạng thái: Còn hàng </p>
+                        <h5 class="card-title">Giá: 550.000vnđ</h5>
+                        <p class="card-text"></p>
+                        <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"><div class="card h-100 shadow-sm">
+                <a href="{% url 'court_booking1' %}" target="_blank">
+                <img src="https://static.fbshop.vn/wp-content/uploads/2024/06/Vot-cau-long.png" class="card-img-top" alt="Sân Lavie">
+            </a>
+                <div class="card-body">
+                        <h5 class="card-title">Bao Cầu Lông Victor BR9313CF | Phong cách cá tính</h5>
+                        <p class="card-text">Địa chỉ: 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh.</p>
+                        <p class="card-text">Trạng thái: Còn hàng </p>
+                        <h5 class="card-title">Giá: 1.400.000vnđ</h5>
+                        <p class="card-text"></p>
+                        <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 5 -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'court_booking1' %}" target="_blank">
+                <img src="https://static.fbshop.vn/wp-content/uploads/2024/06/Vot-cau-long-27-400x400.jpg" class="card-img-top" alt="Sân Cây Lộc">
+            </a>
+                <div class="card-body">
+                        <h5 class="card-title">Bao cầu lông Victor BR5614B | Mạnh mẽ - Huyền bí</h5>
+                        <p class="card-text">Địa chỉ: 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh.</p>
+                        <p class="card-text">Trạng thái: Còn hàng </p>
+                        <h5 class="card-title">Giá: 1.020.000vnđ</h5>
+                        <p class="card-text"></p>
+                        <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
+                </div>
+            </div>
+        </div>
+        <!-- Card 6 -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'court_booking1' %}" target="_blank">
+                <img src="https://static.fbshop.vn/wp-content/uploads/2024/05/Vot-cau-long-2-4.jpg" class="card-img-top" alt="Sân Lan Anh">
+            </a>
+                <div class="card-body">
+                        <h5 class="card-title">Balo Cầu Lông Yonex BA92012MEX | Thiết kế bền bỉ</h5>
+                        <p class="card-text">Địa chỉ: 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh.</p>
+                        <p class="card-text">Trạng thái: Còn hàng </p>
+                        <h5 class="card-title">Giá: 3.000.000vnđ</h5>
+                        <p class="card-text"></p>
+                        <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="pagination-container">
+        <button class="btn btn-secondary">1</button>
+        <button class="btn btn-secondary">2</button>
+        <button class="btn btn-secondary">3</button>
+        <button class="btn btn-secondary">4</button>
+        <button class="btn btn-secondary">5</button>
+        <button class="btn btn-secondary">6</button>
+    </div>
+</div>
+
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 {% endblock contents %}
