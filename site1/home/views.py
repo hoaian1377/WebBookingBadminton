@@ -20,3 +20,7 @@ def support(request):
     return HttpResponseRedirect("https://docs.google.com/forms/d/e/1FAIpQLSdsZGwFck63-cPDZcW8gZyyMAhf2UyYaOINuByEgwbMvtTm3A/viewform")
 def shop(request):
     return render(request,'shop.html')
+def item_detail(request):
+    return render(request,'item_detail.html')
+def cart_detail(request):
+    return render(request,'cart_detail.html')

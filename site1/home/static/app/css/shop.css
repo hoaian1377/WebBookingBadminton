@@ -20,3 +20,11 @@
     padding-left: 40px;
     animation: blink-caret 1s step-end infinite;
 }
+/* Giỏ hàng icon */
+.cart-icon {
+    display: flex; /* Cho phép các phần tử con nằm trên cùng một hàng */
+    justify-content: flex-end; /* Đẩy nội dung sang phía bên phải */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 5px; /* Khoảng cách giữa các phần tử bên trong */
+    margin-right: 20px; /* Thêm lề bên phải nếu cần */
+}

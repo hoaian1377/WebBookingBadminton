@@ -15,8 +15,21 @@
     <link href="{% static 'app/css/badminton_court_booking.css' %}" rel="stylesheet">
 </head>
 <body>
-    <!-- Navbar -->
-    <!-- Tìm kiếm -->
+    <div class="container my-4">
+        <div class="row align-items-center">
+            <!-- Nút giỏ hàng nằm sang bên phải -->
+            <div class="col-md-12 d-flex justify-content-end">
+                <a href="{% url 'cart_detail' %}" class="btn btn-outline-primary position-relative">
+                    🛒 Giỏ hàng
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{ cart|length }} 
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tìm kiếm và các phần khác -->
     <div class="container my-4">
         <div class="row align-items-center">
             <div class="col-md-6">
@@ -52,7 +65,7 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Carousel -->
     <div class="container mt-4">
         <div class="row g-3">
@@ -66,7 +79,7 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <a href="{% url 'court_booking1' %}">
+                            <a href="{% url 'item_detail' %}">
                                 <img src="https://cdn.shopvnb.com/img/1920x640/uploads/slider/astrox88-sd-key-visual-2880x1120-_1718650445.webp" class="carousel-image d-block w-100" alt="Slide 1">
                                 <div class="carousel-caption d-none d-md-block">
                         
@@ -127,7 +140,7 @@
             <!-- Card 1 -->
             <div class="col-md-4">
                 <div class="card h-100 shadow-sm">
-                    <a href="{% url 'court_booking1' %}" target="_blank">
+                    <a href="{% url 'item_detail' %}" target="_blank">
                     <img src="https://static.fbshop.vn/wp-content/uploads/2024/11/Vot-cau-long-17.jpg" class="card-img-top" alt="Sân Panda">
                 </a>
                     <div class="card-body">
@@ -136,14 +149,14 @@
                         <p class="card-text">Trạng thái: Còn hàng </p>
                         <h5 class="card-title">Giá: 1.000.000vnđ</h5>
                         <p class="card-text"></p>
-                        <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
+                        <a href="{% url 'item_detail' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
                     </div>
                 </div>
             </div>
             <!-- Card 2 -->
             <div class="col-md-4">
                 <div class="card h-100 shadow-sm">
-                    <a href="{% url 'court_booking1' %}" target="_blank">
+                    <a href="{% url 'item_detail' %}" target="_blank">
                     <img src="https://static.fbshop.vn/wp-content/uploads/2024/10/Vot-cau-long-8.jpg" class="card-img-top" alt="Sân Quan Nhân">
                 </a>
                     <div class="card-body">
@@ -152,7 +165,7 @@
                         <p class="card-text">Trạng thái: Còn hàng </p>
                         <h5 class="card-title">Giá: 3.619.000vnđ – 4.050.000vnđ</h5>
                         <p class="card-text"></p>
-                        <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
+                        <a href="{% url 'item_detail' %}" class="btn btn-primary" target="_blank">Mua ngay</a>
                     </div>
                 </div>
             </div>
