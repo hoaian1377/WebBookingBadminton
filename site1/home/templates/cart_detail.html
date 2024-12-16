@@ -2,25 +2,78 @@
 {% load static %}
 {% block contents %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS -->
-    <link href="{% static 'app/css/style.css' %}" rel="stylesheet">
-    <title>WebBookingBadminton</title>
+    <title>Giỏ Hàng</title>
+    <link href="{% static 'app/css/cart_detail.css' %}" rel="stylesheet">
 </head>
 <body>
-        <div class="cart-empty">
-            <img src="https://maydongphucyte.com/default/template/img/cart-empty.png" alt="Biểu tượng giỏ hàng">
-            <h2>Giỏ hàng của bạn còn trống</h2>
-            <p>Hãy thêm sản phẩm vào giỏ hàng để bắt đầu mua sắm!</p>
-            <a href="http://127.0.0.1:8000/shop/" class="btn">MUA NGAY</a>
-        </div>
-    <body>
-    
-    
-{% endblock contents %}
+    <div class="container">
+        <h1>Giỏ Hàng của Bạn</h1>
+        <div id="cartItems"></div>  <!-- Phần tử chứa các item giỏ hàng -->
+        <div class="total">Tổng giá: <span id="totalPrice">0 VNĐ</span></div>
+        <a href="#" class="button">Thanh toán ngay</a>
+    </div>
 
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            cartItemsContainer.innerHTML = ''; // Xóa nội dung cũ
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <a href="/shop"> <!-- Thay đổi đường dẫn đến trang shop ở đây -->
+                            <img src="https://maydongphucyte.com/default/template/img/cart-empty.png" alt="Giỏ hàng trống" style="width: 300px; display: block; margin: 0 auto;">
+                        </a>
+                        <p>Giỏ hàng của bạn còn trống. Nhấn vào ảnh để đi đến cửa hàng.</p>
+                    </div>
+                `;
+                document.getElementById('totalPrice').textContent = '0 VNĐ';
+                return;
+            }
+
+            let totalPrice = 0;
+            cart.forEach((item, index) => {
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.classList.add('cart-item');
+                cartItemDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="item-details">
+                        <h2>${item.name}</h2>
+                        <p>${item.description}</p>
+                        <label for="quantity-${index}">Số lượng:</label>
+                        <input type="number" id="quantity-${index}" value="${item.quantity}" min="1" style="width: 60px;" onchange="updateQuantity(${index})">
+                        <button onclick="removeItem(${index})">Xóa</button>
+                    </div>
+                    <div class="item-price">${(item.price * item.quantity).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</div>
+                `;
+                cartItemsContainer.appendChild(cartItemDiv);
+                totalPrice += item.price * item.quantity;
+            });
+
+            document.getElementById('totalPrice').textContent = totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        }
+
+        function updateQuantity(index) {
+            const quantityInput = document.getElementById(`quantity-${index}`);
+            cart[index].quantity = parseInt(quantityInput.value);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        renderCart();
+    </script>
 </body>
 </html>
+{% endblock contents %}
