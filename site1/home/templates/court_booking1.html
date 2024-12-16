@@ -1,4 +1,6 @@
+{% extends "base.html" %}
 {% load static %}
+{% block contents %}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -195,48 +197,13 @@ body {
 }
 
 
-.logo {
-    width: 65px; /* Kích thước logo */
-    height: auto;
-    position: fixed; /* Cố định vị trí */
-    top: 10px; /* Khoảng cách từ mép trên */
-    left: 130px; /* Khoảng cách từ mép trái */
-    z-index: 1000; /* Đảm bảo logo luôn nổi lên trên */
-    cursor: pointer; /* Hiển thị con trỏ khi hover */
-}
 
 
 </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar d-flex justify-content-between align-items-center">
-        <div>
-            <a href="{% url 'home' %}">
-                <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" 
-                     title="Trở về trang chủ" 
-                     alt="Logo" 
-                     class="logo">
-            </a>
-        </div>
-    </nav>
     
-    
-    <!-- Nút Trở về -->
-    <a href="{% url 'badminton_court_booking' %}" class="back-button">Trở về</a>
-
-    <!-- Menu tài khoản bên phải -->
-    <div class="account-menu">
-        <div class="d-flex align-items-center">
-            <img src="https://th.bing.com/th/id/OIP.G4lg1EF9l8eBqtCxfAK49AHaHa?pid=ImgDet&w=184&h=184&c=7&dpr=1.3" alt="Tài khoản" class="account-img">
-            <span>Tài khoản</span>
-        </div>
-        <div class="dropdown-menu">
-            <a href="#">Thông tin cá nhân</a><br>
-            <a href="#">Đơn đặt hàng</a><br>
-            <a href="#">Đăng xuất</a>
-        </div>
-    </div>
 
     <div class="container">
         <div class="details">
@@ -299,3 +266,4 @@ body {
     </div>
 </body>
 </html>
+{% endblock contents %}

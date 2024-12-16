@@ -66,31 +66,25 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <a href="{% url 'court_booking1' %}">
-                                <img src="https://i.ytimg.com/vi/Gaj14c9jXx0/maxresdefault.jpg" class="carousel-image d-block w-100" alt="Slide 1">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Sân cầu lông Cao Lỗ - Quận 8</h5>
-                                    <p>45 Đ. Cao Lỗ, Phường 4, Quận 8, Hồ Chí Minh.</p>
-                                </div>
-                            </a>
+                            <img src="{% static 'app/image/en3.jpg' %}" class="carousel-image d-block w-100" alt="Slide 1">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>Sân cầu lông Cao Lỗ - Quận 8</h5>
+                                <p>45 Đ. Cao Lỗ, Phường 4, Quận 8, Hồ Chí Minh.</p>
+                            </div>
                         </div>
                         <div class="carousel-item">
-                            <a href="#">
-                                <img src="https://i.ytimg.com/vi/IFSkFVlYlQg/maxresdefault.jpg" class="carousel-image d-block w-100" alt="Slide 2">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Sân Cầu Lông Quan Nhân</h5>
-                                    <p>17 Ngõ 134 Quan Nhân, Nhân Chính, Thanh Xuân, Hà Nội.</p>
-                                </div>
-                            </a>
+                            <img src="{% static 'app/image/en2.jpg' %}" class="carousel-image d-block w-100" alt="Slide 2">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>Sân Cầu Lông Quan Nhân</h5>
+                                <p>17 Ngõ 134 Quan Nhân, Nhân Chính, Thanh Xuân, Hà Nội.</p>
+                            </div>
                         </div>
                         <div class="carousel-item">
-                            <a href="#">
-                                <img src="https://cdn.shopvnb.com/uploads/images/tin_tuc/san-cau-long-vstar-badminton-1-1718678799.webp" class="carousel-image d-block w-100" alt="Slide 3">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Sân cầu lông Panda Badminton</h5>
-                                    <p>65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh 00700.</p>
-                                </div>
-                            </a>
+                            <img src="{% static 'app/image/en1.webp' %}" class="carousel-image d-block w-100" alt="Slide 3">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>Sân cầu lông Panda Badminton</h5>
+                                <p>65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh 00700.</p>
+                            </div>
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -107,21 +101,18 @@
             <!-- Additional Images -->
             <div class="col-lg-4 d-flex flex-column justify-content-between">
                 <div class="text-center">
-                    <img src="https://th.bing.com/th/id/R.89f183b83599e5ac524beee75d98ca8b?rik=pYrKK6FzR%2fIPaQ&pid=ImgRaw&r=0" 
+                    <img src="{% static 'app/image/r1.png' %}" 
                          class="img-fluid rounded mb-3" 
                          style="height: 200px; object-fit: cover;" 
                          alt="Sân cầu lông Lan Anh">
                 </div>
                 <div class="text-center">
-                    <img src="https://i.pinimg.com/736x/38/ef/86/38ef86ef341bef63e04be70bf62173f3.jpg" 
+                    <img src="{% static 'app/image/r2.jpg' %}" 
                          class="img-fluid rounded" 
                          style="height: 200px; object-fit: cover;" 
                          alt="Sân cầu lông Cây Lộc">
                 </div>
             </div>
-            
-            
-            
         </div>
     </div>
     
@@ -133,13 +124,13 @@
             <div class="col-md-4">
                 <div class="card h-100 shadow-sm">
                     <a href="{% url 'court_booking1' %}" target="_blank">
-                    <img src="https://cdn.shopvnb.com/uploads/images/tin_tuc/san-cau-long-vstar-badminton-1-1718678799.webp" class="card-img-top" alt="Sân Panda">
+                    <img src="{% static 'app/image/en1.webp' %}" class="card-img-top" alt="Sân Panda">
                 </a>
                     <div class="card-body">
                         <h5 class="card-title">Sân cầu lông Panda Badminton</h5>
                         <p class="card-text">Địa chỉ: 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh.</p>
                         <p class="card-text">Số Sân: 4 </p>
-                        <h5 class="card-title">giá sân: 100.000vnđ/h</h5>
+                        <h5 style="color: black;">Giá sân: 100.000đ/h</h5>
                         <p class="card-text"></p>
                         <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Đặt ngay</a>
                     </div>
@@ -149,13 +140,13 @@
             <div class="col-md-4">
                 <div class="card h-100 shadow-sm">
                     <a href="{% url 'court_booking1' %}" target="_blank">
-                    <img src="https://i.ytimg.com/vi/IFSkFVlYlQg/maxresdefault.jpg" class="card-img-top" alt="Sân Quan Nhân">
+                    <img src="{% static 'app/image/en2.jpg' %}" class="card-img-top" alt="Sân Quan Nhân">
                 </a>
                     <div class="card-body">
                         <h5 class="card-title">Sân cầu lông Cầu Lông Bến Cát</h5>
                         <p class="card-text">Địa chỉ: 145/87 Trần Bá Giao, Phường 5, Q.Gò Vấp, TPHCM.</p>
                         <p class="card-text">Số Sân: 5.</p>
-                        <h5 class="card-title">giá sân: 90.000vnđ/h</h5>
+                        <h5 style="color: black;">Giá sân: 90.000đ/h</h5>
                         <p class="card-text"></p>
                         <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Đặt ngay</a>
                     </div>
@@ -165,12 +156,12 @@
             <div class="col-md-4">
                 <div class="card h-100 shadow-sm">
                     <a href="{% url 'court_booking1' %}" target="_blank">
-                    <img src="https://i.ytimg.com/vi/Gaj14c9jXx0/maxresdefault.jpg" class="card-img-top" alt="Sân Cao Lỗ">
+                    <img src="{% static 'app/image/en3.jpg' %}" class="card-img-top" alt="Sân Cao Lỗ">
                 </a>
                     <div class="card-body"><h5 class="card-title">Sân cầu lông Cao Lỗ - Quận 8</h5>
                         <p class="card-text">Địa chỉ: 45 Đ. Cao Lỗ, Phường 4, Quận 8, Hồ Chí Minh.</p>
                         <p class="card-text">Số sân: 3 </p>
-                        <h5 class="card-title">giá sân: 95.000vnđ/h</h5>
+                        <h5 style="color: black;">Giá sân: 95.000đ/h</h5>
                         <p class="card-text"></p>
                         <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Đặt ngay</a>
                     </div>
@@ -180,13 +171,13 @@
             <div class="col-md-4">
                 <div class="card h-100 shadow-sm">
                     <a href="{% url 'court_booking1' %}" target="_blank">
-                    <img src="https://babolat.com.vn/wp-content/uploads/2023/11/san-danh-cau-long-lavie.jpg" class="card-img-top" alt="Sân Lavie">
+                    <img src="{% static 'app/image/en4.jpg' %}" class="card-img-top" alt="Sân Lavie">
                 </a>
                     <div class="card-body">
                         <h5 class="card-title">Sân cầu lông Nhà thi đấu thể thao Đền Lừ</h5>
                         <p class="card-text">Địa chỉ: Hồ Đền Lừ 3, Hoàng Văn Thụ, Hoàng Mai, Hà Nội.</p>
                         <p class="card-text">Số sân: 5 </p>
-                        <h5 class="card-title">giá sân: 90.000vnđ/h</h5>
+                        <h5 style="color: black;">Giá sân: 90.000đ/h</h5>
                         <p class="card-text"></p>
                         <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Đặt ngay</a>
                     </div>
@@ -196,13 +187,13 @@
             <div class="col-md-4">
                 <div class="card h-100 shadow-sm">
                     <a href="{% url 'court_booking1' %}" target="_blank">
-                    <img src="https://babolat.com.vn/wp-content/uploads/2023/11/san-danh-cau-long-cay-loc-vung-thu-duc.jpg" class="card-img-top" alt="Sân Cây Lộc">
+                    <img src="{% static 'app/image/en5.jpg' %}" class="card-img-top" alt="Sân Cây Lộc">
                 </a>
                     <div class="card-body">
                         <h5 class="card-title">Sân Cầu Lông 266 phố Vũ Hữu</h5>
                         <p class="card-text">Địa chỉ: 266 Vũ Hữu, Nhân Chính, Thanh Xuân, Hà Nội.</p>
                         <p class="card-text">Số sân: 3 </p>
-                        <h5 class="card-title">giá sân: 120.000vnđ/h</h5>
+                        <h5 style="color: black;">Giá sân: 120.000đ/h</h5>
                         <p class="card-text"></p>
                         <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Đặt ngay</a>
                     </div>
@@ -212,13 +203,13 @@
             <div class="col-md-4">
                 <div class="card h-100 shadow-sm">
                     <a href="{% url 'court_booking1' %}" target="_blank">
-                    <img src="https://hvshop.vn/wp-content/uploads/2024/03/san-cau-long-lan-anh-9.webp" class="card-img-top" alt="Sân Lan Anh">
+                    <img src="{% static 'app/image/en6.webp' %}" class="card-img-top" alt="Sân Lan Anh">
                 </a>
                     <div class="card-body">
                         <h5 class="card-title">sân cầu lông Lan Anh Thủ Đức</h5>
                         <p class="card-text">Địa chỉ: Số 119 Đường số 7, Phường Linh Trung, Quận Thủ Đức, Thành phố Hồ Chí Minh.</p>
                         <p class="card-text">Số sân: 4 </p>
-                        <h5 class="card-title">giá sân: 85.000vnđ/h</h5>
+                        <h5 style="color: black;">Giá sân: 85.000đ/h</h5>
                         <p class="card-text"></p>
                         <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Đặt ngay</a>
                     </div>
@@ -226,13 +217,13 @@
             </div>
             <div class="col-md-4"><div class="card h-100 shadow-sm">
                 <a href="{% url 'court_booking1' %}" target="_blank">
-                <img src="https://babolat.com.vn/wp-content/uploads/2023/11/san-cau-long-dai-hoc-thuy-loi.jpg" class="card-img-top" alt="Sân Lavie">
+                <img src="{% static 'app/image/en7.jpg' %}" class="card-img-top" alt="Sân Lavie">
             </a>
                 <div class="card-body">
                     <h5 class="card-title">Sân công viên Thống nhất</h5>
                     <p class="card-text">Địa chỉ: Phố Trần Nhân Tông, phường Lê Đại Hành, Hai Bà Trưng.</p>
                     <p class="card-text">Số sân: 5 </p>
-                    <h5 class="card-title">giá sân: 100.000vnđ/h</h5>
+                    <h5 style="color: black;">Giá sân: 100.000đ/h</h5>
                     <p class="card-text"></p>
                     <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Đặt ngay</a>
                 </div>
@@ -242,13 +233,13 @@
         <div class="col-md-4">
             <div class="card h-100 shadow-sm">
                 <a href="{% url 'court_booking1' %}" target="_blank">
-                <img src="https://babolat.com.vn/wp-content/uploads/2023/11/san-cau-long-266-pho-vu-huu.jpg" class="card-img-top" alt="Sân Cây Lộc">
+                <img src="{% static 'app/image/en8.jpg' %}" class="card-img-top" alt="Sân Cây Lộc">
             </a>
                 <div class="card-body">
                     <h5 class="card-title">Sân cầu lông 354</h5>
                     <p class="card-text">Địa chỉ: 123/2 Lãng Yên, Phường Thanh Lương, Hai Bà Trưng.</p>
                     <p class="card-text">Số sân: 3 </p>
-                    <h5 class="card-title">giá sân: 85.000vnđ/h</h5>
+                    <h5 style="color: black;">Giá sân: 85.000đ/h</h5>
                     <p class="card-text"></p>
                     <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Đặt ngay</a>
                 </div>
@@ -258,13 +249,13 @@
         <div class="col-md-4">
             <div class="card h-100 shadow-sm">
                 <a href="{% url 'court_booking1' %}" target="_blank">
-                <img src="https://babolat.com.vn/wp-content/uploads/2023/11/san-duong-song.jpg" class="card-img-top" alt="Sân Lan Anh">
+                <img src="{% static 'app/image/en9.jpg' %}" class="card-img-top" alt="Sân Lan Anh">
             </a>
                 <div class="card-body">
                     <h5 class="card-title">Sân cầu lông CTA</h5>
                     <p class="card-text">Địa chỉ: Km5+500, Đ. Lê Trọng Tấn, An Khánh, Hoài Đức, Hà Nội. </p>
                     <p class="card-text">Số sân: 4 </p>
-                    <h5 class="card-title">giá sân: 110.000vnđ/h</h5>
+                    <h5 style="color: black;">Giá sân: 110.000đ/h</h5>
                     <p class="card-text"></p>
                     <a href="{% url 'court_booking1' %}" class="btn btn-primary" target="_blank">Đặt ngay</a>
                 </div>
