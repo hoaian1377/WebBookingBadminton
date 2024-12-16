@@ -1,2 +1,159 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block contents %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'app/css/court_booking1.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-4">
+        <!-- Sản phẩm 1: Vợt Victor Auraspeed 90k Metallic -->
+        <h2>Vợt Victor Auraspeed 90k Metallic</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="https://static.fbshop.vn/wp-content/uploads/2024/11/Vot-cau-long-17.jpg" class="img-fluid" alt="Vợt Victor Auraspeed 90k Metallic">
+            </div>
+            <div class="col-md-6">
+                <h4>Thông tin chi tiết:</h4>
+                <p><strong>Giá:</strong> 1.000.000 vnđ</p>
+                <p><strong>Địa chỉ:</strong> 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh</p>
+                <p><strong>Trạng thái:</strong> Còn hàng</p>
+                <p><strong>Mô tả:</strong> Vợt cầu lông Victor Auraspeed 90k Metallic được thiết kế cho những ai yêu thích phong cách tấn công nhanh và mạnh mẽ. Với công nghệ mới, vợt mang lại sức mạnh tối đa và độ chính xác cao khi tấn công.</p>
+                <a href="{% url 'cart_detail' %}" class="btn btn-primary">Thêm vào giỏ hàng</a>
+            </div>
+            <!-- Đặc điểm sản phẩm -->
+    <div class="container my-5">
+        <h4 class="mb-4">Đặc điểm sản phẩm</h4>
+        <ul>
+            <li>Thiết kế tấn công nhanh và mạnh mẽ</li>
+            <li>Chất liệu cao cấp, bền bỉ</li>
+            <li>Phù hợp với các trận đấu cầu lông chuyên nghiệp</li>
+            <li>Được yêu thích bởi các vận động viên hàng đầu</li>
+        </ul>
+    </div>
+
+        </div>
+
+        <hr>
+
+        <!-- Sản phẩm 2: Vợt Yonex Astrox 77 Pro Limited -->
+        <h2>Vợt Yonex Astrox 77 Pro Limited</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="https://static.fbshop.vn/wp-content/uploads/2024/10/Vot-cau-long-8.jpg" class="img-fluid" alt="Vợt Yonex Astrox 77 Pro Limited">
+            </div>
+            <div class="col-md-6">
+                <h4>Thông tin chi tiết:</h4>
+                <p><strong>Giá:</strong> 3.619.000 vnđ – 4.050.000 vnđ</p>
+                <p><strong>Địa chỉ:</strong> 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh</p>
+                <p><strong>Trạng thái:</strong> Còn hàng</p>
+                <p><strong>Mô tả:</strong> Vợt Yonex Astrox 77 Pro Limited là phiên bản nâng cấp của dòng vợt Astrox nổi tiếng, với khả năng tấn công mạnh mẽ và linh hoạt hơn. Sự kết hợp giữa công nghệ hiện đại và thiết kế tinh tế sẽ mang đến cho bạn những pha cầu chính xác và mạnh mẽ.</p>
+                <a href="{% url 'cart_detail' %}" class="btn btn-primary">Thêm vào giỏ hàng</a>
+            </div>
+        </div>
+        <div class="container my-5">
+            <h4 class="mb-4">Đặc điểm sản phẩm</h4>
+            <ul>
+                <li>Thiết kế tấn công nhanh và mạnh mẽ</li>
+                <li>Chất liệu cao cấp, bền bỉ</li>
+                <li>Phù hợp với các trận đấu cầu lông chuyên nghiệp</li>
+                <li>Được yêu thích bởi các vận động viên hàng đầu</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <!-- Sản phẩm 3: Vợt Victor Thruster Ryuga Metallic China Open 2024 -->
+        <h2>Vợt Victor Thruster Ryuga Metallic China Open 2024</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="https://static.fbshop.vn/wp-content/uploads/2024/10/Vot-cau-long-5.jpg" class="img-fluid" alt="Vợt Victor Thruster Ryuga">
+            </div>
+            <div class="col-md-6">
+                <h4>Thông tin chi tiết:</h4>
+                <p><strong>Giá:</strong> 3.500.000 vnđ</p>
+                <p><strong>Địa chỉ:</strong> 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh</p>
+                <p><strong>Trạng thái:</strong> Hết hàng</p>
+                <p><strong>Mô tả:</strong> Vợt Victor Thruster Ryuga Metallic là dòng vợt chuyên dụng dành cho những người chơi đẳng cấp. Phiên bản giới hạn của năm 2024 mang lại khả năng tấn công cực kỳ mạnh mẽ và linh hoạt, giúp bạn chơi tốt hơn trong các trận đấu căng thẳng.</p>
+                <a href="{% url 'cart_detail' %}" class="btn btn-primary">Thêm vào giỏ hàng</a>
+            </div>
+        </div>
+        <div class="container my-5">
+            <h4 class="mb-4">Đặc điểm sản phẩm</h4>
+            <ul>
+                <li>Thiết kế tấn công nhanh và mạnh mẽ</li>
+                <li>Chất liệu cao cấp, bền bỉ</li>
+                <li>Phù hợp với các trận đấu cầu lông chuyên nghiệp</li>
+                <li>Được yêu thích bởi các vận động viên hàng đầu</li>
+            </ul>
+        </div>
+        <hr>
+
+        <!-- Sản phẩm 4: Giày cầu lông Kawasaki 3322 -->
+        <h2>Giày cầu lông Kawasaki 3322</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="https://static.fbshop.vn/wp-content/uploads/2024/11/2c453025927444a89eca3b31127cac28.gif" class="img-fluid" alt="Giày cầu lông Kawasaki 3322">
+            </div>
+            <div class="col-md-6">
+                <h4>Thông tin chi tiết:</h4>
+                <p><strong>Giá:</strong> 950.000 vnđ</p>
+                <p><strong>Địa chỉ:</strong> 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh</p>
+                <p><strong>Trạng thái:</strong> Hết hàng</p>
+                <p><strong>Mô tả:</strong> Giày cầu lông Kawasaki 3322 là lựa chọn tuyệt vời cho những ai yêu thích sự thoải mái và linh hoạt khi chơi cầu lông. Giày được thiết kế đặc biệt để mang lại độ bám tốt trên mặt sân và giảm chấn khi di chuyển.</p>
+                <a href="{% url 'cart_detail' %}" class="btn btn-primary">Thêm vào giỏ hàng</a>
+            </div>
+        </div>
+        <div class="container my-5">
+            <h4 class="mb-4">Đặc điểm sản phẩm</h4>
+            <ul>
+                <li>Thiết kế tấn công nhanh và mạnh mẽ</li>
+                <li>Chất liệu cao cấp, bền bỉ</li>
+                <li>Phù hợp với các trận đấu cầu lông chuyên nghiệp</li>
+                <li>Được yêu thích bởi các vận động viên hàng đầu</li>
+            </ul>
+        </div>
+        <hr>
+ <!-- Sản phẩm 5: Giày Yonex Aerus Z2 Wide Xám 2024 -->
+ <h2>Giày Yonex Aerus Z2 Wide Xám 2024</h2>
+ <div class="row">
+     <div class="col-md-6">
+         <img src="https://static.fbshop.vn/wp-content/uploads/2024/09/Vot-cau-long-97.jpg" class="img-fluid" alt="Giày Yonex Aerus Z2 Wide Xám 2024">
+     </div>
+     <div class="col-md-6">
+         <h4>Thông tin chi tiết:</h4>
+         <p><strong>Giá:</strong> 2.600.000vnđ</p>
+         <p><strong>Địa chỉ:</strong> 65A Đ. Lô Tư, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh</p>
+         <p><strong>Trạng thái:</strong> Còn hàng</p>
+         <p><strong>Mô tả:</strong> Giày Yonex Aerus Z2 Wide Xám 2024 là lựa chọn tuyệt vời cho những ai yêu thích sự thoải mái và linh hoạt khi chơi cầu lông. Giày được thiết kế đặc biệt để mang lại độ bám tốt trên mặt sân và giảm chấn khi di chuyển.</p>
+         <a href="{% url 'cart_detail' %}" class="btn btn-primary">Thêm vào giỏ hàng</a>
+     </div>
+ </div>
+ <div class="container my-5">
+     <h4 class="mb-4">Đặc điểm sản phẩm</h4>
+     <ul>
+         <li>Thiết kế tấn công nhanh và mạnh mẽ</li>
+         <li>Chất liệu cao cấp, bền bỉ</li>
+         <li>Phù hợp với các trận đấu cầu lông chuyên nghiệp</li>
+         <li>Được yêu thích bởi các vận động viên hàng đầu</li>
+     </ul>
+ </div>
+ <hr>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}
+
+
+    
