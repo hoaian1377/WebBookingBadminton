@@ -13,8 +13,49 @@
     <div class="container">
         <h1>Giỏ Hàng của Bạn</h1>
         <div id="cartItems"></div>  <!-- Phần tử chứa các item giỏ hàng -->
-        <div class="total">Tổng giá: <span id="totalPrice">0 VNĐ</span></div>
-        <a href="#" class="button">Thanh toán ngay</a>
+        <div class="total">
+            Tổng số mặt hàng: <span id="totalItems">0</span>
+            Tổng giá: <span id="totalPrice">0 VNĐ</span>
+        </div>
+
+        <div class="discount-section">
+            <div class="voucher">
+                <span class="voucher-icon">🎟️</span>
+                <span class="voucher-label">Mã giảm giá</span>
+                <input type="text" id="discountCode" placeholder="Nhập mã giảm giá">
+                <button onclick="applyDiscount()">Áp dụng</button>
+            </div>
+            <div class="voucher-info">
+                <span>Giảm 30.000 VNĐ cho đơn hàng từ 150.000 VNĐ. Tối đa giảm 50.000 VNĐ.</span>
+            </div>
+        </div>
+
+        <select id="shippingMethod" onchange="updateShippingCost()">
+            <option value="standard">Giao hàng tiêu chuẩn</option>
+            <option value="express">Giao hàng nhanh</option>
+        </select>
+        <div id="shippingCost">Phí giao hàng: 0 VNĐ</div>
+        <button class="button" onclick="openModal()">Thanh toán ngay</button>
+    </div>
+
+    <!-- Modal cho nhập địa chỉ -->
+    <div id="addressModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Địa chỉ mới</h2>
+            <form id="addressForm">
+                <label for="name">Họ và tên:</label>
+                <input type="text" id="name" required placeholder="Nhập họ và tên">
+                <label for="phone">Số điện thoại:</label>
+                <input type="text" id="phone" required placeholder="Nhập số điện thoại">
+                <label for="address">Địa chỉ:</label>
+                <input type="text" id="address" required placeholder="Nhập địa chỉ">
+                <div class="button-container">
+                    <button type="submit">Hoàn thành</button>
+                    <button type="button" onclick="proceedToBuy()">Mua ngay</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -27,17 +68,19 @@
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = `
                     <div class="empty-cart">
-                        <a href="/shop"> <!-- Thay đổi đường dẫn đến trang shop ở đây -->
+                        <a href="/shop">
                             <img src="https://maydongphucyte.com/default/template/img/cart-empty.png" alt="Giỏ hàng trống" style="width: 300px; display: block; margin: 0 auto;">
                         </a>
                         <p>Giỏ hàng của bạn còn trống. Nhấn vào ảnh để đi đến cửa hàng.</p>
                     </div>
                 `;
                 document.getElementById('totalPrice').textContent = '0 VNĐ';
+                document.getElementById('totalItems').textContent = '0';
                 return;
             }
 
             let totalPrice = 0;
+            let totalItems = 0;
             cart.forEach((item, index) => {
                 const cartItemDiv = document.createElement('div');
                 cartItemDiv.classList.add('cart-item');
@@ -54,9 +97,11 @@
                 `;
                 cartItemsContainer.appendChild(cartItemDiv);
                 totalPrice += item.price * item.quantity;
+                totalItems += item.quantity;
             });
 
             document.getElementById('totalPrice').textContent = totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+            document.getElementById('totalItems').textContent = totalItems;
         }
 
         function updateQuantity(index) {
@@ -70,6 +115,72 @@
             cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
             renderCart();
+        }
+
+        function applyDiscount() {
+            const discountCode = document.getElementById('discountCode').value;
+            let discount = 0;
+            const totalPriceElement = document.getElementById('totalPrice');
+            const currentTotal = parseFloat(totalPriceElement.textContent.replace(/[^0-9]/g, ''));
+
+            switch (discountCode) {
+                case 'sale11/11':
+                    discount = 30000; // Giảm 30.000 VNĐ
+                    break;
+                case 'quoctephunu20/10':
+                    discount = 50000; // Giảm 50.000 VNĐ
+                    break;
+                case 'sale12/12':
+                    discount = 10000; // Giảm 10.000 VNĐ
+                    break;
+                case 'khunggiovang':
+                    discount = 20000; // Giảm 20.000 VNĐ
+                    break;
+                default:
+                    alert("Mã giảm giá không hợp lệ.");
+                    return;
+            }
+
+            const finalPrice = currentTotal - discount;
+            totalPriceElement.textContent = finalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+            alert(`Bạn đã được giảm ${discount / 1000} VNĐ!`);
+        }
+
+        function updateShippingCost() {
+            const shippingMethod = document.getElementById('shippingMethod').value;
+            let shippingCost = shippingMethod === 'express' ? 20000 : 0; // 20.000 VNĐ cho giao hàng nhanh
+            document.getElementById('shippingCost').textContent = `Phí giao hàng: ${shippingCost.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}`;
+        }
+
+        function openModal() {
+            document.getElementById('addressModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('addressModal').style.display = "none";
+        }
+
+        document.getElementById('addressForm').onsubmit = function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            alert(`Địa chỉ đã được lưu!\nTên: ${name}\nSĐT: ${phone}\nĐịa chỉ: ${address}`);
+            closeModal();
+        };
+
+        function proceedToBuy() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            if (name && phone && address) {
+                alert(`Tiến hành mua hàng với thông tin:\nTên: ${name}\nSĐT: ${phone}\nĐịa chỉ: ${address}`);
+                closeModal();
+            } else {
+                alert("Vui lòng nhập đầy đủ thông tin địa chỉ trước khi mua.");
+            }
         }
 
         renderCart();
