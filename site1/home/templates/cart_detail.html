@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block contents %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link href="{% static 'app/css/style.css' %}" rel="stylesheet">
+    <title>WebBookingBadminton</title>
+</head>
+<body>
+        <div class="cart-empty">
+            <img src="https://maydongphucyte.com/default/template/img/cart-empty.png" alt="Biểu tượng giỏ hàng">
+            <h2>Giỏ hàng của bạn còn trống</h2>
+            <p>Hãy thêm sản phẩm vào giỏ hàng để bắt đầu mua sắm!</p>
+            <a href="http://127.0.0.1:8000/shop/" class="btn">MUA NGAY</a>
+        </div>
+    <body>
+    
+    
+{% endblock contents %}
+
+</body>
+</html>

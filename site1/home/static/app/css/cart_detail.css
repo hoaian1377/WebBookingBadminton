@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Chiều cao toàn bộ màn hình */
+    margin: 0;
+}
+
+html, body {
+    height: 100%; /* Đảm bảo chiều cao của body 100% */
+    margin: 0; /* Xóa khoảng cách mặc định */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    height: 100vh; /* Chiều cao toàn bộ màn hình */
+}
+
+.cart-empty {
+    display: flex;
+    flex-direction: column; /* Sắp xếp theo cột */
+    align-items: center; /* Căn giữa theo chiều ngang */
+    background-color: #fff;
+    padding: 30px; /* Thêm khoảng cách lớn hơn */
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px; /* Đặt chiều rộng tối đa để giỏ hàng không quá rộng */
+    width: 100%; /* Để giỏ hàng chiếm toàn bộ chiều rộng có sẵn */
+}
+
+.cart-empty img {
+    width: 100px; /* Kích thước hình ảnh */
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 24px; /* Kích thước chữ tiêu đề */
+    color: #333; /* Màu chữ */
+    margin-bottom: 15px; /* Khoảng cách dưới tiêu đề */
+}
+
+p {
+    font-size: 18px; /* Kích thước chữ thông báo giỏ hàng trống */
+    color: #666; /* Màu chữ */
+    margin-bottom: 20px; /* Khoảng cách dưới thông báo */
+}
+
+.btn {
+    background-color: #ff5722; /* Màu nền */
+    color: white; /* Màu chữ */
+    padding: 12px 24px; /* Thêm khoảng cách bên trong */
+    border: 2px solid #ff5722; /* Đường viền để giống như ô đăng nhập */
+    border-radius: 5px; /* Bo góc */
+    cursor: pointer; /* Con trỏ chuột khi di chuột qua */
+    text-decoration: none; /* Xóa gạch chân */
+    font-size: 16px; /* Kích thước chữ */
+    transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển đổi */
+}
+
+.btn:hover {
+    background-color: transparent; /* Nền trong suốt khi hover */
+    color: #ff5722; /* Màu chữ thành màu nền khi hover */
+}
