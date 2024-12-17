@@ -1,17 +1,4 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5; 
-    color: #333; 
-    margin: 0;
-    padding: 0;
-}
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+
 .poster {
     flex: 1;
     margin-right: 20px;
