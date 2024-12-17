@@ -28,3 +28,39 @@
     gap: 5px; /* Khoảng cách giữa các phần tử bên trong */
     margin-right: 20px; /* Thêm lề bên phải nếu cần */
 }
+/* Giúp các sản phẩm căn đều */
+.product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* Căn chỉnh ảnh sản phẩm cho đúng tỷ lệ */
+.product-card img {
+    width: 100%;
+    height: auto;
+}
+
+/* Tạo khoảng cách giữa các nút filter */
+.nav-pills .nav-item .nav-link {
+    margin-right: 10px;
+}
+
+/* Đảm bảo các card có cùng chiều cao */
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+.product-card .card-body {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-img-top {
+    height: 200px; /* Hoặc chiều cao cố định phù hợp */
+    object-fit: cover;
+}

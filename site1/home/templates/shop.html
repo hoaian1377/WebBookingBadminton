@@ -37,33 +37,7 @@
                     <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
                     <button class="btn btn-primary">Tìm kiếm</button>
                 </div>
-            </div>
-            <div class="col-md-2">
-                <select class="form-select">
-                    <option value="">Chọn khu vực</option>
-                    <option value="hanoi">Hà Nội</option>
-                    <option value="hcm">Hồ Chí Minh</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <select class="form-select">
-                    <option value="">Chọn đánh giá</option>
-                    <option value="1">1 sao</option>
-                    <option value="2">2 sao</option>
-                    <option value="3">3 sao</option>
-                    <option value="4">4 sao</option>
-                    <option value="5">5 sao</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <select class="form-select">
-                    <option value="">Chọn mức giá</option>
-                    <option value="cheap">Rẻ</option>
-                    <option value="medium">Trung bình</option>
-                    <option value="vip">Vip</option>
-                </select>
-            </div>
-        </div>
+            
     </div>
     <div class="container mt-4">
         <div class="row g-3">
@@ -134,363 +108,268 @@
         <li class="nav-item">
             <button class="nav-link" onclick="filterProducts('tui')">Túi</button>
         </li>
+        <li class="nav-item">
+            <button class="nav-link" onclick="filterProducts('ao')">Áo</button>
+
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" onclick="filterProducts('quan')">Quần </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" onclick="filterProducts('vay')">Váy</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" onclick="filterProducts('phukien')">Phụ Kiện </button>
+        </li>
+
     </ul>
 </div>
 
 <!-- Danh sách sản phẩm -->
 <div class="container my-5">
     <h3 class="text-center mb-4">Danh sách các sản phẩm</h3>
-    <div class="row g-4" id="product-list">
+    <div class="row g-4 product-list">
         <!-- Card 1 (Vợt) -->
-        <div class="col-md-2 product-card vot">
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card vot">
             <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot1.png' %}" class="card-img-top" alt="">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/Vot1.png' %}" class="card-img-top" alt="Vợt Cầu Lông Lining Aeronaut 9000C">
                 </a>
                 <div class="card-body">
                     <p>Vợt Cầu Lông Lining Aeronaut 9000C</p>
-                    <h3 style="color: red;">599.000₫</h3>
                 </div>
+                <h3 style="color: red;">599.000₫</h3>
             </div>
         </div>
+
         <!-- Card 2 (Vợt) -->
-        <div class="col-md-2 product-card vot">
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card vot">
             <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot2.png' %}" class="card-img-top" alt="">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/Vot2.png' %}" class="card-img-top" alt="Vợt Cầu Lông Yonex Astrox 99">
                 </a>
                 <div class="card-body">
                     <p>Vợt Cầu Lông Yonex Astrox 99</p>
-                    <h3 style="color: red;">1.299.000₫</h3>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card vot">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot3.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Vợt Cầu Lông Yonex Astrox 99</p>
-                    <h3 style="color: red;">490.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <!-- Card 3 (Giày) -->
-        <div class="col-md-2 product-card giay">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/giay1.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Giày cầu lông Kawasaki 3322</p>
-                    <h3 style="color: red;">799.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card giay">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/giay2.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Giày cầu  hhshshsh 3322</p>
-
-                    <h3 style="color: red;">799.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card giay">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/giay3.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Giày cầu lông Kawasaki 3322</p>
-                    <h3 style="color: red;">799.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <!-- Card 4 (Túi) -->
-        <div class="col-md-2 product-card tui">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/tui1.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Túi Cầu Lông Cao Cấp</p>
-                    <h3 style="color: red;">499.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card tui">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/tui2.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Túi Cầu Lông Cao Cấp</p>
-                    <h3 style="color: red;">499.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card tui">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/tui3.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Túi Cầu Lông Cao Cấp</p>
-                    <h3 style="color: red;">499.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card tui">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/tui1.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Túi Cầu Lông Cao Cấp</p>
-                    <h3 style="color: red;">499.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card tui">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/tui2.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Túi Cầu Lông Cao Cấp</p>
-                    <h3 style="color: red;">499.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card tui">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/tui3.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Túi Cầu Lông Cao Cấp</p>
-                    <h3 style="color: red;">499.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card vot">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot1.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Vợt Cầu Lông Lining Aeronaut 9000C</p>
-                    <h3 style="color: red;">599.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <!-- Card 2 (Vợt) -->
-        <div class="col-md-2 product-card vot">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot2.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Vợt Cầu Lông Yonex Astrox 99</p>
-                    <h3 style="color: red;">1.299.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card vot">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot3.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Vợt Cầu Lông Yonex Astrox 99</p>
-                    <h3 style="color: red;">490.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card vot">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot1.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Vợt Cầu Lông Lining Aeronaut 9000C</p>
-                    <h3 style="color: red;">599.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <!-- Card 2 (Vợt) -->
-        <div class="col-md-2 product-card vot">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot2.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Vợt Cầu Lông Yonex Astrox 99</p>
-                    <h3 style="color: red;">1.299.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card vot">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot3.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Vợt Cầu Lông Yonex Astrox 99</p>
-                    <h3 style="color: red;">490.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card giay">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/giay1.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Giày cầu lông Kawasaki 3322</p>
-                    <h3 style="color: red;">799.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card giay">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/giay2.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Giày cầu  hhshshsh 3322</p>
-
-                    <h3 style="color: red;">799.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card giay">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/giay3.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Giày cầu lông Kawasaki 3322</p>
-                    <h3 style="color: red;">799.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card giay">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/giay1.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Giày cầu lông Kawasaki 3322</p>
-                    <h3 style="color: red;">799.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card giay">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/giay2.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Giày cầu  hhshshsh 3322</p>
-
-                    <h3 style="color: red;">799.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card giay">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/giay3.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Giày cầu lông Kawasaki 3322</p>
-                    <h3 style="color: red;">799.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card vot">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot1.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Vợt Cầu Lông Lining Aeronaut 9000C</p>
-                    <h3 style="color: red;">599.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <!-- Card 2 (Vợt) -->
-        <div class="col-md-2 product-card vot">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot2.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Vợt Cầu Lông Yonex Astrox 99</p>
-                    <h3 style="color: red;">1.299.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card vot">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot3.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Vợt Cầu Lông Yonex Astrox 99</p>
-                    <h3 style="color: red;">490.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card giay">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/giay1.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Giày cầu lông Kawasaki 3322</p>
-                    <h3 style="color: red;">799.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card giay">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/giay2.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Giày cầu  hhshshsh 3322</p>
-
-                    <h3 style="color: red;">799.000₫</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 product-card vot">
-            <div class="card h-100 shadow-sm">
-                <a href="{% url 'item_detail' %}" >
-                    <img src="{% static 'app/image/Vot1.png' %}" class="card-img-top" alt="">
-                </a>
-                <div class="card-body">
-                    <p>Vợt Cầu Lông Lining Aeronaut 9000C</p>
-                    <h3 style="color: red;">599.000₫</h3>
-                </div>
+                <h3 style="color: red;">1.299.000₫</h3>
             </div>
         </div>
 
-        
-        
-        
-        
-        
-        
+        <!-- Card 3 (Vợt) -->
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card vot">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/Vot3.png' %}" class="card-img-top" alt="Vợt Cầu Lông Yonex Astrox 99">
+                </a>
+                <div class="card-body">
+                    <p>Vợt Cầu Lông Yonex Astrox 99</p>
+                </div>
+                <h3 style="color: red;">490.000₫</h3>
+            </div>
+        </div>
+
+        <!-- Card 4 (Vợt) -->
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card vot">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/Vot4.png' %}" class="card-img-top" alt="Combo Mua Vợt Cầu Lông Victor Ryuga II Pro">
+                </a>
+                <div class="card-body">
+                    <p>Combo Mua Vợt Cầu Lông Victor Ryuga II Pro Tặng Vợt Victor Auraspeed 9000 + Vợt DX9999</p>
+                </div>
+                <h3 style="color: red;">5.490.000₫</h3>
+            </div>
+        </div>
+
+        <!-- Card 5 (Giày) -->
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card giay">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/giay1.png' %}" class="card-img-top" alt="Giày cầu lông Kawasaki 3322">
+                </a>
+                <div class="card-body">
+                    <p>Giày cầu lông Kawasaki 3322</p>
+                </div>
+                <h3 style="color: red;">799.000₫</h3>
+            </div>
+        </div>
+
+        <!-- Card 6 (Giày) -->
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card giay">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/giay2.png' %}" class="card-img-top" alt="Giày nike 3322">
+                </a>
+                <div class="card-body">
+                    <p>Giày nike 3322</p>
+                </div>
+                <h3 style="color: red;">799.000₫</h3>
+            </div>
+        </div>
+
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card giay">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/giay3.png' %}" class="card-img-top" alt="Giày nike 3322">
+                </a>
+                <div class="card-body">
+                    <p>Giày 3322</p>
+                </div>
+                <h3 style="color: red;">800.000₫</h3>
+            </div>
+        </div>
+
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card giay">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/giay4.png' %}" class="card-img-top" alt="Giày nike 3322">
+                </a>
+                <div class="card-body">
+                    <p>Giày vip </p>
+                </div>
+                <h3 style="color: red;">890.000₫</h3>
+            </div>
+        </div>
+
+        <!-- Card 7 (Túi) -->
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card tui">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/tui1.png' %}" class="card-img-top" alt="Túi Cầu Lông Cao Cấp">
+                </a>
+                <div class="card-body">
+                    <p>Túi Cầu Lông Cao Cấp</p>
+                </div>
+                <h3 style="color: red;">499.000₫</h3>
+            </div>
+        </div>
+
+        <!-- Card 8 (Túi) -->
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card tui">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/tui2.png' %}" class="card-img-top" alt="Túi Cầu Lông Cao Cấp">
+                </a>
+                <div class="card-body">
+                    <p>Túi Cầu Lông Cao Cấp</p>
+                </div>
+                <h3 style="color: red;">499.000₫</h3>
+            </div>
+        </div>
+
+        <!-- Card 9 (Túi) -->
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card tui">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/tui3.png' %}" class="card-img-top" alt="Túi Cầu Lông Cao Cấp">
+                </a>
+                <div class="card-body">
+                    <p>Túi Cầu Lông Cao Cấp</p>
+                </div>
+                <h3 style="color: red;">499.000₫</h3>
+            </div>
+        </div>
+
+        <!-- Card 10 (Váy) -->
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card vay">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/vay1.png' %}" class="card-img-top" alt="Váy cầu lông Yonex 01 - Vàng trắng">
+                </a>
+                <div class="card-body">
+                    <p>Váy cầu lông Yonex 01 - Vàng trắng</p>
+                </div>
+                <h3 style="color: red;">139.000₫</h3>
+            </div>
+        </div>
+
+        <!-- Card 11 (Váy) -->
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card vay">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/vay2.png' %}" class="card-img-top" alt="Váy cầu lông Yonex 943 - Trắng">
+                </a>
+                <div class="card-body">
+                    <p>Váy cầu lông Yonex 943 - Trắng</p>
+                </div>
+                <h3 style="color: red;">139.000₫</h3>
+            </div>
+        </div>
+
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card ao">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/ao1.png' %}" class="card-img-top" alt="Váy cầu lông Yonex 943 - Trắng">
+                </a>
+                <div class="card-body">
+                    <p>Áo Cầu Lông Kamito Galaxy 2 KMAP245223F Nữ - Navy Chính Hãng</p>
+                </div>
+                <h3 style="color: red;">449.000₫</h3>
+            </div>
+        </div>
+
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card ao">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/ao2.png' %}" class="card-img-top" alt="Váy cầu lông Yonex 943 - Trắng">
+                </a>
+                <div class="card-body">
+                    <p>Áo cầu lông Kamito Galaxy 1 KMAP245150 nam - Trắng chính hãng</p>
+                </div>
+                <h3 style="color: red;">430.000₫</h3>
+            </div>
+        </div>
+ <!-- Card 11 (quan) -->
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card quan">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/quan1.png' %}" class="card-img-top" alt="">
+                </a>
+                <div class="card-body">
+                    <p>Quần Cầu Lông Yonex Q36 Nam - Đen Logo Trắng</p>
+                </div>
+                <h3 style="color: red;">120.000₫</h3>
+            </div>
+        </div>
+
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card quan">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/quan2.png' %}" class="card-img-top" alt="">
+                </a>
+                <div class="card-body">
+                    <p>Quần cầu lông Yonex 9224 - Đỏ</p>
+                </div>
+                <h3 style="color: red;">130.000₫</h3>
+            </div>
+        </div>
+ <!-- Card 11 (phukien) -->
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card phukien">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/pk1.png' %}" class="card-img-top" alt="">
+                </a>
+                <div class="card-body">
+                    <p>Túi đứng Kamito Eagle 2.0 KMTUI240390 - Xám chính hãng</p>
+                </div>
+                <h3 style="color: red;">99.000đ</h3>
+            </div>
+        </div>
+
+        <div class="col-xxl-2 col-md-3 col-sm-4 product-card phukien">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'item_detail' %}">
+                    <img src="{% static 'app/image/pk2.png' %}" class="card-img-top" alt="">
+                </a>
+                <div class="card-body">
+                    <p>Vớ cầu lông Kamito Galaxy V2 KMTAT240350 nam - Trắng đen</p>
+                </div>
+                <h3 style="color: red;">100.000đ</h3>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <div class="content">
     <div class="pagination-container">
@@ -510,22 +389,22 @@
 </body>
 <script>
     function filterProducts(category) {
-        const products = document.querySelectorAll('.product-card');
-
-        products.forEach(product => {
-            if (category === 'all' || product.classList.contains(category)) {
-                product.style.display = 'block';
+    var allProducts = document.querySelectorAll('.product-card');
+    if (category === 'all') {
+        allProducts.forEach(function(product) {
+            product.style.display = 'block'; // Hiển thị tất cả sản phẩm
+        });
+    } else {
+        allProducts.forEach(function(product) {
+            if (product.classList.contains(category)) {
+                product.style.display = 'block'; // Hiển thị sản phẩm phù hợp
             } else {
-                product.style.display = 'none';
+                product.style.display = 'none'; // Ẩn sản phẩm không phù hợp
             }
         });
-
-        // Đổi trạng thái active của nút
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
-        });
-        event.target.classList.add('active');
     }
+}
+
 </script>
 
 </html>
