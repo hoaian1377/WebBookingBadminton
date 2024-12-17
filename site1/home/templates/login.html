@@ -1,14 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title></title>
+    <title>Đăng Nhập</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="{% static 'app/css/login.css' %}" rel="stylesheet" />
@@ -16,31 +12,37 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="{% static 'app/css/login.css' %}" />
   </head>
 
   <body>
     <div class="wrapper">
-      <form action="">
+      <!-- Thêm method="POST" và action trỏ về view 'login' -->
+      <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
         <h1>Đăng nhập</h1>
+        <!-- Tên đăng nhập -->
         <div class="input-box">
-          <input type="text" placeholder="Tên đăng nhập" required />
+          <input type="text" name="Username" placeholder="Tên đăng nhập" required />
           <i class="bx bxs-user"></i>
         </div>
+        <!-- Mật khẩu -->
         <div class="input-box">
-          <input type="text" placeholder="Mật khẩu" required />
+          <input type="password" name="Password" placeholder="Mật khẩu" required />
           <i class="bx bxs-lock-alt"></i>
         </div>
-
+        <!-- Nhớ mật khẩu và quên mật khẩu -->
         <div class="remember-forgot">
           <label> <input type="checkbox" /> Nhớ mật khẩu </label>
-          <a href="{% url "forgot_password" %}">Quên mật khẩu?</a>
+          <a href="{% url 'forgot_password' %}">Quên mật khẩu?</a>
         </div>
-
+        <!-- Nút đăng nhập -->
         <button type="submit" class="btn">Đăng nhập</button>
-
+        <!-- Link đăng ký -->
         <div class="register-link">
-          <p>Bạn chưa có tài khoản?<a href="{% url "register" %}"> Đăng ký</a></p>
+          <p>
+            Bạn chưa có tài khoản?
+            <a href="{% url 'register' %}"> Đăng ký</a>
+          </p>
         </div>
       </form>
     </div>

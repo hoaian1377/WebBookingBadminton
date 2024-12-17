@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title></title>
+    <title>Đăng Ký</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="{% static 'app/css/login.css' %}" rel="stylesheet" />
@@ -21,35 +21,52 @@
 
   <body>
     <div class="wrapper">
-      <form action="">
+      <!-- Thêm method="POST" để gửi dữ liệu và action trỏ đến view xử lý -->
+      <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
         <h1>Đăng Ký</h1>
+      
+        <!-- Email -->
         <div class="input-box">
-          <input type="text" placeholder="Email" required />
+          <input type="email" name="Email" placeholder="Email" required />
           <i class="bx bx-envelope"></i>
         </div>
+      
+        <!-- Tên đăng nhập -->
         <div class="input-box">
-          <input type="text" placeholder="Tên đăng nhập" required />
+          <input type="text" name="Username" placeholder="Tên đăng nhập" required />
           <i class="bx bxs-user"></i>
         </div>
+      
+        <!-- Mật khẩu -->
         <div class="input-box">
-          <input type="text" placeholder="Mật khẩu" required />
+          <input type="password" name="Password" placeholder="Mật khẩu" required />
           <i class="bx bxs-lock-alt"></i>
         </div>
-
+      
+        <!-- Nhập lại mật khẩu -->
         <div class="input-box">
-          <input type="text" placeholder="Nhập lại mật khẩu" required />
+          <input
+            type="password"
+            name="Comfirm_password"
+            placeholder="Nhập lại mật khẩu"
+            required
+          />
           <i class="bx bxs-lock-alt"></i>
         </div>
-
+      
+        <!-- Điều khoản -->
         <div class="dieukhoan">
           <label>
-            <input type="checkbox" />Bạn có đồng ý với điều khoản và dịch
-            vụ?</label
-          >
+            <input type="checkbox" name="terms" required />
+            Bạn có đồng ý với điều khoản và dịch vụ?
+          </label>
         </div>
-
+      
+        <!-- Nút Đăng ký -->
         <button type="submit" class="btn">Đăng Ký</button>
       </form>
+      
     </div>
   </body>
 </html>

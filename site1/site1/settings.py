@@ -76,8 +76,14 @@ WSGI_APPLICATION = 'site1.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'mssql',
+        'NAME': 'DLSCL',
+        'User':'',
+        'Password':'',
+        'Host':'DESKTOP-AV5VHME', 
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',  # Kiểm tra driver bạn đã cài đặt
+        },
     }
 }
 
