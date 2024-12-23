@@ -76,13 +76,14 @@ WSGI_APPLICATION = 'site1.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mssql',
-        'NAME': 'DLSCL',
+        'ENGINE': '',
+        'NAME': '',
         'User':'',
         'Password':'',
-        'Host':'DESKTOP-AV5VHME', 
+        'Host':'', 
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',  # Kiểm tra driver bạn đã cài đặt
+            'trust_connection' : 'yes'
         },
     }
 }
