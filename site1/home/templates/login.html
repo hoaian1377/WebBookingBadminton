@@ -19,15 +19,25 @@
       <!-- Thêm method="POST" và action trỏ về view 'login' -->
       <form method="POST" action="{% url 'login' %}">
         {% csrf_token %}
-        <h1>Đăng nhập</h1>
+        <h1>ĐĂNG NHẬP</h1>
         <!-- Tên đăng nhập -->
         <div class="input-box">
-          <input type="text" name="Username" placeholder="Tên đăng nhập" required />
+          <input
+            type="text"
+            name="Username"
+            placeholder="Tên đăng nhập"
+            required
+          />
           <i class="bx bxs-user"></i>
         </div>
         <!-- Mật khẩu -->
         <div class="input-box">
-          <input type="password" name="Password" placeholder="Mật khẩu" required />
+          <input
+            type="password"
+            name="Password"
+            placeholder="Mật khẩu"
+            required
+          />
           <i class="bx bxs-lock-alt"></i>
         </div>
         <!-- Nhớ mật khẩu và quên mật khẩu -->

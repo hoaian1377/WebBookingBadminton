@@ -12,7 +12,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url("https://th.bing.com/th?id=OIP.uPdpFicM-bnLONwZydqbUgHaLJ&w=203&h=306&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2")
+  background: url("https://images.pexels.com/photos/8007166/pexels-photo-8007166.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
     no-repeat center center;
   background-size: cover;
   backdrop-filter: blur(5px);
@@ -25,9 +25,14 @@ body {
   border: 2px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(20px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  color: #333;
+  color: #fff;
   border-radius: 10px;
   padding: 30px 40px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.wrapper:hover {
+  transform: scale(1.05);
 }
 
 .wrapper h1 {
@@ -51,12 +56,18 @@ body {
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 40px;
   font-size: 16px;
-  color: #333;
+  color: #fff;
   padding: 20px 45px 20px 20px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-box input:focus {
+  border-color: #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
 .input-box input::placeholder {
-  color: #333;
+  color: #fff;
 }
 
 .input-box i {
@@ -75,7 +86,7 @@ body {
 }
 
 .dieukhoan label input {
-  accent-color: #333;
+  accent-color: #fff;
   margin-right: 3px;
 }
 
@@ -100,4 +111,10 @@ body {
   font-size: 16px;
   color: #333;
   font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.wrapper .btn:hover {
+  background: #333;
+  color: #fff;
 }
