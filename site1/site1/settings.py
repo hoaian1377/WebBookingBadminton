@@ -76,11 +76,11 @@ WSGI_APPLICATION = 'site1.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': '',
-        'NAME': '',
+        'ENGINE': 'mssql',
+        'NAME': 'QLBMT',
         'User':'',
         'Password':'',
-        'Host':'', 
+        'Host':'DESKTOP-AV5VHME', 
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',  # Kiểm tra driver bạn đã cài đặt
             'trust_connection' : 'yes'
