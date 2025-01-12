@@ -175,7 +175,7 @@ class Products(models.Model):
     quantityinstock = models.IntegerField(db_column='QuantityInStock')  # Field name made lowercase.
     description = models.TextField(db_column='Description', db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
-    isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
+    isactive = models.BooleanField(default=True, db_column='isactive')  # Field name made lowercase.
     imageurl = models.CharField(db_column='ImageUrl', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:

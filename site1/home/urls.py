@@ -16,7 +16,7 @@ urlpatterns = [
     path('login/forgot_password',views.forgot_password,name='forgot_password'),
     path('support/',views.support,name='support'),
     path('shop/',views.shop,name='shop'),
-    path('shop/item_detail/',views.item_detail,name='item_detail'),
+    path('shop/item_detail/<int:pk>/',views.item_detail,name='item_detail'),
     path('shop/cart_detail/',views.cart_detail,name='cart_detail'),
     
     
