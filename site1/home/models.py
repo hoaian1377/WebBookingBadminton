@@ -181,8 +181,3 @@ class Products(models.Model):
     class Meta:
         managed = False
         db_table = 'products'
-
-    def image_url(self):
-        if self.imageurl:
-            return f'{settings.MEDIA_URL}{self.imageurl}'
-        return ''

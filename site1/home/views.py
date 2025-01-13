@@ -38,8 +38,8 @@ def shop(request):
     return render(request, 'shop.html', {'products': products})
 
 def item_detail(request, pk):
-    product = get_object_or_404(Products, pk=pk)
-    return render(request, 'item_detail.html', {'product': product})
+    products = get_object_or_404(Products, pk=pk)
+    return render(request, 'item_detail.html', {'products': products})
 
 def cart_detail(request):
 
