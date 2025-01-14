@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Products
-
+from .models import Registeruser
+from django.contrib.auth.hashers import make_password,check_password
+from django.contrib import messages
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
@@ -10,8 +12,26 @@ def badminton_court_booking(request):
     return render(request, 'badminton_court_booking.html')
 
 def login(request):
-    return render(request, 'login.html')
+    if request.method == 'POST':
+        username = request.POST.get('Username')  # Match the form field name
+        password = request.POST.get('Password')  # Match the form field name
 
+        try:
+            # Fetch the user from the database
+            user = Registeruser.objects.get(username=username)
+
+            # Check password
+            if check_password(password, user.password):
+                # Store user info in the session
+                request.session['user_id'] = user.id
+                request.session['username'] = user.username
+                return redirect('home')  # Redirect to the home view
+            else:
+                messages.error(request, 'Sai mật khẩu.')
+        except Registeruser.DoesNotExist:
+            messages.error(request, 'Tên đăng nhập không tồn tại.')
+    
+    return render(request, 'login.html')  # Reload the login page if errors occur
 def court_history(request):
     return render(request, 'court_history.html')
 
@@ -25,7 +45,33 @@ def court_booking1(request):
     return render(request, 'court_booking1.html')
 
 def register(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+
+        # Kiểm tra mật khẩu khớp
+        if password != confirm_password:
+            messages.error(request, 'Mật khẩu không khớp.')
+            return render(request, 'register.html')
+
+        # Kiểm tra xem username và email đã tồn tại chưa
+        if Registeruser.objects.filter(username=username).exists():
+            messages.error(request, 'Tên đăng nhập đã tồn tại.')
+            return render(request, 'register.html')
+        if Registeruser.objects.filter(email=email).exists():
+            messages.error(request, 'Email đã tồn tại.')
+            return render(request, 'register.html')
+
+        # Mã hóa mật khẩu và lưu vào cơ sở dữ liệu
+        hashed_password = make_password(password)
+        Registeruser.objects.create(username=username, email=email, password=hashed_password)
+        messages.success(request, 'Đăng ký thành công!')
+        return redirect('login')  # Chuyển hướng đến trang đăng nhập
+
     return render(request, 'register.html')
+
 
 def forgot_password(request):
     return render(request, 'forgot_password.html')

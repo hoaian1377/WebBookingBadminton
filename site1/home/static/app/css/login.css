@@ -132,3 +132,8 @@ body {
 .register-link p a:hover {
   text-decoration: underline;
 }
+.messages {
+  text-align: center;
+  color: red;
+  margin-bottom: 15px;
+}
