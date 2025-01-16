@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Products
+from .models import San
 from .models import Registeruser
 from django.contrib.auth.hashers import make_password,check_password
 from django.contrib import messages
@@ -9,7 +10,8 @@ def home(request):
     return render(request, 'home.html')
 
 def badminton_court_booking(request):
-    return render(request, 'badminton_court_booking.html')
+    san_list=San.objects.all()
+    return render(request, 'badminton_court_booking.html',{'san_list': san_list})
 
 def login(request):
     if request.method == 'POST':
