@@ -36,7 +36,7 @@ class San(models.Model):
     diachi = models.CharField(db_column='DiaChi', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
     soluongsan = models.IntegerField(db_column='SoLuongSan', blank=True, null=True)  # Field name made lowercase.
     giathue = models.DecimalField(db_column='GiaThue', max_digits=10, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
-
+    imageurl =models.CharField(db_column='ImageUrl', max_length=255, blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'San'
