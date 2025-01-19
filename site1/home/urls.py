@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('badminton_court_booking/', views.badminton_court_booking, name='badminton_court_booking'),
+    path('logout/', views.logout_view, name='logout'),
     path('login/', views.login, name='login'),
     path('profile/', views.profile, name='profile'),
     path('profile/profile1/', views.profile1, name='profile1'),

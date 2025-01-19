@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import logout
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Products, San, Registeruser
 from django.contrib.auth.hashers import make_password, check_password
@@ -6,22 +7,11 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 
 def shop(request):
-    # Lấy danh sách sản phẩm đã active và sắp xếp theo tên
     product_list = Products.objects.filter(isactive=True).order_by('name')
-
-    # Phân trang: mỗi trang hiển thị 12 sản phẩm
-    paginator = Paginator(product_list, 12)
-
-    # Lấy số trang hiện tại từ URL (mặc định là trang 1)
+    paginator = Paginator(product_list, 24)
     page_number = request.GET.get('page', 1)
-    
-    # Lấy dữ liệu sản phẩm cho trang hiện tại
     products = paginator.get_page(page_number)
-
-    # Giỏ hàng từ session
     cart = request.session.get('cart', {})
-
-    # Truyền dữ liệu vào template
     return render(request, 'shop.html', {'products': products, 'cart': cart})
 
 def home(request):
@@ -51,8 +41,12 @@ def login(request):
         except Registeruser.DoesNotExist:
             messages.error(request, 'Tên đăng nhập không tồn tại.')
     
-    return render(request, 'login.html')  # Reload the login page if errors occur
-
+    return render(request, 'login.html') 
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        messages.success(request, 'Bạn đã đăng xuất thành công.')
+    return redirect('/')  
 def court_history(request):
     return render(request, 'court_history.html')
 

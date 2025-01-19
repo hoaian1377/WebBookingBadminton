@@ -1,70 +1,110 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Trang chủ{% endblock %}</title>
-    <link href="{% static 'app/css/base.css' %}" rel="stylesheet">
-</head>
-<body>
+    <link href="{% static 'app/css/base.css' %}" rel="stylesheet" />
+  </head>
+  <body>
     <div class="hero">
-        <nav>
-            <!-- Logo -->
-            <a href="{% url 'home' %}">
-                <img src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg" title="Trở về trang chủ" alt="Logo" class="logo">
-            </a>
-            <!-- Menu Center -->
-            <ul class="nav-links">
-                <li><a href="{% url 'home' %}" class="home">Home</a></li>
-                <li><a href="{% url 'badminton_court_booking' %}" class="book-court-link">Đặt sân</a></li>
-                <li><a href="{% url 'court_history' %}">Lịch Sử Đặt Sân</a></li>
-                <li><a href="{% url 'support' %}">Hỗ Trợ</a></li>
-                <li><a href="{% url 'profile' %}">Profile</a></li>
-                <li><a href="{% url 'shop' %}">Shop</a></li>
-            </ul>
-            
-            <!-- Đăng ký & Đăng nhập -->
-            <div class="auth-buttons">
-                <a href="{% url 'register' %}" class="btn btn-signup">Đăng ký</a>
-                <a href="{% url 'login' %}" class="btn login-btn">Đăng nhập</a>
-                <a href="#download" class="download-btn">Tải App</a>
-            </div>
-        </nav>
+      <nav>
+        <!-- Logo -->
+        <a href="{% url 'home' %}">
+          <img
+            src="https://img.freepik.com/premium-vector/vector-flat-badminton-logo-design_1107171-485.jpg"
+            title="Trở về trang chủ"
+            alt="Logo"
+            class="logo"
+          />
+        </a>
+        <!-- Menu Center -->
+        <ul class="nav-links">
+          <li><a href="{% url 'home' %}" class="home">Home</a></li>
+          <li>
+            <a
+              href="{% url 'badminton_court_booking' %}"
+              class="book-court-link"
+              >Đặt sân</a
+            >
+          </li>
+          <li><a href="{% url 'court_history' %}">Lịch Sử Đặt Sân</a></li>
+          <li><a href="{% url 'support' %}">Hỗ Trợ</a></li>
+          <li><a href="{% url 'profile' %}">Profile</a></li>
+          <li><a href="{% url 'shop' %}">Shop</a></li>
+        </ul>
+
+        <!-- Đăng ký & Đăng nhập -->
+        <div class="auth-buttons">
+          {% if request.session.user_id %}
+          <li>Chào, {{ request.session.username }}!</li>
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn logout-btn">Đăng xuất</button>
+          </form>
+          {% else %}
+          <a href="{% url 'register' %}" class="btn btn-signup">Đăng ký</a>
+          <a href="{% url 'login' %}" class="btn login-btn">Đăng nhập</a>
+          {% endif %}
+        </div>
+      </nav>
     </div>
 
     <!-- Nội dung trang -->
-    <main style="padding-top: 80px;">
-        {% block contents %}
-        <!-- Nội dung con sẽ được chèn vào đây -->
-        {% endblock contents %}
+    <main style="padding-top: 80px">
+      {% block contents %}
+      <!-- Nội dung con sẽ được chèn vào đây -->
+      {% endblock contents %}
     </main>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>GIỚI THIỆU</h4>
-                <p>Điện thoại: <strong><a href="tel:0123456789" class="contact-link">0123.456.789</a></strong></p>
-                <p>Địa chỉ: Số 47, Đường XYZ, Phường ABC, Quận 1, Thành phố Hồ Chí Minh, Việt Nam</p>
-                <p>Chính sách bảo mật</p>
-                <p>Chính sách hoàn tiền</p>
-            </div>
-            <div class="footer-section">
-                <h4>THÔNG TIN</h4>
-                <p>Công ty Cổ phần Booking 247</p>
-                <p>Mã số thuế: <strong>0112345678</strong></p>
-                <p>Email: <strong><a href="mailto:contact@booking247.com" class="contact-link">contact@booking247.com</a></strong></p>
-            </div>
-            <div class="footer-section">
-                <h4>LIÊN HỆ</h4>
-                <button class="contact-btn" onclick="window.location.href='tel:0123456789'">Gọi ngay</button>
-            </div>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>GIỚI THIỆU</h4>
+          <p>
+            Điện thoại:
+            <strong
+              ><a href="tel:0123456789" class="contact-link"
+                >0123.456.789</a
+              ></strong
+            >
+          </p>
+          <p>
+            Địa chỉ: Số 47, Đường XYZ, Phường ABC, Quận 1, Thành phố Hồ Chí
+            Minh, Việt Nam
+          </p>
+          <p>Chính sách bảo mật</p>
+          <p>Chính sách hoàn tiền</p>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; Copyright 2023. Tất cả quyền được bảo lưu.</p>
-            <p>Tìm chúng tôi</p>
+        <div class="footer-section">
+          <h4>THÔNG TIN</h4>
+          <p>Công ty Cổ phần Booking 247</p>
+          <p>Mã số thuế: <strong>0112345678</strong></p>
+          <p>
+            Email:
+            <strong
+              ><a href="mailto:contact@booking247.com" class="contact-link"
+                >contact@booking247.com</a
+              ></strong
+            >
+          </p>
         </div>
+        <div class="footer-section">
+          <h4>LIÊN HỆ</h4>
+          <button
+            class="contact-btn"
+            onclick="window.location.href='tel:0123456789'"
+          >
+            Gọi ngay
+          </button>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; Copyright 2023. Tất cả quyền được bảo lưu.</p>
+        <p>Tìm chúng tôi</p>
+      </div>
     </footer>
-</body>
+  </body>
 </html>
