@@ -42,8 +42,8 @@
         .price {
             color: red;
             font-weight: bold;
-            font-size: 1.2rem;
-            text-align: center; /* Center the price text */
+            font-size: 1.1rem;  /* Chỉnh sửa kích thước giá tiền nhỏ lại một chút */
+            text-align: left; /* Căn lề trái cho giá tiền */
             animation: flashPrice 1s infinite; /* Add flashing effect */
         }
 
@@ -52,6 +52,36 @@
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
+        }
+
+        /* Custom CSS for product name */
+        .product-name {
+            font-family: 'Times New Roman', Times, serif;
+            color: black;  /* Màu đen cho tên sản phẩm */
+            font-size: 0.9rem;  /* Kích thước chữ nhỏ lại */
+            font-weight: bold;  /* In đậm chữ */
+            text-align: left; /* Căn lề trái cho tên sản phẩm */
+            margin-bottom: 10px; /* Khoảng cách giữa tên sản phẩm và giá tiền */
+        }
+
+        /* Custom CSS for card design */
+        .product-card {
+        background-color: #f9f9f9; /* Màu nền nhẹ cho card */
+        border-radius: 8px; /* Góc bo tròn cho card */
+        border: 2px solid transparent; /* Khung card trong suốt để dễ dàng tạo hiệu ứng */
+        background-image: linear-gradient(135deg, #00b4d8, #ffb703); /* Hiệu ứng gradient màu sắc xanh dương và vàng */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho card */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng khi hover */
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px); /* Đẩy card lên một chút khi hover */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Đổ bóng mạnh hơn khi hover */
+
+        /* Custom hover effect for card */
+        .product-card a {
+            color: inherit;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -189,7 +219,7 @@
                             <img src="{% static product.imageurl %}" class="card-img-top" alt="{{ product.name }}">
                         </a>
                         <div class="card-body">
-                            <p class="text-center">{{ product.name }}</p>
+                            <p class="product-name">{{ product.name }}</p>
                         </div>
                         <h3 class="price">
                             {% if product.price %}
@@ -244,9 +274,6 @@
                 </ul>
             </nav>
         </div>
-
-        
-        
 
 </body>
 </html>
