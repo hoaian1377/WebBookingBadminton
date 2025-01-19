@@ -1,27 +1,62 @@
 {% extends "base.html" %}
 {% load static %}
 {% block contents %}
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đặt Sân Cầu Lông</title>
+    <title>Shop</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{% static 'app/css/court_booking1.css' %}" rel="stylesheet">
     <link href="{% static 'app/css/badminton_court_booking.css' %}" rel="stylesheet">
     <style>
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px; /* Khoảng cách phía trên với danh sách sản phẩm */
+            margin-bottom: 50px; /* Khoảng cách phía dưới với footer */
+            clear: both; /* Đảm bảo thanh phân trang không bị chồng lên các phần tử khác */
+        }
+
+        .content-wrapper {
+            padding-top: 100px; /* Khoảng cách giữa tab công cụ và nội dung chính */
+            padding-bottom: 20px; /* Khoảng cách giữa nội dung và phân trang */
+        }
+
+        footer {
+            margin-top: 30px; /* Tạo khoảng cách giữa footer và phân trang */
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 10; /* Giữ tab công cụ luôn ở trên cùng */
+        }
+
+        /* Custom CSS for price in red and flashing effect */
         .price {
             color: red;
-            text-align: center;
-            font-size: 1.5em;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-align: center; /* Center the price text */
+            animation: flashPrice 1s infinite; /* Add flashing effect */
+        }
+
+        /* Create the flashing effect */
+        @keyframes flashPrice {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
+
     <div class="container my-4">
         <div class="row align-items-center">
             <div class="col-md-12 d-flex justify-content-end">
@@ -34,7 +69,7 @@
             </div>
         </div>
     </div>
-
+    
     <div class="container my-4">
         <div class="row align-items-center">
             <div class="col-md-6">
@@ -70,6 +105,7 @@
             </div>
         </div>
     </div>
+
     <div class="container mt-4">
         <div class="row g-3">
             <div class="col-lg-8">
@@ -142,9 +178,10 @@
             </ul>
         </div>
 
-        <div class="container my-5">
-            <h3 class="text-center mb-4">Danh sách các sản phẩm</h3>
-            <div class="row g-4 product-list">
+        <!-- Danh sách sản phẩm -->
+        <div class="container my-5 content-wrapper">
+            <h3 class="text-center mb-4"> Các sản phẩm của chúng tôi </h3>
+            <div class="row g-4">
                 {% for product in products %}
                 <div class="col-xxl-2 col-md-3 col-sm-4 product-card {{ product.category.name|lower }}">
                     <div class="card h-100 shadow-sm">
@@ -152,9 +189,9 @@
                             <img src="{% static product.imageurl %}" class="card-img-top" alt="{{ product.name }}">
                         </a>
                         <div class="card-body">
-                            <p>{{ product.name }}</p>
+                            <p class="text-center">{{ product.name }}</p>
                         </div>
-                        <h3 class="price"> 
+                        <h3 class="price">
                             {% if product.price %}
                                 {{ product.price|floatformat:0 }}₫
                             {% else %}
@@ -166,7 +203,51 @@
                 {% endfor %}
             </div>
         </div>
-    </div>
+
+        <!-- Thanh phân trang -->
+        <div class="pagination-container">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if products.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="First">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for page_num in products.paginator.page_range %}
+                        {% if page_num == products.number %}
+                            <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+                        {% elif page_num >= products.number|add:-2 and page_num <= products.number|add:2 %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if products.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.paginator.num_pages }}" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+        
+        
+
 </body>
 </html>
-{% endblock contents %}
+{% endblock %}

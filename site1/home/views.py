@@ -1,17 +1,35 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Products
-from .models import San
-from .models import Registeruser
-from django.contrib.auth.hashers import make_password,check_password
+from .models import Products, San, Registeruser
+from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
-# Create your views here.
+from django.core.paginator import Paginator
+
+def shop(request):
+    # Lấy danh sách sản phẩm đã active và sắp xếp theo tên
+    product_list = Products.objects.filter(isactive=True).order_by('name')
+
+    # Phân trang: mỗi trang hiển thị 12 sản phẩm
+    paginator = Paginator(product_list, 12)
+
+    # Lấy số trang hiện tại từ URL (mặc định là trang 1)
+    page_number = request.GET.get('page', 1)
+    
+    # Lấy dữ liệu sản phẩm cho trang hiện tại
+    products = paginator.get_page(page_number)
+
+    # Giỏ hàng từ session
+    cart = request.session.get('cart', {})
+
+    # Truyền dữ liệu vào template
+    return render(request, 'shop.html', {'products': products, 'cart': cart})
+
 def home(request):
     return render(request, 'home.html')
 
 def badminton_court_booking(request):
-    san_list=San.objects.all()
-    return render(request, 'badminton_court_booking.html',{'san_list': san_list})
+    san_list = San.objects.all()
+    return render(request, 'badminton_court_booking.html', {'san_list': san_list})
 
 def login(request):
     if request.method == 'POST':
@@ -34,6 +52,7 @@ def login(request):
             messages.error(request, 'Tên đăng nhập không tồn tại.')
     
     return render(request, 'login.html')  # Reload the login page if errors occur
+
 def court_history(request):
     return render(request, 'court_history.html')
 
@@ -74,23 +93,17 @@ def register(request):
 
     return render(request, 'register.html')
 
-
 def forgot_password(request):
     return render(request, 'forgot_password.html')
 
 def support(request):
     return HttpResponseRedirect("https://docs.google.com/forms/d/e/1FAIpQLSdsZGwFck63-cPDZcW8gZyyMAhf2UyYaOINuByEgwbMvtTm3A/viewform")
 
-def shop(request):
-    products = Products.objects.filter(isactive=True)  # Fetch active products
-    return render(request, 'shop.html', {'products': products})
-
 def item_detail(request, pk):
-    products = get_object_or_404(Products, pk=pk)
-    return render(request, 'item_detail.html', {'products': products})
+    product = get_object_or_404(Products, pk=pk)
+    return render(request, 'item_detail.html', {'product': product})
 
 def cart_detail(request):
-
     cart = request.session.get('cart', {})
     products = []
     total = 0
@@ -126,3 +139,13 @@ def add_to_cart(request):
         return redirect('cart_detail')  # Điều hướng đến trang chi tiết giỏ hàng
 
     return redirect('shop')  # Điều hướng đến trang shop nếu không phải POST
+# View for displaying paginated product list
+def product_list(request):
+    products = Product.objects.filter(is_active=True)  # Fetch only active products
+    paginator = Paginator(products, 10)  # Display 10 products per page
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Correct the template path to avoid issues
+    return render(request, 'product_list.html', {'page_obj': page_obj})
