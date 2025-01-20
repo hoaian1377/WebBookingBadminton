@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'DBNew',
         'User':'',
         'Password':'',
-        'Host':'LAPTOP-33IP66FP', 
+        'Host':'DESKTOP-8LHJJ0H', 
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',  # Kiểm tra driver bạn đã cài đặt
             'trust_connection' : 'yes'

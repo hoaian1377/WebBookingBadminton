@@ -17,9 +17,7 @@ def shop(request):
 def home(request):
     return render(request, 'home.html')
 
-def badminton_court_booking(request):
-    san_list = San.objects.all()
-    return render(request, 'badminton_court_booking.html', {'san_list': san_list})
+
 
 def login(request):
     if request.method == 'POST':
@@ -143,3 +141,36 @@ def product_list(request):
 
     # Correct the template path to avoid issues
     return render(request, 'product_list.html', {'page_obj': page_obj})
+
+
+def badminton_court_booking(request):
+    # Lấy danh sách tất cả các sân và sắp xếp theo tên
+    san_list = San.objects.all().order_by()
+
+    # Kiểm tra xem có bộ lọc tìm kiếm nào không
+    search_query = request.GET.get('search', '')
+    location_filter = request.GET.get('location', '')
+    rating_filter = request.GET.get('rating', '')
+    price_filter = request.GET.get('price', '')
+
+    if search_query:
+        san_list = san_list.filter(tensan__icontains=search_query)
+    if location_filter:
+        san_list = san_list.filter(khuvuc=location_filter)
+    if rating_filter:
+        san_list = san_list.filter(danhgia__gte=rating_filter)
+    if price_filter:
+        if price_filter == 'cheap':
+            san_list = san_list.filter(giathue__lt=100000)  # Ví dụ: giá dưới 100000 VND
+        elif price_filter == 'medium':
+            san_list = san_list.filter(giathue__gte=100000, giathue__lt=500000)
+        elif price_filter == 'vip':
+            san_list = san_list.filter(giathue__gte=500000)
+
+    # Sử dụng Paginator để phân trang, mỗi trang hiển thị 10 sân
+    paginator = Paginator(san_list, 10)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'badminton_court_booking.html', {'page_obj': page_obj})
+

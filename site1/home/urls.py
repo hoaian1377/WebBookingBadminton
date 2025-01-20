@@ -21,6 +21,7 @@ urlpatterns = [
     path('shop/item_detail/<int:pk>/', views.item_detail, name='item_detail'),
     path('shop/cart_detail/', views.cart_detail, name='cart_detail'),
     path('shop/add_to_cart/', views.add_to_cart, name='add_to_cart'),  # Thêm đường dẫn này
+    
 ]
 
 # Static files in development mode
