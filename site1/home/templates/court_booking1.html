@@ -7,79 +7,258 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'app/css/court_booking1.css' %}" rel="stylesheet">
-    <title>Đặt Sân Cầu Lông</title>
-
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{% static 'app/css/court_booking1.css' %}" rel="stylesheet">
-    <link href="{% static 'app/css/badminton_court_booking.css' %}" rel="stylesheet">
-
-
-</head>
-<body>
-    <!-- Navbar -->
+    <link href="{% static 'app/css/style.css' %}" rel="stylesheet">
+    <title>Đặt Sân Cầu Lông</title>
     
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
 
-    <div class="container">
-        <div class="details">
-            <h1>Sân cầu lông</h1>
-            <div class="genre">Sân thể thao - Cầu lông</div>
-            <div class="actions">
-                <button>Thích 99%</button>
-                <button>Đánh giá 5 sao</button>
-                <button>Lịch trống</button>
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        .court-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .court-info, .review-qa-section {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .booking-form input, .booking-form select, .booking-form textarea, .booking-form button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .booking-form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .booking-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .review-section h2, .qa-section h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .average-rating {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .average-rating div {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .average-rating .rating-stars {
+            font-size: 36px;
+            color: #FFD700;
+        }
+
+        .rating-breakdown {
+            margin-top: 20px;
+        }
+
+        .rating-breakdown div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .rating-breakdown .progress {
+            width: 70%;
+        }
+        <style>
+            body {
+                background-color: #f8f9fa;
+                font-family: Arial, sans-serif;
+            }
+    
+            .container {
+                max-width: 1100px;
+                margin: 30px auto;
+                padding: 15px;
+            }
+    
+            .court-image img {
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+    
+            .court-info, .booking-form {
+                background: #fff;
+                border-radius: 10px;
+                padding: 14px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                margin-top: 0px;
+            }
+    
+            .booking-form input, .booking-form select, .booking-form textarea, .booking-form button {
+                width: 100%;
+                margin-top: 10px;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+    
+            .booking-form button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                transition: background-color 0.3s;
+            }
+    
+            .booking-form button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row mb-4">
+                <!-- Image Section -->
+                <div class="col-lg-7 court-image">
+                    <img src="{% static 'app/image/anh2xyz.jpg.jpg' %}" alt="Sân cầu lông">
+                </div>
+    
+                <!-- Info Section -->
+                <div class="col-lg-5 court-info">
+                    <h1 class="mb-3">Thông tin sân</h1>
+                    <p><strong>Giờ mở cửa:</strong> 6h - 23h</p>
+                    <p><strong>Số sân thi đấu:</strong> 20 Sân</p>
+                    <p><strong>Giá sân:</strong> Liên hệ</p>
+                    <p><strong>Dịch vụ tiện ích:</strong></p>
+                    <ul>
+                        <li>Wifi</li>
+                        <li>Bãi đỗ xe ô tô & xe máy</li>
+                        <li>Trà đá, đồ ăn</li>
+                    </ul>
+                </div>
             </div>
-            <div class="description">
-                Sân cầu lông của chúng tôi được trang bị đầy đủ tiện nghi, đảm bảo mang lại trải nghiệm tốt nhất cho quý khách.
+    
+            <!-- Booking Form Section -->
+            <div class="row mb-4">
+                <div class="col-lg-12 booking-form">
+                    <h2 class="mb-3">Đặt sân theo yêu cầu</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="fullName">Họ và tên:</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại:</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Chọn ngày:</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Thời gian:</label>
+                            <select id="time" name="time">
+                                <option value="1.5">1 giờ</option>
+                                <option value="1.5">1.5 giờ</option>
+                                <option value="1.5">2 giờ</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                            <label for="duration">Thời gian hẹn gặp:</label>
+<input id="duration" type="time" min="00:00" max="23:59">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Ghi chú:</label>
+                            <textarea id="notes" name="notes"></textarea>
+                        </div>
+                        <button type="submit">Đặt sân</button>
+                    </form>
+                </div>
             </div>
-            <div class="info">
-                <div>
-                    <span>Độ hài lòng</span>
-                    <span>99%</span>
+      
+    
+        <!-- Review and QA Section -->
+        <div class="row review-qa-section">
+            <!-- Review Section -->
+            <div class="col-lg-6 review-section">
+                <h2 class="text-primary">Đánh giá sân cầu lông</h2>
+                <div class="average-rating d-flex align-items-center mb-3">
+                    <span class="me-2 fs-4">Trung bình</span>
+                    <span class="rating-stars fs-3">5.0 ★</span>
+                    <button class="btn btn-primary ms-auto">Đánh giá và nhận xét</button>
                 </div>
-                <div>
-                    <span>Khởi công</span>
-                    <span>2024</span>
-                </div>
-                <div>
-                    <span>Thời gian mở cửa</span>
-                    <span>6:00 - 22:00</span>
-                </div>
-                <div>
-                    <span>Độ tuổi</span>
-                    <span>Mọi lứa tuổi</span>
+                <div class="rating-breakdown">
+                    <div class="mb-2 d-flex align-items-center">
+                        <span class="me-2 fs-5">5 ★</span>
+                        <div class="progress w-75">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <span class="ms-2 fs-5">100%</span>
+                    </div>
+                    <div class="mb-2 d-flex align-items-center">
+                        <span class="me-2 fs-5">4 ★</span>
+                        <div class="progress w-75">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <span class="ms-2 fs-5">80%</span>
+                    </div>
+                    <div class="mb-2 d-flex align-items-center">
+                        <span class="me-2 fs-5">3 ★</span>
+                        <div class="progress w-75">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <span class="ms-2 fs-5">50%</span>
+                    </div>
+                    <div class="mb-2 d-flex align-items-center">
+                        <span class="me-2 fs-5">2 ★</span>
+                        <div class="progress w-75">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <span class="ms-2 fs-5">30%</span>
+                    </div>
+                    <div class="mb-2 d-flex align-items-center">
+                        <span class="me-2 fs-5">1 ★</span>
+                        <div class="progress w-75">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 10%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <span class="ms-2 fs-5">10%</span>
+                    </div>
                 </div>
             </div>
-            <div class="cast">
-                <span>Người quản lý: Đặng Thanh Tùng</span>
-                <span>Người phục vụ: Lê Khánh Thiện</span>
-            </div>
-            <div class="booking">
-                <h2>Đặt sân</h2>
-                <label for="name">Tên của bạn:</label>
-                <input type="text" id="name" name="name" required>
-                <label for="phone">Số điện thoại:</label>
-                <input type="tel" id="phone" name="phone" required>
-                <label for="date">Chọn ngày:</label>
-                <input type="date" id="date" name="date" required>
-                <div class="time-slots">
-                    <label>Chọn giờ:</label>
-                    <button>6:00</button>
-                    <button>8:00</button>
-                    <button>10:00</button>
-                    <button>12:00</button>
-                    <button>14:00</button>
-                    <button>16:00</button>
-                    <button>18:00</button>
-                    <button>20:00</button>
-                </div>
-                <label for="payment">Ghi chú:</label>
-                <input type="text" id="payment" name="payment" required>
-                <button>Đặt ngay</button>
+        
+            <!-- Q&A Section -->
+            <div class="col-lg-6 qa-section">
+                <h2 class="text-primary">Hỏi đáp</h2>
+                <textarea class="form-control mb-2" placeholder="Mời bạn để lại bình luận" rows="4"></textarea>
+                <button class="btn btn-primary w-100">Gửi bình luận</button>
             </div>
         </div>
-    </div>
+        
 </body>
 </html>
 {% endblock contents %}
