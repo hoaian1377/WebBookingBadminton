@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +8,7 @@
     <link href="{% static 'app/css/base.css' %}" rel="stylesheet" />
   </head>
   <body>
+    <!-- Hero Section -->
     <div class="hero">
       <nav>
         <!-- Logo -->
@@ -19,42 +20,39 @@
             class="logo"
           />
         </a>
-        <!-- Menu Center -->
+        <!-- Menu -->
         <ul class="nav-links">
           <li><a href="{% url 'home' %}" class="home">Home</a></li>
-          <li>
-            <a
-              href="{% url 'badminton_court_booking' %}"
-              class="book-court-link"
-              >Đặt sân</a
-            >
-          </li>
+          <li><a href="{% url 'badminton_court_booking' %}" class="book-court-link">Đặt sân</a></li>
           <li><a href="{% url 'court_history' %}">Lịch Sử Đặt Sân</a></li>
           <li><a href="{% url 'support' %}">Hỗ Trợ</a></li>
           <li><a href="{% url 'profile' %}">Profile</a></li>
           <li><a href="{% url 'shop' %}">Shop</a></li>
         </ul>
-
-        <!-- Đăng ký & Đăng nhập -->
+        <!-- Authentication Buttons -->
         <div class="auth-buttons">
           {% if request.session.user_id %}
-          <li>Chào, {{ request.session.username }}!</li>
-          <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn logout-btn">Đăng xuất</button>
-          </form>
+          <div class="auth-logged-in">
+            <span class="welcome-message">Chào, {{ request.session.username }}!</span>
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-logout">Đăng xuất</button>
+            </form>
+          </div>
           {% else %}
-          <a href="{% url 'register' %}" class="btn btn-signup">Đăng ký</a>
-          <a href="{% url 'login' %}" class="btn login-btn">Đăng nhập</a>
+          <div class="auth-guest">
+            <a href="{% url 'register' %}" class="btn btn-signup">Đăng ký</a>
+            <a href="{% url 'login' %}" class="btn btn-login">Đăng nhập</a>
+          </div>
           {% endif %}
         </div>
       </nav>
     </div>
 
-    <!-- Nội dung trang -->
+    <!-- Main Content -->
     <main style="padding-top: 80px">
       {% block contents %}
-      <!-- Nội dung con sẽ được chèn vào đây -->
+      <!-- Content goes here -->
       {% endblock contents %}
     </main>
 
@@ -63,17 +61,11 @@
       <div class="footer-content">
         <div class="footer-section">
           <h4>GIỚI THIỆU</h4>
-          <p>
-            Điện thoại:
-            <strong
-              ><a href="tel:0123456789" class="contact-link"
-                >0123.456.789</a
-              ></strong
-            >
+          <p>Điện thoại:
+            <strong><a href="tel:0123456789" class="contact-link">0123.456.789</a></strong>
           </p>
           <p>
-            Địa chỉ: Số 47, Đường XYZ, Phường ABC, Quận 1, Thành phố Hồ Chí
-            Minh, Việt Nam
+            Địa chỉ: Số 47, Đường XYZ, Phường ABC, Quận 1, TP. Hồ Chí Minh, VN
           </p>
           <p>Chính sách bảo mật</p>
           <p>Chính sách hoàn tiền</p>
@@ -84,19 +76,14 @@
           <p>Mã số thuế: <strong>0112345678</strong></p>
           <p>
             Email:
-            <strong
-              ><a href="mailto:contact@booking247.com" class="contact-link"
-                >contact@booking247.com</a
-              ></strong
-            >
+            <strong><a href="mailto:contact@booking247.com" class="contact-link">contact@booking247.com</a></strong>
           </p>
         </div>
         <div class="footer-section">
           <h4>LIÊN HỆ</h4>
           <button
             class="contact-btn"
-            onclick="window.location.href='tel:0123456789'"
-          >
+            onclick="window.location.href='tel:0123456789'">
             Gọi ngay
           </button>
         </div>

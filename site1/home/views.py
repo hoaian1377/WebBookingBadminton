@@ -132,33 +132,47 @@ def add_to_cart(request):
 
     return redirect('shop')  # Điều hướng đến trang shop nếu không phải POST
 # View for displaying paginated product list
-def product_list(request):
-    products = Product.objects.filter(is_active=True)  # Fetch only active products
-    paginator = Paginator(products, 10)  # Display 10 products per page
+def shop(request):
+    # Lấy giá trị từ query string
+    search_query = request.GET.get('search', '').strip()  # Lấy từ khóa tìm kiếm
+    price_filter = request.GET.get('price', '')  # Lấy bộ lọc giá (low hoặc high)
 
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    # Lấy danh sách sản phẩm ban đầu (chỉ lấy các sản phẩm active)
+    product_list = Products.objects.filter(isactive=True)
 
-    # Correct the template path to avoid issues
-    return render(request, 'product_list.html', {'page_obj': page_obj})
+    # Lọc theo từ khóa tìm kiếm (nếu có)
+    if search_query:
+        product_list = product_list.filter(name__icontains=search_query)  # Tìm kiếm theo tên sản phẩm
 
+    # Lọc theo giá (nếu có)
+    if price_filter == 'low':
+        product_list = product_list.order_by('price')  # Giá tăng dần
+    elif price_filter == 'high':
+        product_list = product_list.order_by('-price')  # Giá giảm dần
+
+    # Phân trang sản phẩm (24 sản phẩm mỗi trang)
+    paginator = Paginator(product_list, 24)
+    page_number = request.GET.get('page', 1)
+    products = paginator.get_page(page_number)
+
+    # Lấy giỏ hàng từ session
+    cart = request.session.get('cart', {})
+
+    # Trả về template với danh sách sản phẩm và giỏ hàng
+    return render(request, 'shop.html', {'products': products, 'cart': cart})
 
 def badminton_court_booking(request):
-    # Lấy danh sách tất cả các sân và sắp xếp theo tên
-    san_list = San.objects.all().order_by()
+    # Lấy danh sách tất cả các sân
+    san_list = San.objects.all()
 
-    # Kiểm tra xem có bộ lọc tìm kiếm nào không
-    search_query = request.GET.get('search', '')
-    location_filter = request.GET.get('location', '')
-    rating_filter = request.GET.get('rating', '')
+    # Lấy các tham số tìm kiếm từ GET request
+    address_filter = request.GET.get('address', '').strip()
     price_filter = request.GET.get('price', '')
+    name_filter = request.GET.get('search', '').strip()  # Tìm kiếm theo tên sân
 
-    if search_query:
-        san_list = san_list.filter(tensan__icontains=search_query)
-    if location_filter:
-        san_list = san_list.filter(khuvuc=location_filter)
-    if rating_filter:
-        san_list = san_list.filter(danhgia__gte=rating_filter)
+    # Áp dụng bộ lọc nếu có
+    if address_filter:
+        san_list = san_list.filter(diachi__icontains=address_filter)  # Tìm các sân có địa chỉ chứa chuỗi nhập vào
     if price_filter:
         if price_filter == 'cheap':
             san_list = san_list.filter(giathue__lt=100000)  # Ví dụ: giá dưới 100000 VND
@@ -166,6 +180,8 @@ def badminton_court_booking(request):
             san_list = san_list.filter(giathue__gte=100000, giathue__lt=500000)
         elif price_filter == 'vip':
             san_list = san_list.filter(giathue__gte=500000)
+    if name_filter:
+        san_list = san_list.filter(tensan__icontains=name_filter)  # Tìm kiếm theo tên sân
 
     # Sử dụng Paginator để phân trang, mỗi trang hiển thị 10 sân
     paginator = Paginator(san_list, 10)
@@ -173,4 +189,3 @@ def badminton_court_booking(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'badminton_court_booking.html', {'page_obj': page_obj})
-

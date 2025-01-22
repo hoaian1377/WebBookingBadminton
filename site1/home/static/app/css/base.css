@@ -401,3 +401,174 @@ footer {
 .contact-link:hover {
     text-decoration: underline; /* Hiện gạch chân khi di chuột qua */
 }
+/* General reset and body styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Hero Section Styles */
+  .hero {
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f0f2f5;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  .logo {
+    height: 50px;
+    cursor: pointer;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    color: #007bff;
+  }
+  
+  /* Authentication Buttons */
+  .auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .auth-logged-in {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .welcome-message {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-signup {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .btn-login {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .btn-logout {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .btn:hover {
+    opacity: 0.8;
+  }
+  
+  /* Footer Styles */
+  footer {
+    background-color: #003366;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  
+  .footer-section {
+    flex: 1;
+  }
+  
+  .footer-section h4 {
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  
+  .footer-section p {
+    margin: 5px 0;
+    color: #ddd;
+  }
+  
+  .footer-section a {
+    color: #ffcc00;
+    text-decoration: none;
+  }
+  
+  .footer-section a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer-bottom {
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+  }
+  
+  .contact-btn {
+    background-color: #ffcc00;
+    color: #003366;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .nav-links {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .footer-content {
+      flex-direction: column;
+    }
+  }
+  

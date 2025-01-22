@@ -15,70 +15,80 @@
     <link href="{% static 'app/css/court_booking1.css' %}" rel="stylesheet">
     <link href="{% static 'app/css/badminton_court_booking.css' %}" rel="stylesheet">
     <style>
+        .price-container {
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    margin-top: 10px;
+}
+.price {
+    color: red;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-align: center; /* Đảm bảo văn bản được căn giữa */
+    animation: flashPrice 1s infinite;
+}
+
         .pagination-container {
             display: flex;
             justify-content: center;
-            margin-top: 30px; /* Khoảng cách phía trên với danh sách sản phẩm */
-            margin-bottom: 50px; /* Khoảng cách phía dưới với footer */
-            clear: both; /* Đảm bảo thanh phân trang không bị chồng lên các phần tử khác */
+            margin-top: 30px;
+            margin-bottom: 50px;
+            clear: both;
         }
 
         .content-wrapper {
-            padding-top: 100px; /* Khoảng cách giữa tab công cụ và nội dung chính */
-            padding-bottom: 20px; /* Khoảng cách giữa nội dung và phân trang */
+            padding-top: 100px;
+            padding-bottom: 20px;
         }
 
         footer {
-            margin-top: 30px; /* Tạo khoảng cách giữa footer và phân trang */
+            margin-top: 30px;
         }
 
         nav {
             position: sticky;
             top: 0;
-            z-index: 10; /* Giữ tab công cụ luôn ở trên cùng */
+            z-index: 10;
         }
 
-        /* Custom CSS for price in red and flashing effect */
         .price {
             color: red;
             font-weight: bold;
-            font-size: 1.1rem;  /* Chỉnh sửa kích thước giá tiền nhỏ lại một chút */
-            text-align: left; /* Căn lề trái cho giá tiền */
-            animation: flashPrice 1s infinite; /* Add flashing effect */
+            font-size: 1.1rem;
+            text-align: left;
+            animation: flashPrice 1s infinite;
         }
 
-        /* Create the flashing effect */
         @keyframes flashPrice {
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
         }
 
-        /* Custom CSS for product name */
         .product-name {
             font-family: 'Times New Roman', Times, serif;
-            color: black;  /* Màu đen cho tên sản phẩm */
-            font-size: 0.9rem;  /* Kích thước chữ nhỏ lại */
-            font-weight: bold;  /* In đậm chữ */
-            text-align: left; /* Căn lề trái cho tên sản phẩm */
-            margin-bottom: 10px; /* Khoảng cách giữa tên sản phẩm và giá tiền */
+            color: black;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-align: left;
+            margin-bottom: 10px;
         }
 
-        /* Custom CSS for card design */
         .product-card {
-        background-color: #f9f9f9; /* Màu nền nhẹ cho card */
-        border-radius: 8px; /* Góc bo tròn cho card */
-        border: 2px solid transparent; /* Khung card trong suốt để dễ dàng tạo hiệu ứng */
-        background-image: linear-gradient(135deg, #00b4d8, #ffb703); /* Hiệu ứng gradient màu sắc xanh dương và vàng */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho card */
-        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng khi hover */
-    }
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            background-image: linear-gradient(135deg, #00b4d8, #ffb703);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-    .product-card:hover {
-        transform: translateY(-5px); /* Đẩy card lên một chút khi hover */
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Đổ bóng mạnh hơn khi hover */
-    }
-        /* Custom hover effect for card */
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
         .product-card a {
             color: inherit;
             text-decoration: none;
@@ -101,39 +111,23 @@
     </div>
     
     <div class="container my-4">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
-                    <button class="btn btn-primary">Tìm kiếm</button>
+        <form method="get" action="{% url 'shop' %}">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm..." value="{{ request.GET.search }}">
+                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <select name="price" class="form-select">
+                        <option value="">Chọn mức giá</option>
+                        <option value="low" {% if request.GET.price == 'low' %}selected{% endif %}>Thấp đến cao</option>
+                        <option value="high" {% if request.GET.price == 'high' %}selected{% endif %}>Cao đến thấp</option>
+                    </select>
                 </div>
             </div>
-            <div class="col-md-2">
-                <select class="form-select">
-                    <option value="">Chọn khu vực</option>
-                    <option value="hanoi">Hà Nội</option>
-                    <option value="hcm">Hồ Chí Minh</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <select class="form-select">
-                    <option value="">Chọn đánh giá</option>
-                    <option value="1">1 sao</option>
-                    <option value="2">2 sao</option>
-                    <option value="3">3 sao</option>
-                    <option value="4">4 sao</option>
-                    <option value="5">5 sao</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <select class="form-select">
-                    <option value="">Chọn mức giá</option>
-                    <option value="cheap">Rẻ</option>
-                    <option value="medium">Trung bình</option>
-                    <option value="vip">Vip</option>
-                </select>
-            </div>
-        </div>
+        </form>
     </div>
 
     <div class="container mt-4">
@@ -179,41 +173,12 @@
             </div>
         </div>
 
-        <div class="container my-4">
-            <ul class="nav nav-pills justify-content-center">
-                <li class="nav-item">
-                    <button class="nav-link active" onclick="filterProducts('all')">Tất cả</button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" onclick="filterProducts('vot')">Vợt</button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" onclick="filterProducts('giay')">Giày</button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" onclick="filterProducts('tui')">Túi</button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" onclick="filterProducts('ao')">Áo</button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" onclick="filterProducts('quan')">Quần</button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" onclick="filterProducts('vay')">Váy</button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" onclick="filterProducts('phukien')">Phụ Kiện</button>
-                </li>
-            </ul>
-        </div>
-
         <!-- Danh sách sản phẩm -->
         <div class="container my-5 content-wrapper">
             <h3 class="text-center mb-4"> Các sản phẩm của chúng tôi </h3>
             <div class="row g-4">
                 {% for product in products %}
-                <div class="col-xxl-2 col-md-3 col-sm-4 product-card {{ product.category.name|lower }}">
+                <div class="col-xxl-2 col-md-3 col-sm-4 product-card">
                     <div class="card h-100 shadow-sm">
                         <a href="{% url 'item_detail' product.id %}">
                             <img src="{% static product.imageurl %}" class="card-img-top" alt="{{ product.name }}">
@@ -221,13 +186,16 @@
                         <div class="card-body">
                             <p class="product-name">{{ product.name }}</p>
                         </div>
-                        <h3 class="price">
-                            {% if product.price %}
-                                {{ product.price|floatformat:0 }}₫
-                            {% else %}
-                                Liên hệ
-                            {% endif %}
-                        </h3>
+                        <div class="price-container">
+                            <h3 class="price">
+                                {% if product.price %}
+                                    {{ product.price|floatformat:0 }}₫
+                                {% else %}
+                                    Liên hệ
+                                {% endif %}
+                            </h3>
+                        </div>
+                        
                     </div>
                 </div>
                 {% endfor %}
@@ -274,7 +242,7 @@
                 </ul>
             </nav>
         </div>
-
+    </div>
 </body>
 </html>
 {% endblock %}

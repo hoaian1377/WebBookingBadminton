@@ -16,86 +16,66 @@
 
     <!-- Custom CSS for padding -->
     <style>
-         .pagination-container {
+        .pagination-container {
             display: flex;
             justify-content: center;
-            margin-top: 30px; /* Khoảng cách phía trên với danh sách sản phẩm */
-            margin-bottom: 50px; /* Khoảng cách phía dưới với footer */
-            clear: both; /* Đảm bảo thanh phân trang không bị chồng lên các phần tử khác */
+            margin-top: 30px;
+            margin-bottom: 50px;
+            clear: both;
         }
 
         .content-wrapper {
-            padding-top: 100px; /* Khoảng cách giữa tab công cụ và nội dung chính */
-            padding-bottom: 20px; /* Khoảng cách giữa nội dung và phân trang */
+            padding-top: 100px;
+            padding-bottom: 20px;
         }
 
         footer {
-            margin-top: 30px; /* Tạo khoảng cách giữa footer và phân trang */
+            margin-top: 30px;
         }
 
         nav {
             position: sticky;
             top: 0;
-            z-index: 10; /* Giữ tab công cụ luôn ở trên cùng */
+            z-index: 10;
         }
 
         body {
-            padding-top: 80px; /* Đảm bảo khoảng cách giữa thanh công cụ và phần nội dung */
-        }
-
-        .pagination-container {
-            margin-top: 50px; /* Tạo khoảng cách từ nội dung đến phân trang */
+            padding-top: 80px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Tìm kiếm và lọc -->
-    <div class="container my-4">
-        <h3 class="text-center mb-4">Tìm kiếm sân cầu lông</h3>
-        <form method="get">
-            <div class="row align-items-center">
-                <div class="col-md-3">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm sân bạn muốn?" name="search" value="{{ request.GET.search }}">
-                        <button class="btn btn-primary">Tìm kiếm</button>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <select class="form-select" name="location">
-                        <option value="">Chọn khu vực</option>
-                        <option value="hanoi" {% if request.GET.location == 'hanoi' %}selected{% endif %}>Hà Nội</option>
-                        <option value="hcm" {% if request.GET.location == 'hcm' %}selected{% endif %}>Hồ Chí Minh</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <select class="form-select" name="rating">
-                        <option value="">Chọn đánh giá</option>
-                        <option value="1" {% if request.GET.rating == '1' %}selected{% endif %}>1 sao</option>
-                        <option value="2" {% if request.GET.rating == '2' %}selected{% endif %}>2 sao</option>
-                        <option value="3" {% if request.GET.rating == '3' %}selected{% endif %}>3 sao</option>
-                        <option value="4" {% if request.GET.rating == '4' %}selected{% endif %}>4 sao</option>
-                        <option value="5" {% if request.GET.rating == '5' %}selected{% endif %}>5 sao</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <select class="form-select" name="price">
-                        <option value="">Chọn mức giá</option>
-                        <option value="cheap" {% if request.GET.price == 'cheap' %}selected{% endif %}>Rẻ</option>
-                        <option value="medium" {% if request.GET.price == 'medium' %}selected{% endif %}>Trung bình</option>
-                        <option value="vip" {% if request.GET.price == 'vip' %}selected{% endif %}>Vip</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
-                </div>
+    <!-- Form tìm kiếm -->
+<!-- Form tìm kiếm -->
+<div class="container my-5">
+    <h3 class="text-center mb-4">Danh sách các sân cầu lông</h3>
+    <form method="get" action="{% url 'badminton_court_booking' %}">
+        <div class="row mb-3">
+            <!-- Tìm kiếm địa chỉ -->
+            <div class="col-md-5">
+                <input type="text" name="address" value="{{ request.GET.address }}" placeholder="Nhập địa chỉ sân" class="form-control">
             </div>
-        </form>
-    </div>
+            <!-- Tìm kiếm theo giá -->
+            <div class="col-md-5">
+                <select name="price" class="form-control">
+                    <option value="">Chọn mức giá</option>
+                    <option value="cheap" {% if request.GET.price == 'cheap' %}selected{% endif %}>Rẻ</option>
+                    <option value="medium" {% if request.GET.price == 'medium' %}selected{% endif %}>Vừa</option>
+                    <option value="vip" {% if request.GET.price == 'vip' %}selected{% endif %}>VIP</option>
+                </select>
+            </div>
+            <!-- Nút tìm kiếm -->
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
+            </div>
+        </div>
+    </form>
+</div>
+
 
     <!-- Danh sách sân -->
     <div class="container my-5">
-        <h3 class="text-center mb-4">Danh sách các sân cầu lông</h3>
         <div class="row g-4">
             {% for san in page_obj %}
             <div class="col-md-4">
@@ -124,12 +104,12 @@
             <ul class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page=1{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.location %}&location={{ request.GET.location }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.price %}&price={{ request.GET.price }}{% endif %}" aria-label="First">
+                    <a class="page-link" href="?page=1{% if request.GET.address %}&address={{ request.GET.address }}{% endif %}{% if request.GET.price %}&price={{ request.GET.price }}{% endif %}" aria-label="First">
                         <span aria-hidden="true">&laquo;&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.location %}&location={{ request.GET.location }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.price %}&price={{ request.GET.price }}{% endif %}" aria-label="Previous">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.address %}&address={{ request.GET.address }}{% endif %}{% if request.GET.price %}&price={{ request.GET.price }}{% endif %}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -137,18 +117,18 @@
 
                 {% for num in page_obj.paginator.page_range %}
                 <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                    <a class="page-link" href="?page={{ num }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.location %}&location={{ request.GET.location }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.price %}&price={{ request.GET.price }}{% endif %}">{{ num }}</a>
+                    <a class="page-link" href="?page={{ num }}{% if request.GET.address %}&address={{ request.GET.address }}{% endif %}{% if request.GET.price %}&price={{ request.GET.price }}{% endif %}">{{ num }}</a>
                 </li>
                 {% endfor %}
 
                 {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.location %}&location={{ request.GET.location }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.price %}&price={{ request.GET.price }}{% endif %}" aria-label="Next">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.address %}&address={{ request.GET.address }}{% endif %}{% if request.GET.price %}&price={{ request.GET.price }}{% endif %}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.location %}&location={{ request.GET.location }}{% endif %}{% if request.GET.rating %}&rating={{ request.GET.rating }}{% endif %}{% if request.GET.price %}&price={{ request.GET.price }}{% endif %}" aria-label="Last">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.address %}&address={{ request.GET.address }}{% endif %}{% if request.GET.price %}&price={{ request.GET.price }}{% endif %}" aria-label="Last">
                         <span aria-hidden="true">&raquo;&raquo;</span>
                     </a>
                 </li>
