@@ -8,50 +8,104 @@
 from django.db import models
 
 
+class Chitiethoadon(models.Model):
+    chitiethoadonid = models.IntegerField(db_column='ChiTietHoaDonID', primary_key=True)  # Field name made lowercase.
+    hoadonid = models.ForeignKey('Hoadon', models.DO_NOTHING, db_column='HoaDonID')  # Field name made lowercase.
+    sanphamid = models.ForeignKey('Sanpham', models.DO_NOTHING, db_column='SanPhamID')  # Field name made lowercase.
+    soluong = models.IntegerField(db_column='SoLuong')  # Field name made lowercase.
+    giatien = models.DecimalField(db_column='GiaTien', max_digits=10, decimal_places=2)  # Field name made lowercase.
+    tongtien = models.DecimalField(db_column='TongTien', max_digits=21, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'ChiTietHoaDon'
+
+
 class Datsan(models.Model):
-    datsanid = models.AutoField(db_column='DatSanID', primary_key=True)  # Field name made lowercase.
-    sanid = models.ForeignKey('San', models.DO_NOTHING, db_column='SanID', blank=True, null=True)  # Field name made lowercase.
-    khachhangid = models.ForeignKey('Users', models.DO_NOTHING, db_column='KhachHangID', blank=True, null=True)  # Field name made lowercase.
-    thoigianbatdau = models.DateTimeField(db_column='ThoiGianBatDau')  # Field name made lowercase.
-    thoigianketthuc = models.DateTimeField(db_column='ThoiGianKetThuc')  # Field name made lowercase.
-    tongtien = models.DecimalField(db_column='TongTien', max_digits=10, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
+    datsanid = models.OneToOneField('San', models.DO_NOTHING, db_column='DatSanID', primary_key=True)  # Field name made lowercase. The composite primary key (DatSanID, DatSanID) found, that is not supported. The first column is selected.
+    thoigianbatdau = models.TimeField(db_column='ThoiGianBatDau', blank=True, null=True)  # Field name made lowercase.
+    thoigianketthuc = models.TimeField(db_column='ThoiGianKetThuc', blank=True, null=True)  # Field name made lowercase.
+    trangthai = models.CharField(db_column='TrangThai', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'DatSan'
+        unique_together = (('datsanid', 'datsanid'),)
 
 
-class Registeruser(models.Model):
-    email = models.CharField(unique=True, max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')
-    username = models.CharField(unique=True, max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')
-    password = models.CharField(max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')
+class Hoadon(models.Model):
+    hoadonid = models.IntegerField(db_column='HoaDonID', primary_key=True)  # Field name made lowercase.
+    khachhangid = models.ForeignKey('Khachhang', models.DO_NOTHING, db_column='KhachHangID')  # Field name made lowercase.
+    total = models.DecimalField(db_column='Total', max_digits=10, decimal_places=2)  # Field name made lowercase.
+    phuongthucthanhtoan = models.CharField(db_column='PhuongThucThanhToan', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
+    thoigian = models.DateTimeField(db_column='ThoiGian', blank=True, null=True)  # Field name made lowercase.
+    trangthai = models.CharField(db_column='TrangThai', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
+    description = models.TextField(db_column='Description', db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'RegisterUser'
+        db_table = 'HoaDon'
+
+
+class Khachhang(models.Model):
+    khachhangid = models.IntegerField(db_column='KhachHangID', primary_key=True)  # Field name made lowercase.
+    email = models.CharField(db_column='Email', unique=True, max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
+    hoten = models.CharField(db_column='HoTen', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
+    sdt = models.IntegerField(db_column='SDT', blank=True, null=True)  # Field name made lowercase.
+    diachi = models.CharField(db_column='DiaChi', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'KhachHang'
+
+
+class Role(models.Model):
+    roleid = models.IntegerField(db_column='RoleID', primary_key=True)  # Field name made lowercase.
+    rolename = models.CharField(db_column='RoleName', unique=True, max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Role'
 
 
 class San(models.Model):
-    tensan = models.CharField(db_column='TenSan', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
-    diachi = models.CharField(db_column='DiaChi', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
-    soluongsan = models.IntegerField(db_column='SoLuongSan', blank=True, null=True)  # Field name made lowercase.
-    giathue = models.DecimalField(db_column='GiaThue', max_digits=10, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
-    imageurl =models.CharField(db_column='ImageUrl', max_length=255, blank=True, null=True)
+    sanid = models.IntegerField(db_column='SanID', primary_key=True)  # Field name made lowercase.
+    tensan = models.CharField(db_column='TenSan', unique=True, max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
+    giathue = models.FloatField(db_column='GiaThue')  # Field name made lowercase.
+    soluongsan = models.FloatField(db_column='SoLuongSan')  # Field name made lowercase.
+    diachi = models.CharField(db_column='DiaChi', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
+    description = models.TextField(db_column='Description', db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
+    imageurl = models.CharField(db_column='ImageUrl', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
+
     class Meta:
         managed = False
         db_table = 'San'
 
 
-class Users(models.Model):
-    username = models.CharField(unique=True, max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')
-    email = models.CharField(unique=True, max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)
-    hoten = models.CharField(db_column='HoTen', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
-    ngaysinh = models.DateField(db_column='NgaySinh', blank=True, null=True)  # Field name made lowercase.
-    phone = models.IntegerField(db_column='Phone', blank=True, null=True)  # Field name made lowercase.
+class Sanpham(models.Model):
+    sanphamid = models.IntegerField(db_column='SanPhamID', primary_key=True)  # Field name made lowercase.
+    tensp = models.CharField(db_column='TenSP', unique=True, max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
+    giatien = models.FloatField(db_column='GiaTien')  # Field name made lowercase.
+    soluong = models.FloatField(db_column='SoLuong')  # Field name made lowercase.
+    thoigiannhaphang = models.DateTimeField(db_column='ThoiGianNhapHang', blank=True, null=True)  # Field name made lowercase.
+    trangthai = models.CharField(db_column='TrangThai', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
+    description = models.TextField(db_column='Description', db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
+    imageurl = models.CharField(db_column='ImageUrl', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'Users'
+        db_table = 'SanPham'
+
+
+class Taikhoan(models.Model):
+    taikhoanid = models.OneToOneField(Khachhang, models.DO_NOTHING, db_column='TaiKhoanID', primary_key=True)  # Field name made lowercase.
+    username = models.CharField(db_column='UserName', unique=True, max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
+    password = models.CharField(db_column='PassWord', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
+    roleid = models.ForeignKey(Role, models.DO_NOTHING, db_column='RoleID', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'TaiKhoan'
 
 
 class AuthGroup(models.Model):
@@ -168,16 +222,14 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-class Products(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
-    categoryid = models.IntegerField(db_column='CategoryID')  # Field name made lowercase.
-    price = models.DecimalField(db_column='Price', max_digits=10, decimal_places=2)  # Field name made lowercase.
-    quantityinstock = models.IntegerField(db_column='QuantityInStock')  # Field name made lowercase.
-    description = models.TextField(db_column='Description', blank=True, null=True)  # Field name made lowercase.
-    createddate = models.DateTimeField(db_column='CreatedDate')  # Field name made lowercase.
-    isactive = models.BooleanField(default=True, db_column='isactive')  # Field name made lowercase.
-    imageurl = models.CharField(db_column='ImageUrl', max_length=255, blank=True, null=True)  # Field name made lowercase.
+class Sysdiagrams(models.Model):
+    name = models.CharField(max_length=128, db_collation='SQL_Latin1_General_CP1_CI_AS')
+    principal_id = models.IntegerField()
+    diagram_id = models.AutoField(primary_key=True)
+    version = models.IntegerField(blank=True, null=True)
+    definition = models.BinaryField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'products'
+        db_table = 'sysdiagrams'
+        unique_together = (('principal_id', 'name'),)

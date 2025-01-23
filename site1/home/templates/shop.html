@@ -177,19 +177,19 @@
         <div class="container my-5 content-wrapper">
             <h3 class="text-center mb-4"> Các sản phẩm của chúng tôi </h3>
             <div class="row g-4">
-                {% for product in products %}
+                {% for sanpham in Sanpham %}
                 <div class="col-xxl-2 col-md-3 col-sm-4 product-card">
                     <div class="card h-100 shadow-sm">
-                        <a href="{% url 'item_detail' product.id %}">
-                            <img src="{% static product.imageurl %}" class="card-img-top" alt="{{ product.name }}">
+                        <a href="{% url 'item_detail' sanpham.id %}">
+                            <img src="{% static sanpham.imageurl %}" class="card-img-top" alt="{{ sanpham.tensp }}">
                         </a>
                         <div class="card-body">
-                            <p class="product-name">{{ product.name }}</p>
+                            <p class="product-name">{{ sanpham.tensp }}</p>
                         </div>
                         <div class="price-container">
                             <h3 class="price">
-                                {% if product.price %}
-                                    {{ product.price|floatformat:0 }}₫
+                                {% if sanpham.giatien %}
+                                    {{ sanpham.giatien|floatformat:0 }}₫
                                 {% else %}
                                     Liên hệ
                                 {% endif %}
@@ -206,35 +206,35 @@
         <div class="pagination-container">
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    {% if products.has_previous %}
+                    {% if Sanpham.has_previous %}
                     <li class="page-item">
                         <a class="page-link" href="?page=1" aria-label="First">
                             <span aria-hidden="true">&laquo;&laquo;</span>
                         </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ products.previous_page_number }}" aria-label="Previous">
+                        <a class="page-link" href="?page={{ Sanpham.previous_page_number }}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     {% endif %}
 
-                    {% for page_num in products.paginator.page_range %}
-                        {% if page_num == products.number %}
+                    {% for page_num in Sanpham.paginator.page_range %}
+                        {% if page_num == Sanpham.number %}
                             <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
-                        {% elif page_num >= products.number|add:-2 and page_num <= products.number|add:2 %}
+                        {% elif page_num >= Sanpham.number|add:-2 and page_num <= Sanpham.number|add:2 %}
                             <li class="page-item"><a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a></li>
                         {% endif %}
                     {% endfor %}
 
-                    {% if products.has_next %}
+                    {% if Sanpham.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ products.next_page_number }}" aria-label="Next">
+                        <a class="page-link" href="?page={{ Sanpham.next_page_number }}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ products.paginator.num_pages }}" aria-label="Last">
+                        <a class="page-link" href="?page={{ Sanpham.paginator.num_pages }}" aria-label="Last">
                             <span aria-hidden="true">&raquo;&raquo;</span>
                         </a>
                     </li>
