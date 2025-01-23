@@ -6,47 +6,66 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.core.paginator import Paginator
 
+
 def shop(request):
+    # Lấy tất cả sản phẩm còn hàng
+    sanpham_list = Sanpham.objects.filter(trangthai='còn hàng')
+
+    # Xử lý tìm kiếm và lọc giá
     search_query = request.GET.get('search', '').strip()
     price_filter = request.GET.get('price', '')
 
-    DanhSachSP = Sanpham.objects.filter(trangthai='còn hàng')
-
     if search_query:
-        DanhSachSP = DanhSachSP.filter(tensp__icontains=search_query)
+        sanpham_list = sanpham_list.filter(tensp__icontains=search_query)
 
     if price_filter == 'low':
-        DanhSachSP = DanhSachSP.order_by('giatien')
+        sanpham_list = sanpham_list.order_by('giatien')
     elif price_filter == 'high':
-        DanhSachSP = DanhSachSP.order_by('-giatien')
+        sanpham_list = sanpham_list.order_by('-giatien')
 
-    paginator = Paginator(DanhSachSP, 24)
+    # Phân trang sản phẩm
+    paginator = Paginator(sanpham_list, 24)  # Mỗi trang 24 sản phẩm
     page_number = request.GET.get('page', 1)
     sanpham_page = paginator.get_page(page_number)
 
+    # Lấy giỏ hàng từ session
     cart = request.session.get('cart', {})
 
-    return render(request, 'shop.html', {'Sanpham': sanpham_page, 'cart': cart})
-
+    return render(request, 'shop.html', {'sanpham': sanpham_page, 'cart': cart})
 def item_detail(request, pk):
     sanpham = get_object_or_404(Sanpham, pk=pk)
-    return render(request, 'item_detail.html', {'Sanpham': sanpham})
+    return render(request, 'item_detail.html', {'sanpham': sanpham})
 
 def cart_detail(request):
     cart = request.session.get('cart', {})
     sanpham_list = []
-    total = 0
+    total_price = 0
+    total_items = 0
 
     for sanphamid, quantity in cart.items():
         product = get_object_or_404(Sanpham, pk=sanphamid)
+        subtotal = product.giatien * quantity
         sanpham_list.append({
             'product': product,
             'quantity': quantity,
-            'subtotal': product.giatien * quantity
+            'subtotal': subtotal,
+            'total_price': subtotal
         })
-        total += product.giatien * quantity
+        total_price += subtotal
+        total_items += quantity
 
-    return render(request, 'cart_detail.html', {'cart_items': sanpham_list, 'total': total})
+    # Tính phí giao hàng và tổng thanh toán
+    shipping_cost = 20000  # Ví dụ phí giao hàng cố định
+    total_payment = total_price + shipping_cost
+
+    return render(request, 'cart_detail.html', {
+        'cart_items': sanpham_list,
+        'total_price': total_price,
+        'total_items': total_items,
+        'shipping_cost': shipping_cost,
+        'total_payment': total_payment
+    })
+
 
 def add_to_cart(request):
     if request.method == 'POST':

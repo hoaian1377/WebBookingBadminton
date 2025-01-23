@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'site1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'DLBMT',
+        'NAME': 'DLSCLFL',
         'User':'',
         'Password':'',
-        'Host':'DESKTOP-AV5VHME', 
+        'Host':'DESKTOP-8LHJJ0H', 
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',  # Kiểm tra driver bạn đã cài đặt
             'trust_connection' : 'yes'
@@ -128,7 +128,17 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'app' / 'static',
+]
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'app' / 'static']  # Đảm bảo thư mục này đúng

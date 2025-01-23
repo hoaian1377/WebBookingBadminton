@@ -15,13 +15,12 @@ urlpatterns = [
     path('court_history/', views.court_history, name='court_history'),
     path('badminton_court_booking/court_booking1/', views.court_booking1, name='court_booking1'),
     path('login/register/', views.register, name='register'),
-    path('login/forgot_password/', views.forgot_password, name='forgot_password'),  # Thêm dấu "/" ở cuối để nhất quán
+    path('login/forgot_password/', views.forgot_password, name='forgot_password'),
     path('support/', views.support, name='support'),
     path('shop/', views.shop, name='shop'),
     path('shop/item_detail/<int:pk>/', views.item_detail, name='item_detail'),
     path('shop/cart_detail/', views.cart_detail, name='cart_detail'),
-    path('shop/add_to_cart/', views.add_to_cart, name='add_to_cart'),  # Thêm đường dẫn này
-    
+    path('shop/add_to_cart/', views.add_to_cart, name='add_to_cart'),
 ]
 
 # Static files in development mode
