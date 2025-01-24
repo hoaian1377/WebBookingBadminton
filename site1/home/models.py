@@ -233,3 +233,11 @@ class Sysdiagrams(models.Model):
         managed = False
         db_table = 'sysdiagrams'
         unique_together = (('principal_id', 'name'),)
+class CartItem(models.Model):
+    product = models.ForeignKey('Sanpham', on_delete=models.CASCADE)  # Liên kết đến sản phẩm
+    quantity = models.IntegerField(default=1)  # Số lượng sản phẩm
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2)  # Tổng tiền cho mặt hàng này
+
+    class Meta:
+        db_table = 'cart_item'  # Tên bảng trong cơ sở dữ liệu
+        

@@ -1,17 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from .models import Sanpham, San, Taikhoan
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.core.paginator import Paginator
-
+from django.shortcuts import redirect
+from .models import CartItem
 
 def shop(request):
-    # Lấy tất cả sản phẩm còn hàng
     sanpham_list = Sanpham.objects.filter(trangthai='còn hàng')
-
-    # Xử lý tìm kiếm và lọc giá
     search_query = request.GET.get('search', '').strip()
     price_filter = request.GET.get('price', '')
 
@@ -23,15 +21,13 @@ def shop(request):
     elif price_filter == 'high':
         sanpham_list = sanpham_list.order_by('-giatien')
 
-    # Phân trang sản phẩm
-    paginator = Paginator(sanpham_list, 24)  # Mỗi trang 24 sản phẩm
+    paginator = Paginator(sanpham_list, 24)
     page_number = request.GET.get('page', 1)
     sanpham_page = paginator.get_page(page_number)
 
-    # Lấy giỏ hàng từ session
     cart = request.session.get('cart', {})
-
     return render(request, 'shop.html', {'sanpham': sanpham_page, 'cart': cart})
+
 def item_detail(request, pk):
     sanpham = get_object_or_404(Sanpham, pk=pk)
     return render(request, 'item_detail.html', {'sanpham': sanpham})
@@ -43,19 +39,17 @@ def cart_detail(request):
     total_items = 0
 
     for sanphamid, quantity in cart.items():
-        product = get_object_or_404(Sanpham, pk=sanphamid)
-        subtotal = product.giatien * quantity
-        sanpham_list.append({
-            'product': product,
-            'quantity': quantity,
-            'subtotal': subtotal,
-            'total_price': subtotal
-        })
-        total_price += subtotal
-        total_items += quantity
+        try:
+            sanphamid = int(sanphamid)
+            product = get_object_or_404(Sanpham, pk=sanphamid)
+            subtotal = product.giatien * quantity
+            sanpham_list.append({'product': product, 'quantity': quantity, 'subtotal': subtotal})
+            total_price += subtotal
+            total_items += quantity
+        except (ValueError, TypeError):
+            continue
 
-    # Tính phí giao hàng và tổng thanh toán
-    shipping_cost = 20000  # Ví dụ phí giao hàng cố định
+    shipping_cost = 20000
     total_payment = total_price + shipping_cost
 
     return render(request, 'cart_detail.html', {
@@ -66,22 +60,28 @@ def cart_detail(request):
         'total_payment': total_payment
     })
 
-
 def add_to_cart(request):
     if request.method == 'POST':
-        sanphamid = request.POST.get('sanphamid')
-        quantity = int(request.POST.get('quantity', 1))
+        sanphamid = request.POST.get('sanpham_id')
+        try:
+            sanphamid = int(sanphamid)
+            quantity = int(request.POST.get('quantity', 1))
+            if quantity < 1:
+                messages.error(request, 'Số lượng phải lớn hơn 0.')
+                return redirect('shop')
 
-        cart = request.session.get('cart', {})
+            cart = request.session.get('cart', {})
+            if sanphamid in cart:
+                cart[sanphamid] += quantity
+            else:
+                cart[sanphamid] = quantity
 
-        if sanphamid in cart:
-            cart[sanphamid] += quantity
-        else:
-            cart[sanphamid] = quantity
-
-        request.session['cart'] = cart
-
-        return redirect('cart_detail')
+            request.session['cart'] = cart
+            messages.success(request, 'Sản phẩm đã được thêm vào giỏ hàng.')
+            return redirect('cart_detail')
+        except (ValueError, TypeError):
+            messages.error(request, 'Dữ liệu không hợp lệ hoặc sản phẩm không tồn tại.')
+            return redirect('shop')
 
     return redirect('shop')
 
@@ -162,11 +162,108 @@ def forgot_password(request):
 
 def support(request):
     return HttpResponseRedirect("https://docs.google.com/forms/d/e/1FAIpQLSdsZGwFck63-cPDZcW8gZyyMAhf2UyYaOINuByEgwbMvtTm3A/viewform")
+
 def profile1(request):
-    return render (request,'profile1.html')
+    return render(request, 'profile1.html')
+
 def profile(request):
     return render(request, 'profile.html')
+
 def court_history(request):
     return render(request, 'court_history.html')
+
 def court_booking1(request):
     return render(request, 'court_booking1.html')
+
+def update_cart(request, product_id):
+    if request.method == 'POST':
+        quantity = int(request.POST.get('quantity', 1))
+        cart = request.session.get('cart', {})
+        if product_id in cart:
+            if quantity > 0:
+                cart[product_id] = quantity
+            else:
+                del cart[product_id]
+        request.session['cart'] = cart
+        messages.success(request, 'Giỏ hàng đã được cập nhật.')
+    return redirect('cart_detail')
+
+def remove_from_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    if product_id in cart:
+        del cart[product_id]
+        messages.success(request, 'Sản phẩm đã được xóa khỏi giỏ hàng.')
+    request.session['cart'] = cart
+    return redirect('cart_detail')
+
+def checkout(request):
+    # Logic xử lý thanh toán
+    return render(request, 'checkout.html')
+def remove_from_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    if str(product_id) in cart:
+        del cart[str(product_id)]  # Xóa sản phẩm khỏi giỏ hàng
+        messages.success(request, 'Sản phẩm đã được xóa khỏi giỏ hàng.')
+    request.session['cart'] = cart
+    return redirect('cart_detail')  # Điều hướng lại đến trang giỏ hàng
+from django.shortcuts import redirect
+from .models import CartItem
+
+def update_cart(request, product_id):
+    if request.method == "POST":
+        action = request.POST.get('action')
+        quantity = request.POST.get('quantity')
+
+        # Logic để cập nhật giỏ hàng
+        cart_item = CartItem.objects.get(product_id=product_id)
+        if action == "increase":
+            cart_item.quantity += 1
+        elif action == "decrease" and cart_item.quantity > 1:
+            cart_item.quantity -= 1
+        cart_item.save()
+
+    return redirect('cart_detail')  # Hoặc đường dẫn phù hợp đến trang giỏ hàng
+# home/views.py
+from django.shortcuts import redirect
+from .models import CartItem
+
+def update_cart(request, product_id):
+    if request.method == "POST":
+        action = request.POST.get('action')
+        quantity = request.POST.get('quantity')
+
+        # Tìm cart item bằng product_id
+        cart_item = CartItem.objects.get(product__sanphamid=product_id)
+
+        if action == "increase":
+            cart_item.quantity += 1
+        elif action == "decrease" and cart_item.quantity > 1:
+            cart_item.quantity -= 1
+        cart_item.save()
+
+    return redirect('cart_detail')  # Hoặc đường dẫn phù hợp đến trang giỏ hàng
+from django.shortcuts import render
+
+def checkout(request):
+    # Logic xử lý thanh toán
+    return render(request, 'checkout.html')
+def remove_from_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    if str(product_id) in cart:
+        del cart[str(product_id)]  # Xóa sản phẩm khỏi giỏ hàng
+        messages.success(request, 'Sản phẩm đã được xóa khỏi giỏ hàng.')
+    request.session['cart'] = cart
+    return redirect('cart_detail')  # Điều hướng lại đến trang giỏ hàng
+def update_cart(request, product_id):
+    if request.method == "POST":
+        action = request.POST.get('action')
+        quantity = request.POST.get('quantity')
+
+        # Logic để cập nhật giỏ hàng
+        cart_item = CartItem.objects.get(product_id=product_id)
+        if action == "increase":
+            cart_item.quantity += 1
+        elif action == "decrease" and cart_item.quantity > 1:
+            cart_item.quantity -= 1
+        cart_item.save()
+        

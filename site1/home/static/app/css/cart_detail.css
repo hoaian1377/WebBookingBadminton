@@ -7,170 +7,171 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    line-height: 1.6;
-    padding: 20px;
+    background-color: #f4f4f4; /* Màu nền nhẹ cho toàn bộ trang */
+    color: #333; /* Màu chữ chính */
+    line-height: 1.6; /* Khoảng cách giữa các dòng */
+    padding: 20px; /* Padding cho body */
 }
 
 /* Container chính */
 .container {
-    max-width: 900px;
-    margin: auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 900px; /* Chiều rộng tối đa của container */
+    margin: auto; /* Căn giữa */
+    background-color: #fff; /* Màu nền trắng cho container */
+    padding: 20px; /* Padding cho container */
+    border-radius: 10px; /* Bo tròn các góc */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho container */
 }
 
 /* Tiêu đề chính */
 h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+    text-align: center; /* Căn giữa tiêu đề */
+    margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+    color: #333; /* Màu chữ cho tiêu đề */
 }
 
 /* Mục trong giỏ hàng */
 .cart-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
+    display: flex; /* Sử dụng flexbox cho các mục giỏ hàng */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: space-between; /* Căn đều giữa các mục */
+    border-bottom: 1px solid #ddd; /* Đường viền dưới */
+    padding: 15px 0; /* Padding cho các mục */
 }
 
 .cart-item:last-child {
-    border-bottom: none;
+    border-bottom: none; /* Không có đường viền dưới cho mục cuối cùng */
 }
 
 .cart-item img {
-    width: 100px;
-    height: auto;
-    margin-right: 20px;
-    border-radius: 5px;
+    width: 100px; /* Chiều rộng cho hình ảnh sản phẩm */
+    height: auto; /* Chiều cao tự động */
+    margin-right: 20px; /* Khoảng cách bên phải */
+    border-radius: 5px; /* Bo tròn các góc hình ảnh */
 }
 
 .item-details {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-grow: 1; /* Cho phép phần chi tiết mở rộng */
+    display: flex; /* Sử dụng flexbox */
+    flex-direction: column; /* Đặt theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều dọc */
 }
 
 .item-details h3 {
-    margin-bottom: 5px;
-    font-size: 1.1em;
-    color: #555;
+    margin-bottom: 5px; /* Khoảng cách dưới tiêu đề sản phẩm */
+    font-size: 1.1em; /* Kích thước chữ cho tên sản phẩm */
+    color: #555; /* Màu chữ cho tên sản phẩm */
 }
 
 .item-details p {
-    font-size: 0.9em;
-    color: #777;
+    font-size: 0.9em; /* Kích thước chữ cho mô tả sản phẩm */
+    color: #777; /* Màu chữ cho mô tả sản phẩm */
 }
 
+/* Giá sản phẩm */
 .item-price {
-    font-weight: bold;
-    font-size: 1.1em;
-    color: #28a745;
-    text-align: right;
+    font-weight: bold; /* Đậm chữ */
+    font-size: 1.1em; /* Kích thước chữ cho giá sản phẩm */
+    color: #28a745; /* Màu xanh cho giá */
+    text-align: right; /* Căn phải cho giá */
 }
 
 /* Tổng thanh toán */
 .total {
-    text-align: right;
-    margin-top: 20px;
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #333;
+    text-align: right; /* Căn phải cho tổng thanh toán */
+    margin-top: 20px; /* Khoảng cách trên */
+    font-size: 1.2em; /* Kích thước chữ cho tổng thanh toán */
+    font-weight: bold; /* Đậm chữ */
+    color: #333; /* Màu chữ cho tổng thanh toán */
 }
 
 /* Các nút thao tác */
 .button {
-    display: inline-block;
-    width: 100%;
-    background-color: #28a745;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 20px;
+    display: inline-block; /* Hiển thị như một khối nội tuyến */
+    width: 100%; /* Chiều rộng 100% */
+    background-color: #28a745; /* Màu xanh cho nút */
+    color: #fff; /* Màu chữ trắng */
+    text-align: center; /* Căn giữa chữ */
+    padding: 10px; /* Padding cho nút */
+    border-radius: 5px; /* Bo tròn các góc */
+    cursor: pointer; /* Hiển thị con trỏ tay */
+    text-decoration: none; /* Không có gạch chân */
+    font-weight: bold; /* Đậm chữ */
+    margin-top: 20px; /* Khoảng cách trên */
 }
 
 .button:hover {
-    background-color: #218838;
+    background-color: #218838; /* Màu xanh đậm khi hover */
 }
 
 /* Voucher và giảm giá */
 .discount-section {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-    border-radius: 5px;
+    margin-top: 20px; /* Khoảng cách trên */
+    padding: 15px; /* Padding cho phần giảm giá */
+    border: 1px solid #ddd; /* Đường viền */
+    background-color: #f9f9f9; /* Màu nền cho phần giảm giá */
+    border-radius: 5px; /* Bo tròn các góc */
 }
 
 .discount-section h3 {
-    font-size: 1em;
-    margin-bottom: 10px;
+    font-size: 1em; /* Kích thước chữ cho tiêu đề giảm giá */
+    margin-bottom: 10px; /* Khoảng cách dưới tiêu đề */
 }
 
 .discount-section input[type="text"] {
-    width: calc(100% - 90px);
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: calc(100% - 90px); /* Chiều rộng cho ô nhập */
+    padding: 5px; /* Padding cho ô nhập */
+    border: 1px solid #ccc; /* Đường viền cho ô nhập */
+    border-radius: 5px; /* Bo tròn các góc */
 }
 
 .discount-section button {
-    width: 80px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 6px 0;
-    border-radius: 5px;
-    cursor: pointer;
+    width: 80px; /* Chiều rộng cho nút giảm giá */
+    background-color: #007bff; /* Màu xanh cho nút giảm giá */
+    color: #fff; /* Màu chữ trắng */
+    border: none; /* Không có đường viền */
+    padding: 6px 0; /* Padding cho nút */
+    border-radius: 5px; /* Bo tròn các góc */
+    cursor: pointer; /* Hiển thị con trỏ tay */
 }
 
 .discount-section button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Màu xanh đậm khi hover */
 }
 
 /* Phần giỏ hàng trống */
 .empty-cart {
-    text-align: center;
-    padding: 40px 0;
-    color: #777;
+    text-align: center; /* Căn giữa cho phần giỏ hàng trống */
+    padding: 40px 0; /* Padding cho phần giỏ hàng trống */
+    color: #777; /* Màu chữ cho phần giỏ hàng trống */
 }
 
 .empty-cart img {
-    width: 120px;
-    margin-bottom: 20px;
+    width: 120px; /* Chiều rộng cho hình ảnh giỏ hàng trống */
+    margin-bottom: 20px; /* Khoảng cách dưới hình ảnh */
 }
 
 .empty-cart p {
-    font-size: 1em;
+    font-size: 1em; /* Kích thước chữ cho mô tả giỏ hàng trống */
 }
 
 /* Responsive */
 @media (max-width: 600px) {
     .cart-item {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: column; /* Đặt theo chiều dọc cho màn hình nhỏ */
+        align-items: flex-start; /* Căn trái cho các mục */
     }
 
     .cart-item img {
-        margin-bottom: 10px;
+        margin-bottom: 10px; /* Khoảng cách dưới hình ảnh */
     }
 
     .item-price {
-        text-align: left;
-        margin-top: 10px;
+        text-align: left; /* Căn trái cho giá sản phẩm */
+        margin-top: 10px; /* Khoảng cách trên */
     }
 
     .button {
-        font-size: 1em;
+        font-size: 1em; /* Kích thước chữ cho nút */
     }
 }

@@ -7,7 +7,195 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ Hàng</title>
-    <link href="{% static 'app/css/cart_detail.css' %}" rel="stylesheet">
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Màu nền nhẹ cho toàn bộ trang */
+            color: #333; /* Màu chữ chính */
+            line-height: 1.6; /* Khoảng cách giữa các dòng */
+            padding: 20px; /* Padding cho body */
+        }
+
+        /* Container chính */
+        .container {
+            max-width: 900px; /* Chiều rộng tối đa của container */
+            margin: auto; /* Căn giữa */
+            background-color: #fff; /* Màu nền trắng cho container */
+            padding: 20px; /* Padding cho container */
+            border-radius: 10px; /* Bo tròn các góc */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho container */
+        }
+
+        /* Tiêu đề chính */
+        h1 {
+            text-align: center; /* Căn giữa tiêu đề */
+            margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+            color: #333; /* Màu chữ cho tiêu đề */
+        }
+
+        /* Mục trong giỏ hàng */
+        .cart-item {
+            display: flex; /* Sử dụng flexbox cho các mục giỏ hàng */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            justify-content: space-between; /* Căn đều giữa các mục */
+            border-bottom: 1px solid #ddd; /* Đường viền dưới */
+            padding: 15px 0; /* Padding cho các mục */
+        }
+
+        .cart-item:last-child {
+            border-bottom: none; /* Không có đường viền dưới cho mục cuối cùng */
+        }
+
+        .cart-item img {
+            width: 100px; /* Chiều rộng cho hình ảnh sản phẩm */
+            height: auto; /* Chiều cao tự động */
+            margin-right: 20px; /* Khoảng cách bên phải */
+            border-radius: 5px; /* Bo tròn các góc hình ảnh */
+        }
+
+        .item-details {
+            flex-grow: 1; /* Cho phép phần chi tiết mở rộng */
+            display: flex; /* Sử dụng flexbox */
+            flex-direction: column; /* Đặt theo chiều dọc */
+            justify-content: center; /* Căn giữa theo chiều dọc */
+        }
+
+        .item-details h2 {
+            margin-bottom: 5px; /* Khoảng cách dưới tiêu đề sản phẩm */
+            font-size: 1.1em; /* Kích thước chữ cho tên sản phẩm */
+            color: #555; /* Màu chữ cho tên sản phẩm */
+        }
+
+        .item-details p {
+            font-size: 0.9em; /* Kích thước chữ cho mô tả sản phẩm */
+            color: #777; /* Màu chữ cho mô tả sản phẩm */
+        }
+
+        /* Giá sản phẩm */
+        .item-price {
+            font-weight: bold; /* Đậm chữ */
+            font-size: 1.1em; /* Kích thước chữ cho giá sản phẩm */
+            color: #28a745; /* Màu xanh cho giá */
+            text-align: right; /* Căn phải cho giá */
+        }
+
+        /* Nút tăng giảm sản phẩm */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-controls button {
+            background-color: #007bff; /* Màu xanh cho nút tăng/giảm */
+            color: #fff; /* Màu chữ trắng */
+            border: none; /* Không có viền */
+            padding: 5px 10px; /* Padding cho nút */
+            border-radius: 5px; /* Bo tròn góc nút */
+            cursor: pointer; /* Thay đổi con trỏ khi hover */
+            margin: 0 5px; /* Khoảng cách giữa các nút */
+        }
+
+        .quantity-controls input {
+            width: 40px; /* Chiều rộng ô nhập số lượng */
+            text-align: center; /* Căn giữa chữ trong ô nhập */
+            border: 1px solid #ccc; /* Đường viền cho ô nhập */
+            border-radius: 5px; /* Bo tròn góc ô nhập */
+        }
+
+        /* Tổng thanh toán */
+        .total {
+            border: 1px solid #ddd; /* Đường viền cho tổng thanh toán */
+            border-radius: 5px; /* Bo tròn góc */
+            padding: 15px; /* Padding cho tổng thanh toán */
+            margin-top: 20px; /* Khoảng cách trên */
+            background-color: #f9f9f9; /* Màu nền cho tổng thanh toán */
+            text-align: center; /* Căn giữa cho tổng thanh toán */
+        }
+
+        .total p {
+            margin: 5px 0; /* Khoảng cách giữa các dòng */
+            font-size: 1em; /* Kích thước chữ cho tổng thanh toán */
+        }
+
+        /* Các nút thao tác */
+        .btn {
+            display: inline-block; /* Hiển thị như một khối nội tuyến */
+            background-color: #28a745; /* Màu xanh cho nút */
+            color: #fff; /* Màu chữ trắng */
+            text-align: center; /* Căn giữa chữ */
+            padding: 10px; /* Padding cho nút */
+            border-radius: 5px; /* Bo tròn các góc */
+            cursor: pointer; /* Hiển thị con trỏ tay */
+            text-decoration: none; /* Không có gạch chân */
+            font-weight: bold; /* Đậm chữ */
+            margin-top: 20px; /* Khoảng cách trên */
+        }
+
+        .btn-danger {
+            background-color: #e74c3c; /* Màu đỏ cho nút xóa */
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b; /* Màu đỏ đậm khi hover */
+        }
+
+        .btn-success:hover {
+            background-color: #218838; /* Màu xanh đậm khi hover */
+        }
+
+        .btn-secondary {
+            background-color: #3498db; /* Màu xanh cho nút tiếp tục mua sắm */
+        }
+
+        .btn-secondary:hover {
+            background-color: #2980b9; /* Màu xanh đậm khi hover */
+        }
+
+        /* Phần giỏ hàng trống */
+        .empty-cart {
+            text-align: center; /* Căn giữa cho phần giỏ hàng trống */
+            padding: 40px 0; /* Padding cho phần giỏ hàng trống */
+            color: #777; /* Màu chữ cho phần giỏ hàng trống */
+        }
+
+        .empty-cart img {
+            width: 300px; /* Chiều rộng cho hình ảnh giỏ hàng trống */
+            display: block; /* Hiển thị như một khối */
+            margin: 0 auto; /* Căn giữa hình ảnh */
+        }
+
+        .empty-cart p {
+            font-size: 1em; /* Kích thước chữ cho mô tả giỏ hàng trống */
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .cart-item {
+                flex-direction: column; /* Đặt theo chiều dọc cho màn hình nhỏ */
+                align-items: flex-start; /* Căn trái cho các mục */
+            }
+
+            .cart-item img {
+                margin-bottom: 10px; /* Khoảng cách dưới hình ảnh */
+            }
+
+            .item-price {
+                text-align: left; /* Căn trái cho giá sản phẩm */
+                margin-top: 10px; /* Khoảng cách trên */
+            }
+
+            .btn {
+                font-size: 1em; /* Kích thước chữ cho nút */
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -17,17 +205,26 @@
             <div id="cartItems">
                 {% for item in cart_items %}
                     <div class="cart-item">
-                        <img src="{{ item.product.image.url }}" alt="{{ item.product.tensp }}">
+                        <img src="{% static item.product.imageurl %}" class="card-img-top" alt="{{ item.product.tensp }}">
                         <div class="item-details">
                             <h2>{{ item.product.tensp }}</h2>
-                            <p>{{ item.product.mota }}</p>
-                            <p>Số lượng: {{ item.quantity }}</p>
+                            <div class="quantity-controls">
+                                <form method="POST" action="{% url 'update_cart' item.product.sanphamid %}">
+                                    {% csrf_token %}
+                                    <button type="submit" name="action" value="decrease">-</button>
+                                    <input type="text" name="quantity" value="{{ item.quantity }}" readonly>
+                                    <button type="submit" name="action" value="increase">+</button>
+                                </form>
+                            </div>
                             <p>Giá mỗi sản phẩm: {{ item.product.giatien|floatformat:0 }} VNĐ</p>
                         </div>
                         <div class="item-price">
-                            Tổng: {{ item.product.giatien|floatformat:0 }} x {{ item.quantity }} = 
-                            {{ item.total_price|floatformat:0 }} VNĐ
+                            {{ item.subtotal|floatformat:0 }} VNĐ
                         </div>
+                        <form method="POST" action="{% url 'remove_from_cart' item.product.sanphamid %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                        </form>
                     </div>
                 {% endfor %}
             </div>
@@ -41,13 +238,16 @@
                     <span>{{ total_payment|floatformat:0 }} VNĐ</span></strong></p>
             </div>
 
-            <button class="button">Thanh toán ngay</button>
+            <div class="text-center">
+                <a href="{% url 'checkout' %}" class="btn btn-success">Thanh toán ngay</a>
+                <a href="{% url 'shop' %}" class="btn btn-secondary">Tiếp tục mua sắm</a>
+            </div>
 
         {% else %}
             <!-- Hiển thị khi giỏ hàng trống -->
-            <div class="empty-cart">
+            <div class="empty-cart text-center">
                 <a href="/shop">
-                    <img src="https://maydongphucyte.com/default/template/img/cart-empty.png" alt="Giỏ hàng trống" style="width: 300px; display: block; margin: 0 auto;">
+                    <img src="https://maydongphucyte.com/default/template/img/cart-empty.png" alt="Giỏ hàng trống">
                 </a>
                 <p>Giỏ hàng của bạn còn trống. Nhấn vào ảnh để đi đến cửa hàng.</p>
             </div>

@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
+from .views import update_cart
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -21,7 +22,15 @@ urlpatterns = [
     path('shop/item_detail/<int:pk>/', views.item_detail, name='item_detail'),
     path('shop/cart_detail/', views.cart_detail, name='cart_detail'),
     path('shop/add_to_cart/', views.add_to_cart, name='add_to_cart'),
+    path('shop/remove_from_cart/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),  # Thêm đường dẫn xóa sản phẩm
+    path('shop/checkout/', views.checkout, name='checkout'),  # Thêm đường dẫn thanh toán
+    path('shop/remove_from_cart/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
+    path('shop/checkout/', views.checkout, name='checkout'),  # Đường dẫn thanh toán
+    path('shop/remove_from_cart/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
+    path('update_cart/<int:product_id>/', update_cart, name='update_cart'),
+    
 ]
+
 
 # Static files in development mode
 if settings.DEBUG:
