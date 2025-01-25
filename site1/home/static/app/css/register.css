@@ -118,3 +118,24 @@ body {
   background: #333;
   color: #fff;
 }
+.messages ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.messages li {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.messages .error {
+  background-color: #ffdddd;
+  color: #d8000c;
+}
+
+.messages .success {
+  background-color: #ddffdd;
+  color: #4f8a10;
+}

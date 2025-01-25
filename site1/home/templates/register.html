@@ -1,15 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Đăng Ký</title>
-    <meta name="description" content="" />
+    <meta name="description" content="Form Đăng Ký" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="{% static 'app/css/login.css' %}" rel="stylesheet" />
     <link
@@ -21,24 +17,67 @@
 
   <body>
     <div class="wrapper">
-      <!-- Thêm method="POST" để gửi dữ liệu và action trỏ đến view xử lý -->
+      <!-- Hiển thị thông báo -->
+      <div class="messages">
+        {% if messages %}
+          <ul>
+            {% for message in messages %}
+              <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
       <form method="POST" action="{% url 'register' %}">
         {% csrf_token %}
+        
+        <!-- Tên đăng nhập -->
         <div class="input-box">
-          <input type="text" name="username" placeholder="Tên đăng nhập" required />
+          <input
+            type="text"
+            name="username"
+            placeholder="Tên đăng nhập"
+            required
+          />
           <i class="bx bxs-user"></i>
         </div>
+
+        <!-- Email -->
         <div class="input-box">
-          <input type="password" name="password" placeholder="Mật khẩu" required />
-          <i class="bx bxs-lock-alt"></i>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <i class="bx bxs-envelope"></i>
         </div>
-        <div class="input-box">
-          <input type="password" name="confirm_password" placeholder="Nhập lại mật khẩu" required />
-          <i class="bx bxs-lock-alt"></i>
-        </div>
-        <button type="submit" class="btn">Đăng Ký</button>
         
-      
-     
+        <!-- Mật khẩu -->
+        <div class="input-box">
+          <input
+            type="password"
+            name="password"
+            placeholder="Mật khẩu"
+            required
+          />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+
+        <!-- Nhập lại mật khẩu -->
+        <div class="input-box">
+          <input
+            type="password"
+            name="confirm_password"
+            placeholder="Nhập lại mật khẩu"
+            required
+          />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+
+        <!-- Nút đăng ký -->
+        <button type="submit" class="btn">Đăng Ký</button>
+      </form>
+    </div>
   </body>
 </html>

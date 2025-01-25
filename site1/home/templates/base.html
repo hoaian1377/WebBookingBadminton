@@ -31,7 +31,7 @@
         </ul>
         <!-- Authentication Buttons -->
         <div class="auth-buttons">
-          {% if request.session.user_id %}
+          {% if request.session.taikhoanid %}
           <div class="auth-logged-in">
             <span class="welcome-message">Chào, {{ request.session.username }}!</span>
             <form method="post" action="{% url 'logout' %}">

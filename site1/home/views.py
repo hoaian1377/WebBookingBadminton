@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
-from .models import Sanpham, San, Taikhoan
+from .models import Sanpham, San, Taikhoan,Khachhang
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db import models
 from django.shortcuts import redirect
 from .models import CartItem
+import random
 
 def shop(request):
     sanpham_list = Sanpham.objects.filter(trangthai='còn hàng')
@@ -84,41 +86,80 @@ def add_to_cart(request):
             return redirect('shop')
 
     return redirect('shop')
+def generate_unique_id():
+    # Lấy ID lớn nhất hiện có trong bảng KhachHang
+    last_id = Khachhang.objects.aggregate(max_id=models.Max('khachhangid'))['max_id']
+    if last_id is None:
+        return 1  # Nếu bảng trống, bắt đầu từ 1
+    return last_id + 1  # ID tiếp theo
+
 
 def register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
+        email = request.POST.get('email')  # Lấy email từ form
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
+        # Kiểm tra mật khẩu
         if password != confirm_password:
             messages.error(request, 'Mật khẩu không khớp.')
             return render(request, 'register.html')
 
+        # Kiểm tra tên đăng nhập đã tồn tại
         if Taikhoan.objects.filter(username=username).exists():
             messages.error(request, 'Tên đăng nhập đã tồn tại.')
             return render(request, 'register.html')
 
+        # Kiểm tra email đã tồn tại
+        if Khachhang.objects.filter(email=email).exists():
+            messages.error(request, 'Email đã được sử dụng.')
+            return render(request, 'register.html')
+
+        # Tạo khách hàng mới
+        khachhang = Khachhang.objects.create(
+            khachhangid=generate_unique_id(),  # Hàm tự tạo ID duy nhất
+            email=email  # Gán email từ form
+        )
+
+        # Tạo tài khoản mới liên kết với khách hàng
         hashed_password = make_password(password)
-        Taikhoan.objects.create(username=username, password=hashed_password)
+        Taikhoan.objects.create(
+            taikhoanid=khachhang,  # Sử dụng đối tượng Khachhang
+            username=username,
+            password=hashed_password
+        )
+
         messages.success(request, 'Đăng ký thành công!')
         return redirect('login')
 
     return render(request, 'register.html')
 
+
 def login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        # Đảm bảo giá trị không phải None, thay bằng chuỗi rỗng nếu thiếu
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '').strip()
+
+        # Kiểm tra nếu trường bị bỏ trống
+        if not username or not password:
+            messages.error(request, 'Vui lòng nhập đầy đủ thông tin.')
+            return render(request, 'login.html')
 
         try:
+            # Tìm người dùng theo tên đăng nhập
             user = Taikhoan.objects.get(username=username)
+
+            # Kiểm tra mật khẩu
             if check_password(password, user.password):
-                request.session['user_id'] = user.id
+                # Lưu thông tin vào session
+                request.session['taikhoanid'] = user.taikhoanid_id  # Lấy ID nếu là khóa ngoại
                 request.session['username'] = user.username
                 return redirect('home')
             else:
                 messages.error(request, 'Sai mật khẩu.')
+
         except Taikhoan.DoesNotExist:
             messages.error(request, 'Tên đăng nhập không tồn tại.')
 
@@ -223,47 +264,3 @@ def update_cart(request, product_id):
         cart_item.save()
 
     return redirect('cart_detail')  # Hoặc đường dẫn phù hợp đến trang giỏ hàng
-# home/views.py
-from django.shortcuts import redirect
-from .models import CartItem
-
-def update_cart(request, product_id):
-    if request.method == "POST":
-        action = request.POST.get('action')
-        quantity = request.POST.get('quantity')
-
-        # Tìm cart item bằng product_id
-        cart_item = CartItem.objects.get(product__sanphamid=product_id)
-
-        if action == "increase":
-            cart_item.quantity += 1
-        elif action == "decrease" and cart_item.quantity > 1:
-            cart_item.quantity -= 1
-        cart_item.save()
-
-    return redirect('cart_detail')  # Hoặc đường dẫn phù hợp đến trang giỏ hàng
-from django.shortcuts import render
-
-def checkout(request):
-    # Logic xử lý thanh toán
-    return render(request, 'checkout.html')
-def remove_from_cart(request, product_id):
-    cart = request.session.get('cart', {})
-    if str(product_id) in cart:
-        del cart[str(product_id)]  # Xóa sản phẩm khỏi giỏ hàng
-        messages.success(request, 'Sản phẩm đã được xóa khỏi giỏ hàng.')
-    request.session['cart'] = cart
-    return redirect('cart_detail')  # Điều hướng lại đến trang giỏ hàng
-def update_cart(request, product_id):
-    if request.method == "POST":
-        action = request.POST.get('action')
-        quantity = request.POST.get('quantity')
-
-        # Logic để cập nhật giỏ hàng
-        cart_item = CartItem.objects.get(product_id=product_id)
-        if action == "increase":
-            cart_item.quantity += 1
-        elif action == "decrease" and cart_item.quantity > 1:
-            cart_item.quantity -= 1
-        cart_item.save()
-        

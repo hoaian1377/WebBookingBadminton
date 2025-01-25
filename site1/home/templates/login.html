@@ -12,49 +12,52 @@
 
   <body>
     <div class="wrapper">
-      <form method="POST" action="{% url 'login' %}">
-        {% csrf_token %}
-        <h1>ĐĂNG NHẬP</h1>
-      
+      <!-- Form đăng nhập -->
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <h1>ĐĂNG NHẬP</h1>
 
-        <!-- Tên đăng nhập -->
-        <div class="input-box">
-          <input type="text" name="Username" placeholder="Tên đăng nhập" required />
-          <i class="bx bxs-user"></i>
-        </div>
+      <!-- Tên đăng nhập -->
+      <div class="input-box">
+        <input type="text" name="username" placeholder="Tên đăng nhập" required />
+        <i class="bx bxs-user"></i>
+      </div>
 
-        <!-- Mật khẩu -->
-        <div class="input-box">
-          <input type="password" name="Password" placeholder="Mật khẩu" required />
-          <i class="bx bxs-lock-alt"></i>
-        </div>
-        <!-- Hiển thị thông báo lỗi -->
-        {% if messages %}
-        <div class="messages">
-          {% for message in messages %}
-            <p class="{{ message.tags }}">{{ message }}</p>
-          {% endfor %}
-        </div>
-        {% endif %}
-        
-        <!-- Nhớ mật khẩu và quên mật khẩu -->
-        <div class="remember-forgot">
-          <label>
-            <input type="checkbox" name="remember_me" /> Nhớ mật khẩu
-          </label>
-          <a href="{% url 'forgot_password' %}">Quên mật khẩu?</a>
-        </div>
-        <!-- Nút đăng nhập -->
-        <button type="submit" class="btn">Đăng nhập</button>
+      <!-- Mật khẩu -->
+      <div class="input-box">
+        <input type="password" name="password" placeholder="Mật khẩu" required />
+        <i class="bx bxs-lock-alt"></i>
+      </div>
 
-        <!-- Link đăng ký -->
-        <div class="register-link">
-          <p>
-            Bạn chưa có tài khoản?
-            <a href="{% url 'register' %}">Đăng ký</a>
-          </p>
-        </div>
-      </form>
+      <!-- Hiển thị thông báo lỗi -->
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <p class="{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Nhớ mật khẩu và quên mật khẩu -->
+      <div class="remember-forgot">
+        <label>
+          <input type="checkbox" name="remember_me" /> Nhớ mật khẩu
+        </label>
+        <a href="{% url 'forgot_password' %}">Quên mật khẩu?</a>
+      </div>
+
+      <!-- Nút đăng nhập -->
+      <button type="submit" class="btn">Đăng nhập</button>
+
+      <!-- Link đăng ký -->
+      <div class="register-link">
+        <p>
+          Bạn chưa có tài khoản?
+          <a href="{% url 'register' %}">Đăng ký</a>
+        </p>
+      </div>
+    </form>
+
     </div>
   </body>
 </html>
