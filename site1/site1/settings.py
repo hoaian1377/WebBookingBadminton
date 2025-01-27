@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'DLSCLFL',
         'User':'',
         'Password':'',
-        'Host':'MSI', 
+        'Host':'LAPTOP-33IP66FPI', 
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',  # Kiểm tra driver bạn đã cài đặt
             'trust_connection' : 'yes'
