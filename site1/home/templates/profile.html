@@ -1,145 +1,50 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block contents %}
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thông Tin Tài Khoản</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #e6f7ff; /* Xanh nhạt */
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 800px;
-      background: rgba(0, 0, 0, 0.8); /* Đen mờ */
-      padding: 20px 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    h3 {
-      color: #4fc3f7; /* Xanh nhạt */
-      border-bottom: 2px solid #4fc3f7;
-      padding-bottom: 8px;
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-    }
-
-    .account-info p {
-      margin-top: 10px;
-      color: #ffffff; /* Chữ trắng */
-    }
-
-    .account-info p span {
-      font-weight: bold;
-      color: #4fc3f7; /* Xanh nhạt */
-    }
-
-    .edit-button {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 16px;
-      color: #000;
-      background: #4fc3f7; /* Nút xanh nhạt */
-      text-decoration: none;
-      border-radius: 8px;
-      transition: background 0.3s ease;
-      font-weight: bold;
-    }
-
-    .edit-button:hover {
-      background: #33b2e0;
-    }
-
-    table {
-      width: 100%;
-      margin-top: 20px;
-      border-collapse: collapse;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    table th, table td {
-      border: 1px solid rgba(255, 255, 255, 0.2); /* Đường viền trắng mờ */
-      padding: 12px 15px;
-      text-align: center;
-    }
-
-    table th {
-      background: #4fc3f7; /* Nền xanh nhạt */
-      color: #000; /* Chữ đen */
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-
-    table td {
-      background: rgba(255, 255, 255, 0.1); /* Nền trắng mờ */
-      color: #ffffff; /* Chữ trắng */
-    }
-
-    table .no-orders {
-      text-align: center;
-      color: #cccccc;
-      font-style: italic;
-    }
-
-    table tbody tr:hover {
-      background: rgba(255, 255, 255, 0.2); /* Hover sáng hơn */
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        padding: 15px;
-      }
-
-      table th, table td {
-        font-size: 14px;
-        padding: 10px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <!-- Thông Tin Khách Hàng -->
-    <div class="account-info">
-      <h3>Thông Tin Tài Khoản</h3>
-      <p><span>Xin chào,</span> Chưa xác định</p>
-      <p><span>Họ tên:</span> Chưa xác định</p>
-      <p><span>Số ĐT:</span> Chưa xác định</p>
-      <p><span>Địa chỉ:</span> Chưa xác định</p>
-      <a href="profile" class="edit-button">Sửa Thông Tin</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{% static 'app/css/profile.css' %}" rel="stylesheet" />
+    <title>Thông Tin Tài Khoản</title>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Thông Tin Khách Hàng -->
+       {% if request.session.taikhoanid %}
+      <div class="account-info">
+        <h3>Thông Tin Tài Khoản</h3>
+        <p><span>Xin chào,</span> {{request.session.username}}</p>
+        <p><span>Email:</span> {{khachhang.email|default:"Chưa Xác Định" }}</p> 
+        <p><span>Họ tên:</span> {{khachhang.hoten|default:"Chưa Xác Định" }}</p>
+        <p><span>Số ĐT:</span> {{khachhang.sdt|default:"Chưa Xác Định" }}</p>
+        <p><span>Địa chỉ:</span> {{khachhang.diachi|default:"Chưa Xác Định"}}</p>
+        <a href="{% url 'profile1' %}" class="edit-button">Sửa Thông Tin</a>
+      </div>
+      {% endif %}
+      <!-- Bảng Đơn Hàng -->
+      <div class="order-section">
+        <h3>Đơn Hàng Của Bạn</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Đơn Hàng</th>
+              <th>Ngày</th>
+              <th>Địa Chỉ</th>
+              <th>Giá Trị</th>
+              <th>Tình Trạng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="5" class="no-orders">Không có đơn hàng nào.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </body>
 
-    <!-- Bảng Đơn Hàng -->
-    <div class="order-section">
-      <h3>Đơn Hàng Của Bạn</h3>
-      <table>
-<thead>
-          <tr>
-            <th>Đơn Hàng</th>
-            <th>Ngày</th>
-            <th>Địa Chỉ</th>
-            <th>Giá Trị</th>
-            <th>Tình Trạng</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td colspan="5" class="no-orders">Không có đơn hàng nào.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</body>
 </html>
+{% endblock contents %}

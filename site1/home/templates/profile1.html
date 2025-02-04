@@ -14,42 +14,17 @@
         <button class="back-button">QUAY LẠI</button>
         
         <h2>Thông tin tài khoản</h2>
-        <form action="#" method="POST" class="account-form">
-            <label for="email">Email *</label>
-            <input type="email" id="email" name="email" placeholder="Nhập email" value="" required>
-
+        <form action="{% url 'profile1' %}" method="POST">
+            {% csrf_token %}
             <label for="name">Họ tên *</label>
-            <input type="text" id="name" name="name" placeholder="Nhập họ tên" value="" required>
-
+            <input type="text" id="name" name="name" value="{{ khachhang.hoten }}" required>
+        
             <label for="phone">Số điện thoại *</label>
-            <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" value="" required>
+            <input type="tel" id="phone" name="phone" value="{{ khachhang.sdt }}" required>   
+            <label for="phone">Địa Chỉ *</label>
 
-            <label for="gender">Giới tính:</label>
-            <select id="gender" name="gender">
-                <option value="">Chọn giới tính</option>
-                <option value="male">Nam</option>
-                <option value="female">Nữ</option>
-                <option value="other">Khác</option>
-            </select>
-
-            <label for="dob">Ngày sinh:</label>
-            <input type="date" id="dob" name="dob" placeholder="Nhập ngày sinh">
-
-            <button type="submit" class="update-btn">CẬP NHẬT</button>
-        </form>
-
-        <h2>Đổi mật khẩu</h2>
-        <form action="#" method="POST" class="password-form">
-            <label for="current-password">Mật khẩu hiện tại *</label>
-            <input type="password" id="current-password" name="current-password" placeholder="Mật khẩu hiện tại" required>
-
-            <label for="new-password">Mật khẩu mới *</label>
-            <input type="password" id="new-password" name="new-password" placeholder="Mật khẩu mới" required>
-
-            <label for="confirm-password">Nhập lại mật khẩu mới *</label>
-            <input type="password" id="confirm-password" name="confirm-password" placeholder="Nhập lại mật khẩu mới" required>
-
-            <button type="submit" class="password-btn">ĐỔI MẬT KHẨU</button>
+            <input type="tel" id="diachi" name="diachi" value="{{ khachhang.diachi }}" required>  
+            <button type="submit">CẬP NHẬT</button>
         </form>
     </div>
 </body>

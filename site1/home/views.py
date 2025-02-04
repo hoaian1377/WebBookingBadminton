@@ -205,10 +205,39 @@ def support(request):
     return HttpResponseRedirect("https://docs.google.com/forms/d/e/1FAIpQLSdsZGwFck63-cPDZcW8gZyyMAhf2UyYaOINuByEgwbMvtTm3A/viewform")
 
 def profile1(request):
-    return render(request, 'profile1.html')
+    taikhoan_id = request.session.get('taikhoanid')
+
+    if not taikhoan_id:
+        messages.error(request, "Bạn cần đăng nhập để cập nhật thông tin.")
+        return redirect('login')
+
+    khachhang = Khachhang.objects.get(khachhangid=taikhoan_id)
+
+    if request.method == 'POST':
+        hoten = request.POST.get('name')
+        sdt = request.POST.get('phone')
+        diachi=request.POST.get('diachi')
+        khachhang.hoten = hoten
+        khachhang.sdt = sdt
+        khachhang.diachi=diachi
+        khachhang.save()  
+
+        messages.success(request, "Cập nhật thông tin thành công!")
+        return redirect('profile')
+
+    return render(request, 'profile1.html', {'khachhang': khachhang})
 
 def profile(request):
-    return render(request, 'profile.html')
+    taikhoan_id=request.session.get('taikhoanid')
+    if taikhoan_id:
+        try:
+            taikhoan=Taikhoan.objects.get(taikhoanid=taikhoan_id)
+            khachhang=taikhoan.taikhoanid
+        except Taikhoan.DoesNotExist:
+            khachhang = None
+    else :
+        khachhang = None     
+    return render(request, 'profile.html',{'khachhang':khachhang})
 
 def court_history(request):
     return render(request, 'court_history.html')
