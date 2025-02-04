@@ -36,9 +36,7 @@
         .product-status span {
             font-size: 1.1rem;
         }
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
+        .btn-primary, .btn-success {
             padding: 10px 20px;
             font-size: 1.2rem;
             border-radius: 30px;
@@ -48,6 +46,13 @@
             background-color: #0056b3;
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0, 91, 187, 0.3);
+        }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+        .btn-success:hover {
+            background-color: #218838;
         }
         .quantity-input {
             width: 100px;
@@ -80,6 +85,10 @@
             font-size: 1.2rem;
             font-weight: bold;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .button-group {
+            display: flex; /* Sử dụng Flexbox để căn chỉnh các nút */
+            gap: 10px; /* Khoảng cách giữa các nút */
         }
     </style>
 </head>
@@ -121,7 +130,7 @@
                     Số lượng trong kho: 
                     <strong>{{ sanpham.soluong }}</strong>
                 </p>
-                <form method="post" action="{% url 'add_to_cart' %}">
+                <form method="post" action="{% url 'add_to_cart' %}" class="mb-3">
                     {% csrf_token %}
                     <input type="hidden" name="sanpham_id" value="{{ sanpham.pk }}">
                     <div class="d-flex align-items-center mb-3">
@@ -129,6 +138,11 @@
                         <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ sanpham.soluong }}" class="form-control quantity-input me-2">
                     </div>
                     <button type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
+                </form>
+                <form method="post" action="{% url 'checkout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="sanpham_id" value="{{ sanpham.pk }}">
+                    <button type="submit" class="btn btn-success">Mua ngay</button>
                 </form>
             </div>
         </div>

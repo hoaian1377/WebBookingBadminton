@@ -285,11 +285,58 @@ def update_cart(request, product_id):
         quantity = request.POST.get('quantity')
 
         # Logic để cập nhật giỏ hàng
-        cart_item = CartItem.objects.get(product_id=product_id)
-        if action == "increase":
-            cart_item.quantity += 1
-        elif action == "decrease" and cart_item.quantity > 1:
-            cart_item.quantity -= 1
-        cart_item.save()
+        cart = request.session.get('cart', {})
+        if str(product_id) in cart:
+            if action == "increase":
+                cart[str(product_id)] += 1
+            elif action == "decrease" and cart[str(product_id)] > 1:
+                cart[str(product_id)] -= 1
+            elif action == "remove":  # Thêm logic để xóa sản phẩm
+                del cart[str(product_id)]
 
+        request.session['cart'] = cart
+        messages.success(request, 'Giỏ hàng đã được cập nhật.')
     return redirect('cart_detail')  # Hoặc đường dẫn phù hợp đến trang giỏ hàng
+def update_cart(request, product_id):
+    if request.method == "POST":
+        action = request.POST.get('action')
+        cart = request.session.get('cart', {})
+
+        if str(product_id) in cart:
+            if action == "increase":
+                cart[str(product_id)] += 1
+            elif action == "decrease" and cart[str(product_id)] > 1:
+                cart[str(product_id)] -= 1
+            elif action == "remove":
+                del cart[str(product_id)]
+
+        request.session['cart'] = cart
+        messages.success(request, 'Giỏ hàng đã được cập nhật.')
+    return redirect('cart_detail')
+def cart_detail(request):
+    cart = request.session.get('cart', {})
+    sanpham_list = []
+    total_price = 0
+    total_items = 0
+
+    for sanphamid, quantity in cart.items():
+        try:
+            sanphamid = int(sanphamid)
+            product = get_object_or_404(Sanpham, pk=sanphamid)
+            subtotal = product.giatien * quantity
+            sanpham_list.append({'product': product, 'quantity': quantity, 'subtotal': subtotal})
+            total_price += subtotal
+            total_items += quantity
+        except (ValueError, TypeError):
+            continue
+
+    shipping_cost = 20000
+    total_payment = total_price + shipping_cost
+
+    return render(request, 'cart_detail.html', {
+        'cart_items': sanpham_list,
+        'total_price': total_price,
+        'total_items': total_items,
+        'shipping_cost': shipping_cost,
+        'total_payment': total_payment
+    })
