@@ -571,4 +571,142 @@ footer {
       flex-direction: column;
     }
   }
-  
+  .btn-logout {
+    background-color: #ef4444; /* Đỏ nổi bật */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #dc2626; /* Đỏ đậm hơn */
+    transform: scale(1.05); /* Hiệu ứng nhấn */
+}
+nav {
+    background: linear-gradient(135deg, #1e293b, #334155); /* Gradient hiện đại */
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    display: inline-block;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.nav-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-logout {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.btn-logout:hover {
+    background: #dc2626;
+    transform: scale(1.05);
+}
+
+.btn-signup {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn-signup:hover {
+    background: white;
+    color: #1e293b;
+}
+
+.btn-login {
+    background: #3b82f6;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.btn-login:hover {
+    background: #2563eb;
+    transform: scale(1.05);
+}
+/* Chỉnh màu cho lời chào */
+.welcome-message {
+    color: white; /* Đổi màu chữ thành trắng */
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Làm nổi bật nút Đăng xuất */
+.btn-logout {
+    background: #e11d48; /* Màu đỏ nổi bật */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.btn-logout:hover {
+    background: #be123c; /* Màu đậm hơn khi hover */
+    transform: scale(1.05);
+}
+/* Làm nổi bật nút Đăng xuất trên tất cả các trang */
+.btn-logout {
+    background: #e11d48; /* Màu đỏ */
+    color: white;
+    border: none !important; /* Loại bỏ viền */
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.btn-logout:hover {
+    background: #be123c;
+    transform: scale(1.05);
+}
