@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
-from .models import Sanpham, San, Taikhoan,Khachhang
+from .models import Sanpham, San, Taikhoan,Khachhang,Chitiethoadon,Hoadon
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db import models
 from django.shortcuts import redirect
 from .models import CartItem
+from decimal import Decimal
 import random
 
 def shop(request):
@@ -267,8 +268,68 @@ def remove_from_cart(request, product_id):
     return redirect('cart_detail')
 
 def checkout(request):
-    # Logic xử lý thanh toán
-    return render(request, 'checkout.html')
+    cart = request.session.get('cart', {})  # Lấy giỏ hàng từ session
+    if not cart:  # Kiểm tra nếu giỏ hàng rỗng
+        return render(request, 'checkout.html', {'message': 'Giỏ hàng trống!'})
+
+    user = request.user
+    try:
+        khachhang = Khachhang.objects.get(email=user.email)  # Lấy thông tin khách hàng
+    except Khachhang.DoesNotExist:
+        messages.error(request, "Không tìm thấy khách hàng.")
+        return redirect('cart_detail')
+
+    cart_items = []
+    total_price = 0
+
+    for sanphamid, quantity in cart.items():
+        try:
+            product = Sanpham.objects.get(pk=sanphamid)
+            subtotal = product.giatien * quantity
+            cart_items.append({'product': product, 'quantity': quantity, 'subtotal': subtotal})
+            total_price += subtotal
+        except Sanpham.DoesNotExist:
+            continue  # Bỏ qua sản phẩm không tồn tại
+
+    shipping_cost = 20000  # Phí vận chuyển cố định
+    total_payment = total_price + shipping_cost  # Tổng tiền
+
+    if request.method == "POST":
+        phuong_thuc = request.POST.get("phuong_thuc")
+
+        # Tạo hóa đơn mới
+        hoadon = Hoadon.objects.create(
+            khachhangid=khachhang,
+            total=Decimal(total_payment),
+            phuongthucthanhtoan=phuong_thuc,
+            trangthai="Chờ xác nhận"
+        )
+
+        # Lưu từng sản phẩm vào ChiTietHoaDon
+        for item in cart_items:
+            Chitiethoadon.objects.create(
+                hoadonid=hoadon,
+                sanphamid=item['product'],
+                soluong=item['quantity'],
+                giatien=item['product'].giatien,
+                tongtien=item['subtotal']
+            )
+            # Cập nhật số lượng sản phẩm trong kho
+            product = item['product']
+            product.soluong -= item['quantity']
+            product.save()
+
+        # Xóa giỏ hàng trong session sau khi thanh toán
+        request.session['cart'] = {}
+
+        return redirect("payment_success")  # Chuyển hướng đến trang thành công
+
+    return render(request, "checkout.html", {
+        "cart_items": cart_items,
+        "total_price": total_price,
+        "shipping_cost": shipping_cost,
+        "total_payment": total_payment
+    })
 def remove_from_cart(request, product_id):
     cart = request.session.get('cart', {})
     if str(product_id) in cart:
