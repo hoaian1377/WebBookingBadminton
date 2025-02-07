@@ -15,25 +15,30 @@
             padding: 0;
         }
         .container {
-            max-width: 1000px;
+            display: flex;
+            max-width: 1200px;
             margin: 20px auto;
             padding: 20px;
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .form-section {
-            margin-bottom: 30px;
+        .left-section, .right-section {
+            flex: 1;
+            padding: 20px;
         }
-        .form-section h2 {
+        .left-section {
+            border-right: 2px solid #ddd;
+        }
+        h2 {
             color: #ff6600;
-            font-size: 28px;
+            font-size: 24px;
             border-bottom: 2px solid #ff6600;
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .form-group label {
             display: block;
@@ -43,18 +48,23 @@
         }
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            box-sizing: border-box;
             font-size: 16px;
         }
-        .form-group textarea {
-            resize: vertical;
-            height: 120px;
+        .order-summary table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        .payment-options {
-            margin-top: 20px;
+        .order-summary th, .order-summary td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .order-summary th {
+            background-color: #ff6600;
+            color: white;
         }
         .payment-options label {
             display: block;
@@ -62,27 +72,9 @@
             color: #555;
             font-weight: bold;
         }
-        .payment-options input {
-            margin-right: 10px;
-        }
-        .bank-details {
-            margin-top: 15px;
-            display: none;
-        }
-        .bank-details h3 {
-            color: #ff6600;
-            font-size: 22px;
-        }
-        .bank-details p {
-            margin: 5px 0;
-            color: #777;
-            font-size: 16px;
-        }
-        .submit-btn {
-            margin-top: 20px;
-        }
         .submit-btn button {
-            padding: 14px 40px;
+            width: 100%;
+            padding: 14px;
             background-color: #ff6600;
             color: white;
             border: none;
@@ -94,112 +86,11 @@
         .submit-btn button:hover {
             background-color: #e65c00;
         }
-        .success-message {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #dff0d8;
-            color: #3c763d;
-            border: 1px solid #d6e9c6;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .order-confirmation {
-            display: none;
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .order-confirmation h2 {
-            color: #ff6600;
-            font-size: 28px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #ff6600;
-            padding-bottom: 10px;
-        }
-        .order-confirmation .order-details {
-            margin-bottom: 20px;
-            color: #555;
-            font-size: 16px;
-        }
-        .order-confirmation .order-summary {
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
-            color: #555;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .order-confirmation .order-summary p {
-            margin: 5px 0;
-        }
-        .order-confirmation .order-summary .total {
-            font-weight: bold;
-            color: #ff6600;
-        }
-        .order-confirmation img {
-            max-width: 200px;
-            margin-left: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .nav-buttons {
-            display: none;
-            justify-content: center;
-            margin-top: 40px;
-        }
-        .nav-buttons button {
-            padding: 10px 30px;
-            background-color: #ff6600;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 0 10px;
-        }
-        .nav-buttons button:hover {
-            background-color: #ff6600 ;
-        }
     </style>
-    <script>
-        function toggleBankDetails() {
-            var bankDetails = document.querySelector('.bank-details');
-            var bankRadio = document.querySelector('input[name="payment"][value="bank"]');
-            if (bankRadio.checked) {
-                bankDetails.style.display = 'block';
-            } else {
-                bankDetails.style.display = 'none';
-            }
-        }
-
-        function submitForm() {
-            // Display the success message
-            document.querySelector('.success-message').style.display = 'block';
-            
-            // Display the order confirmation section
-            document.querySelector('.order-confirmation').style.display = 'block';
-            
-            // Display the navigation buttons
-            document.querySelector('.nav-buttons').style.display = 'flex';
-        }
-
-        function goBack() {
-            // Implement back navigation logic here
-            alert('Going back to the previous page.');
-        }
-
-        function goNext() {
-            // Implement next navigation logic here
-            alert('Proceeding to the next page.');
-        }
-    </script>
 </head>
 <body>
     <div class="container">
-        <div class="form-section">
+        <div class="left-section">
             <h2>Thông tin nhận hàng</h2>
             <div class="form-group">
                 <label for="fullname">Họ và tên người nhận hàng</label>
@@ -218,63 +109,45 @@
                 <input type="email" id="email" name="email">
             </div>
             <div class="form-group">
-                <label for="notes">Ghi chú đơn hàng (tùy chọn)</label>
-                <textarea id="notes" name="notes"></textarea>
+                <label for="note">Ghi chú đơn hàng (tùy chọn)</label>
+                <textarea id="note" name="note"></textarea>
             </div>
         </div>
-        <div class="form-section">
-            <h2>Thanh toán</h2>
-            <div class="payment-options">
-                <label>
-                    <input type="radio" name="payment" value="cod" checked onclick="toggleBankDetails()">
-                    Thanh toán khi nhận hàng (COD)
-                </label>
-                <label>
-                    <input type="radio" name="payment" value="bank" onclick="toggleBankDetails()">
-                    Thanh toán qua ngân hàng
-                </label>
+        <div class="right-section">
+            <h2>Đơn hàng</h2>
+            <div class="order-summary">
+                <table>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Đơn giá</th>
+                        <th>Số lượng</th>
+                        <th>Tổng</th>
+                    </tr>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.product.price|floatformat:0 }} đ</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.total_price|floatformat:0 }} đ</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="3" style="text-align: right;"><strong>Tổng cộng:</strong></td>
+                        <td><strong>{{ cart_total|floatformat:0 }} đ</strong></td>
+                    </tr>
+                </table>
             </div>
-            <div class="bank-details">
-                <h3>Chi tiết thanh toán ngân hàng</h3>
-                <p>Ngân hàng: Vietcombank</p>
-                <p>Số tài khoản: 798798798</p>
-                <p>Chủ tài khoản: Boss Lê Hoài Ân</p>
-                <p><strong>Nội dung chuyển khoản:</strong> Tên + Số ĐT đặt hàng</p>
+            <h2>Hình thức thanh toán</h2>
+            <div class="payment-options">
+                <label><input type="radio" name="payment" value="cash" checked> Tiền mặt</label>
+                <label><input type="radio" name="payment" value="momo"> Momo</label>
+                <label><input type="radio" name="payment" value="qr"> QR Code</label>
             </div>
             <div class="submit-btn">
-                <button type="button" onclick="submitForm()">Thanh toán ngay</button>
+                <button type="submit">ĐẶT HÀNG</button>
             </div>
-            <div class="success-message">
-                Thanh toán thành công!
-            </div>
-        </div>
-        <div class="order-confirmation">
-            <h2>Xác nhận đơn hàng</h2>
-            <div class="order-details">
-                <p><strong>Tên người nhận hàng:</strong> John Doe</p>
-                <p><strong>Địa chỉ:</strong> 123 Main Street, Thành phố Hồ Chí Minh, Việt Nam</p>
-                <p><strong>Số điện thoại:</strong> 0123456789</p>
-                <p><strong>Email:</strong> john.doe@example.com</p>
-                <p><strong>Trạng thái đơn hàng:</strong> Chưa xác nhận</p>
-            </div>
-            <div class="order-summary">
-                <div>
-                    <h3>Tóm tắt đơn hàng</h3>
-                    <p><strong>Sản phẩm:</strong> Vợt cầu lông Lining Turbocharging 75C Loh Kean Yew</p>
-                    <p><strong>Đơn giá:</strong> 4,150,000 đ</p>
-                    <p><strong>Số lượng:</strong> 1</p>
-                    <p class="total"><strong>Tổng cộng:</strong> 4,150,000 đ</p>
-                </div>
-                <img src="{% static 'app/image/anh1.webp' %}" alt="Product Image">
-            </div>
-            <p>Lưu ý: Phí vận chuyển và thời gian xử lý có thể áp dụng. Hotline: 123456789</p>
-        </div>
-        <div class="nav-buttons">
-            <button type="button" onclick="location.href='{% url 'cart_detail' %}'">Quay lại</button>
-
         </div>
     </div>
 </body>
 </html>
 {% endblock contents %}
-
