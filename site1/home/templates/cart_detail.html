@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 {% block contents %}
 <!DOCTYPE html>
 <html lang="vi">
@@ -216,10 +217,10 @@
                                     <button type="submit" name="action" value="increase">+</button>
                                 </form>
                             </div>
-                            <p>Giá mỗi sản phẩm: {{ item.product.giatien|floatformat:0 }} VNĐ</p>
+                            <p>Giá mỗi sản phẩm: {{ item.product.giatien|floatformat:0|intcomma }} VNĐ</p>
                         </div>
                         <div class="item-price">
-                            {{ item.subtotal|floatformat:0 }} VNĐ
+                            {{ item.subtotal|floatformat:0|intcomma }} VNĐ
                         </div>
                         <form method="POST" action="{% url 'remove_from_cart' item.product.sanphamid %}">
                             {% csrf_token %}
@@ -232,10 +233,10 @@
             <!-- Phần tổng kết -->
             <div class="total">
                 <p>Tổng số mặt hàng: <span>{{ total_items }}</span></p>
-                <p>Tổng giá sản phẩm: <span>{{ total_price|floatformat:0 }} VNĐ</span></p>
-                <p>Phí giao hàng: <span>{{ shipping_cost|floatformat:0 }} VNĐ</span></p>
+                <p>Tổng giá sản phẩm: <span>{{ total_price|floatformat:0|intcomma }} VNĐ</span></p>
+                <p>Phí giao hàng: <span>{{ shipping_cost|floatformat:0|intcomma }} VNĐ</span></p>
                 <p><strong>Tổng thanh toán: 
-                    <span>{{ total_payment|floatformat:0 }} VNĐ</span></strong></p>
+                    <span>{{ total_payment|floatformat:0|intcomma }} VNĐ</span></strong></p>
             </div>
 
             <div class="text-center">

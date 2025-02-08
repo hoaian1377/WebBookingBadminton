@@ -4,16 +4,14 @@ from django.http import HttpResponseRedirect
 from .models import Sanpham, San, Taikhoan,Khachhang,Chitiethoadon,Hoadon
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import models
 from django.shortcuts import redirect
 from .models import CartItem
+from django.db import transaction
 from decimal import Decimal
 import random
-
-
-
-
 
 def shop(request):
     sanpham_list = Sanpham.objects.filter(trangthai='còn hàng')
@@ -237,16 +235,30 @@ def profile1(request):
     return render(request, 'profile1.html', {'khachhang': khachhang})
 
 def profile(request):
-    taikhoan_id=request.session.get('taikhoanid')
+    taikhoan_id = request.session.get('taikhoanid')
+    khachhang = None
+    hoadons = None
+
     if taikhoan_id:
         try:
-            taikhoan=Taikhoan.objects.get(taikhoanid=taikhoan_id)
-            khachhang=taikhoan.taikhoanid
-        except Taikhoan.DoesNotExist:
+            # Lấy khách hàng kèm danh sách hóa đơn (tối ưu cho nhiều hóa đơn)
+            khachhang = Khachhang.objects.prefetch_related('hoadon_set').get(taikhoan__taikhoanid=taikhoan_id)
+
+            # Lấy danh sách hóa đơn từ quan hệ `hoadon_set`
+            hoadons = khachhang.hoadon_set.all().order_by('-thoigian')
+
+        except Khachhang.DoesNotExist:
             khachhang = None
-    else :
-        khachhang = None     
-    return render(request, 'profile.html',{'khachhang':khachhang})
+            hoadons = None
+
+    return render(request, 'profile.html', {'khachhang': khachhang, 'hoadons': hoadons})
+def generate_Hoadon_id():
+    # Lấy ID lớn nhất hiện có trong bảng KhachHang
+    last_id = Hoadon.objects.aggregate(max_id=models.Max('hoadonid'))['max_id']
+    if last_id is None:
+        return 1  # Nếu bảng trống, bắt đầu từ 1
+    return last_id + 1  # ID tiếp theo
+
 
 def court_history(request):
     return render(request, 'court_history.html')
@@ -277,60 +289,79 @@ def remove_from_cart(request, product_id):
 
 def checkout(request):
     cart = request.session.get('cart', {})  # Lấy giỏ hàng từ session
-    if not cart:  # Kiểm tra nếu giỏ hàng rỗng
-        return render(request, 'checkout.html', {'message': 'Giỏ hàng trống!'})
-
-    user = request.user
-    try:
-        khachhang = Khachhang.objects.get(email=user.email)  # Lấy thông tin khách hàng
-    except Khachhang.DoesNotExist:
-        messages.error(request, "Không tìm thấy khách hàng.")
+    if not cart:
+        messages.error(request, "Giỏ hàng trống! Vui lòng thêm sản phẩm trước khi thanh toán.")
         return redirect('cart_detail')
 
-    cart_items = []
-    total_price = 0
+    taikhoan_id = request.session.get('taikhoanid')  # Lấy ID tài khoản từ session
+    if not taikhoan_id:
+        messages.error(request, "Bạn chưa đăng nhập! Vui lòng đăng nhập để thanh toán.")
+        return redirect('login')
 
+    # Kiểm tra khách hàng từ tài khoản ID
+    try:
+        taikhoan = Taikhoan.objects.get(taikhoanid=taikhoan_id)
+        khachhang = Khachhang.objects.get(taikhoan=taikhoan)
+    except (Taikhoan.DoesNotExist, Khachhang.DoesNotExist):
+        messages.error(request, "Không tìm thấy thông tin khách hàng. Vui lòng cập nhật tài khoản.")
+        return redirect('profile')
+
+    cart_items = []
+    total_price = Decimal(0)
+
+    # Lấy thông tin sản phẩm từ giỏ hàng
     for sanphamid, quantity in cart.items():
         try:
             product = Sanpham.objects.get(pk=sanphamid)
-            subtotal = product.giatien * quantity
+            subtotal = Decimal(str(product.giatien)) * Decimal(quantity)  # Fix lỗi Decimal
             cart_items.append({'product': product, 'quantity': quantity, 'subtotal': subtotal})
             total_price += subtotal
         except Sanpham.DoesNotExist:
             continue  # Bỏ qua sản phẩm không tồn tại
 
-    shipping_cost = 20000  # Phí vận chuyển cố định
+    shipping_cost = Decimal(20000)  # Phí vận chuyển cố định
     total_payment = total_price + shipping_cost  # Tổng tiền
 
     if request.method == "POST":
         phuong_thuc = request.POST.get("phuong_thuc")
+        if not phuong_thuc:
+            messages.error(request, "Vui lòng chọn phương thức thanh toán.")
+            return redirect("checkout")
 
-        # Tạo hóa đơn mới
-        hoadon = Hoadon.objects.create(
-            khachhangid=khachhang,
-            total=Decimal(total_payment),
-            phuongthucthanhtoan=phuong_thuc,
-            trangthai="Chờ xác nhận"
-        )
+        try:
+            with transaction.atomic():
+                hoadon = Hoadon.objects.create(
+                    hoadonid=generate_Hoadon_id(),
+                    khachhangid=khachhang,
+                    total=total_payment,
+                    phuongthucthanhtoan=phuong_thuc,
+                    trangthai="Chờ xác nhận"
+                )
 
-        # Lưu từng sản phẩm vào ChiTietHoaDon
-        for item in cart_items:
-            Chitiethoadon.objects.create(
-                hoadonid=hoadon,
-                sanphamid=item['product'],
-                soluong=item['quantity'],
-                giatien=item['product'].giatien,
-                tongtien=item['subtotal']
-            )
-            # Cập nhật số lượng sản phẩm trong kho
-            product = item['product']
-            product.soluong -= item['quantity']
-            product.save()
+                for item in cart_items:
+                    product = item['product']
+                    if product.soluong < item['quantity']:
+                        messages.error(request, f"Sản phẩm {product.tensanpham} không đủ hàng.")
+                        return redirect("checkout")
 
-        # Xóa giỏ hàng trong session sau khi thanh toán
-        request.session['cart'] = {}
+                    Chitiethoadon.objects.create(
+                        hoadonid=hoadon,
+                        sanphamid=product,
+                        soluong=item['quantity'],
+                        giatien=product.giatien
+                    )
 
-        return redirect("payment_success")  # Chuyển hướng đến trang thành công
+                    product.soluong -= item['quantity']
+                    product.save()
+
+                request.session['cart'] = {}
+
+                messages.success(request, "Thanh toán thành công! Đơn hàng của bạn đang được xử lý.")
+                return redirect("home")
+
+        except Exception as e:
+            messages.error(request, f"Có lỗi xảy ra: {str(e)}")
+            return redirect("checkout")
 
     return render(request, "checkout.html", {
         "cart_items": cart_items,
@@ -338,6 +369,7 @@ def checkout(request):
         "shipping_cost": shipping_cost,
         "total_payment": total_payment
     })
+
 def remove_from_cart(request, product_id):
     cart = request.session.get('cart', {})
     if str(product_id) in cart:
@@ -408,4 +440,15 @@ def cart_detail(request):
         'total_items': total_items,
         'shipping_cost': shipping_cost,
         'total_payment': total_payment
+    })
+def hoadon_detail(request, hoadonid):
+    try:
+        hoadon = Hoadon.objects.get(hoadonid=hoadonid)
+        chitiet_list = Chitiethoadon.objects.filter(hoadonid=hoadon)
+    except Hoadon.DoesNotExist:
+        return render(request, '404.html', {'message': 'Hóa đơn không tồn tại.'})
+
+    return render(request, 'hoadon_detail.html', {
+        'hoadon': hoadon,
+        'chitiet_list': chitiet_list,
     })

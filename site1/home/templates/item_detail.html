@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load humanize %}
 {% block contents %}
 <!DOCTYPE html>
 <html lang="vi">
@@ -117,7 +117,7 @@
             <div class="col-md-6">
                 <h1 class="product-title">{{ sanpham.tensp }}</h1>
                 <p class="text-muted">{{ sanpham.description|default:"Chưa có mô tả" }}</p>
-                <h3 class="product-price">{{ sanpham.giatien|floatformat:0 }} VNĐ</h3>
+                <h3 class="product-price">{{ sanpham.giatien|floatformat:0|intcomma }} VNĐ</h3>
                 <p class="product-status">
                     Tình trạng: 
                     {% if sanpham.trangthai == "Còn hàng" %}

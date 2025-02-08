@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %} 
+{% load humanize %}
 {% block contents %}
 <!DOCTYPE html>
 <html lang="vi">
@@ -26,22 +27,37 @@
       <!-- Bảng Đơn Hàng -->
       <div class="order-section">
         <h3>Đơn Hàng Của Bạn</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Đơn Hàng</th>
-              <th>Ngày</th>
-              <th>Địa Chỉ</th>
-              <th>Giá Trị</th>
-              <th>Tình Trạng</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colspan="5" class="no-orders">Không có đơn hàng nào.</td>
-            </tr>
-          </tbody>
+        {% if hoadons %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Mã Hóa Đơn</th>
+                    <th>Thời Gian</th>
+                    <th>Phương Thức Thanh Toán</th>
+                    <th>Tổng Tiền</th>
+                    <th>Trạng Thái</th>
+                    <th>Chi Tiết</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for hoadon in hoadons %}
+              <tr>
+                  <td>{{ hoadon.hoadonid }}</td>
+                  <td>{{ hoadon.thoigian }}</td>
+                  <td>{{ hoadon.phuongthucthanhtoan }}</td>
+                  <td>{{ hoadon.total|floatformat:0|intcomma }}</td>
+                  <td>{{ hoadon.trangthai }}</td>
+                  <td>
+                      <a href="{% url 'hoadon_detail' hoadon.hoadonid %}">Xem Chi Tiết</a>
+                  </td>
+              </tr>
+          {% endfor %}
+            </tbody>
         </table>
+        {% else %}
+        <p>Tổng số hóa đơn: {{ hoadons.count }}</p>
+
+        {% endif %}
       </div>
     </div>
   </body>

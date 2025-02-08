@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 {% block contents %}
 <!DOCTYPE html>
 <html lang="vi">
@@ -68,7 +69,7 @@
                                         <td><img src={% static item.product.imageurl %} alt="{{ item.product.tensp }}" class="product-image"></td>
                                         <td>{{ item.product.tensp }}</td>
                                         <td>{{ item.quantity }}</td>
-                                        <td>{{ item.subtotal }} VNĐ</td>
+                                        <td>{{ item.subtotal|floatformat:0|intcomma }} VNĐ</td>
                                     </tr>
                                 {% endfor %}
                             {% else %}
@@ -80,7 +81,7 @@
                     </table>
                 </div>
                 
-                <p class="fw-bold">Tổng tiền: <span class="text-danger">{{ total_price }} VNĐ</span></p>
+                <p class="fw-bold">Tổng tiền: <span class="text-danger">{{ total_price|floatformat:0|intcomma }} VNĐ</span></p>
                 
                 <form method="post">
                     {% csrf_token %}

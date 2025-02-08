@@ -6,15 +6,14 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
+from django.utils.timezone import now  
 
 class Chitiethoadon(models.Model):
-    chitiethoadonid = models.IntegerField(db_column='ChiTietHoaDonID', primary_key=True)  # Field name made lowercase.
+    chitiethoadonid = models.AutoField(db_column='ChiTietHoaDonID', primary_key=True)  # Field name made lowercase.
     hoadonid = models.ForeignKey('Hoadon', models.DO_NOTHING, db_column='HoaDonID')  # Field name made lowercase.
     sanphamid = models.ForeignKey('Sanpham', models.DO_NOTHING, db_column='SanPhamID')  # Field name made lowercase.
     soluong = models.IntegerField(db_column='SoLuong')  # Field name made lowercase.
     giatien = models.DecimalField(db_column='GiaTien', max_digits=10, decimal_places=2)  # Field name made lowercase.
-    tongtien = models.DecimalField(db_column='TongTien', max_digits=21, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -38,7 +37,7 @@ class Hoadon(models.Model):
     khachhangid = models.ForeignKey('Khachhang', models.DO_NOTHING, db_column='KhachHangID')  # Field name made lowercase.
     total = models.DecimalField(db_column='Total', max_digits=10, decimal_places=2)  # Field name made lowercase.
     phuongthucthanhtoan = models.CharField(db_column='PhuongThucThanhToan', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
-    thoigian = models.DateTimeField(db_column='ThoiGian', blank=True, null=True)  # Field name made lowercase.
+    thoigian = models.DateTimeField(db_column='ThoiGian', blank=True, null=True,default=now)  # Field name made lowercase.
     trangthai = models.CharField(db_column='TrangThai', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
     description = models.TextField(db_column='Description', db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
 

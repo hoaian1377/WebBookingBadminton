@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Hóa Đơn</title>
+</head>
+<body>
+    <h1>Chi Tiết Hóa Đơn</h1>
+    <p>Mã Hóa Đơn: {{ hoadon.hoadonid }}</p>
+    <p>Ngày: {{ hoadon.thoi_gian }}</p>
+    <p>Phương Thức Thanh Toán: {{ hoadon.phuongthucthanhtoan }}</p>
+    <p>Tổng Tiền: {{ hoadon.total }}</p>
+    <p>Trạng Thái: {{ hoadon.trangthai }}</p>
+
+    <h2>Sản Phẩm</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Tên Sản Phẩm</th>
+                <th>Số Lượng</th>
+                <th>Giá Tiền</th>
+                <th>Tổng Tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for chitiet in chitiet_list %}
+                <tr>
+                    <td>{{ chitiet.sanphamid.ten }}</td>
+                    <td>{{ chitiet.soluong }}</td>
+                    <td>{{ chitiet.giatien }}</td>
+                    <td>{{ chitiet.tongtien }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

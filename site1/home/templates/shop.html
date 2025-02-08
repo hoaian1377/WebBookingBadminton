@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load humanize %}
 {% block contents %}
 <!DOCTYPE html>
 <html lang="vi">
@@ -153,7 +153,7 @@
                     <div class="price-container">
                         <h3 class="price">
                             {% if sanpham.giatien %}
-                                {{ sanpham.giatien|floatformat:0 }}₫
+                                {{ sanpham.giatien|floatformat:0|intcomma }}₫
                             {% else %}
                                 Liên hệ
                             {% endif %}
