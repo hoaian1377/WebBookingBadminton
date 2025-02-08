@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'site1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'DLSCLFL',
+        'NAME': 'DLBMT',
         'User':'',
         'Password':'',
         'Host':'DESKTOP-J6O1B30', 

@@ -445,10 +445,19 @@ def hoadon_detail(request, hoadonid):
     try:
         hoadon = Hoadon.objects.get(hoadonid=hoadonid)
         chitiet_list = Chitiethoadon.objects.filter(hoadonid=hoadon)
+
+        # Cập nhật tổng tiền cho từng chi tiết hóa đơn
+        for chitiet in chitiet_list:
+            chitiet.tongtien = chitiet.soluong * chitiet.giatien
+
+        # Tính tổng tiền cho hóa đơn
+        total_sum = sum(chitiet.tongtien for chitiet in chitiet_list)
+
     except Hoadon.DoesNotExist:
         return render(request, '404.html', {'message': 'Hóa đơn không tồn tại.'})
 
     return render(request, 'hoadon_detail.html', {
         'hoadon': hoadon,
         'chitiet_list': chitiet_list,
+        'total_sum': total_sum,  # Tổng tiền của hóa đơn
     })
