@@ -1,38 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% block contents %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi Tiết Hóa Đơn</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi Tiết Hóa Đơn</title>
+  <link href="{% static 'app/css/hoadon_detail.css' %}" rel="stylesheet">
+  
 </head>
 <body>
+  <div class="container">
     <h1>Chi Tiết Hóa Đơn</h1>
-    <p>Mã Hóa Đơn: {{ hoadon.hoadonid }}</p>
-    <p>Ngày: {{ hoadon.thoi_gian }}</p>
-    <p>Phương Thức Thanh Toán: {{ hoadon.phuongthucthanhtoan }}</p>
-    <p>Tổng Tiền: {{ hoadon.total }}</p>
-    <p>Trạng Thái: {{ hoadon.trangthai }}</p>
+    <p><strong>Mã Hóa Đơn:</strong> {{ hoadon.hoadonid }}</p>
+    <p><strong>Ngày:</strong> {{ hoadon.thoi_gian }}</p>
+    <p><strong>Phương Thức Thanh Toán:</strong> {{ hoadon.phuongthucthanhtoan }}</p>
+    <p><strong>Tổng Tiền:</strong> <span class="money">{{ hoadon.total }}</span></p>
+    <p><strong>Trạng Thái:</strong> <span class="status">{{ hoadon.trangthai }}</span></p>
 
     <h2>Sản Phẩm</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Tên Sản Phẩm</th>
-                <th>Số Lượng</th>
-                <th>Giá Tiền</th>
-                <th>Tổng Tiền</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for chitiet in chitiet_list %}
-                <tr>
-                    <td>{{ chitiet.sanphamid.ten }}</td>
-                    <td>{{ chitiet.soluong }}</td>
-                    <td>{{ chitiet.giatien }}</td>
-                    <td>{{ chitiet.tongtien }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
+    <table>
+      <thead>
+        <tr>
+          <th>Tên Sản Phẩm</th>
+          <th>Số Lượng</th>
+          <th>Giá Tiền</th>
+          <th>Tổng Tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for chitiet in chitiet_list %}
+          <tr style="animation-delay: {{ forloop.counter0|floatformat:1 }}s;">
+            <td data-label="Tên Sản Phẩm">{{ chitiet.sanphamid.ten }}</td>
+            <td data-label="Số Lượng">{{ chitiet.soluong }}</td>
+            <td data-label="Giá Tiền"><span class="money">{{ chitiet.giatien }}</span></td>
+            <td data-label="Tổng Tiền"><span class="money">{{ chitiet.tongtien }}</span></td>
+          </tr>
+        {% endfor %}
+      </tbody>
     </table>
+  </div>
 </body>
 </html>
+{% endblock contents %}

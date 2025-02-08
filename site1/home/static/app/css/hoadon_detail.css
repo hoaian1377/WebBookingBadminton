@@ -1,0 +1,156 @@
+
+    :root {
+      --primary-color: #007BFF;
+      --secondary-color: #00c6ff;
+      --bg-gradient-start: #f0f4f8;
+      --bg-gradient-end: #d9e2ec;
+      --container-bg: #ffffff;
+      --text-color: #333333;
+      --heading-font-size: 2.5rem;
+      --subheading-font-size: 1.8rem;
+    }
+
+    /* Reset một số thuộc tính */
+    * {
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Container chính với hiệu ứng slide-in */
+    .container {
+      max-width: 800px;
+      width: 90%;
+      margin: 40px auto;
+      background: var(--container-bg);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideIn 1s forwards;
+    }
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Tiêu đề chính với đường gạch gradient */
+    h1 {
+      text-align: center;
+      color: var(--text-color);
+      margin-bottom: 20px;
+      font-size: var(--heading-font-size);
+      position: relative;
+    }
+    h1::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    /* Đoạn văn cơ bản */
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text-color);
+      margin: 10px 0;
+    }
+
+    /* Tiêu đề phụ cho danh sách sản phẩm */
+    h2 {
+      margin-top: 40px;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 8px;
+      font-size: var(--subheading-font-size);
+    }
+
+    /* Bảng sản phẩm */
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 20px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    table thead {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: #ffffff;
+    }
+    table th, table td {
+      padding: 15px;
+      text-align: left;
+    }
+    table tbody tr {
+      background: var(--container-bg);
+      border-bottom: 1px solid #e0e0e0;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: fadeInRow 0.5s forwards;
+    }
+    table tbody tr:nth-child(even) {
+      background: #f5f5f5;
+    }
+    @keyframes fadeInRow {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    table tbody tr:hover {
+      background: #e9f7fe;
+      transform: scale(1.01);
+    }
+
+    /* Responsive: chuyển bảng sang dạng block cho màn hình nhỏ */
+    @media (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      table thead {
+        display: none;
+      }
+      table tr {
+        margin-bottom: 15px;
+      }
+      table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+      table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        padding-right: 10px;
+        font-weight: bold;
+        text-align: left;
+      }
+    }
+
+    /* CSS cho số tiền */
+    .money {
+      color: red;
+      font-weight: bold;
+    }
+
+    /* CSS cho trạng thái */
+    .status {
+      color: orangered;
+      font-weight: bold;
+    }
