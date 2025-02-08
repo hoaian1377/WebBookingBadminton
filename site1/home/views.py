@@ -11,6 +11,10 @@ from .models import CartItem
 from decimal import Decimal
 import random
 
+
+
+
+
 def shop(request):
     sanpham_list = Sanpham.objects.filter(trangthai='còn hàng')
     search_query = request.GET.get('search', '').strip()
@@ -34,6 +38,10 @@ def shop(request):
 def item_detail(request, pk):
     sanpham = get_object_or_404(Sanpham, pk=pk)
     return render(request, 'item_detail.html', {'sanpham': sanpham})
+
+def court_booking1(request, sansan):  # Đặt tên tham số hợp lý
+    san = get_object_or_404(San, sansan=sansan)  # Truy vấn bằng khóa chính
+    return render(request, 'court_booking1.html', {'San': san})  # Truyền đúng biến
 
 def cart_detail(request):
     cart = request.session.get('cart', {})

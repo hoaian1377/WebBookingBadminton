@@ -28,6 +28,8 @@ urlpatterns = [
     path('shop/checkout/', views.checkout, name='checkout'),  # Đường dẫn thanh toán
     path('shop/remove_from_cart/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('update_cart/<int:product_id>/', update_cart, name='update_cart'),
+
+
     
 ]
 
