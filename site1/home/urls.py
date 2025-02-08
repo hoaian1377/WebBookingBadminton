@@ -29,6 +29,9 @@ urlpatterns = [
     path('shop/remove_from_cart/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('update_cart/<int:product_id>/', update_cart, name='update_cart'),
     path('hoadon/<str:hoadonid>/', views.hoadon_detail, name='hoadon_detail'),
+    path("checkout/", views.checkout, name="checkout"),
+    path("shop/checkout/", views.checkout, name="checkout"),
+    
 
     
 ]

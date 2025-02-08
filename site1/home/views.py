@@ -11,6 +11,8 @@ from django.shortcuts import redirect
 from .models import CartItem
 from django.db import transaction
 from decimal import Decimal
+from django.shortcuts import render
+
 import random
 
 def shop(request):
@@ -461,3 +463,15 @@ def hoadon_detail(request, hoadonid):
         'chitiet_list': chitiet_list,
         'total_sum': total_sum,  # Tổng tiền của hóa đơn
     })
+def checkout(request):
+    return render(request, "checkout.html")
+
+def checkout(request):
+    cart = request.session.get("cart", [])  # Lấy giỏ hàng từ session
+    total_price = sum(item["subtotal"] for item in cart) if cart else 0
+
+    context = {
+        "cart_items": cart,
+        "total_price": total_price,
+    }
+    return render(request, "shop/checkout.html", context)  # Đảm bảo đường dẫn đúng

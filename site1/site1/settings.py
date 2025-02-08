@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -82,7 +81,7 @@ DATABASES = {
         'NAME': 'DLBMT',
         'User':'',
         'Password':'',
-        'Host':'DESKTOP-J6O1B30', 
+        'Host':'THANHTUNG', 
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',  # Kiểm tra driver bạn đã cài đặt
             'trust_connection' : 'yes'
