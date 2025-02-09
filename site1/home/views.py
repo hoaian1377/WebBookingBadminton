@@ -39,7 +39,9 @@ def shop(request):
 
 def item_detail(request, pk):
     sanpham = get_object_or_404(Sanpham, pk=pk)
-    return render(request, 'item_detail.html', {'sanpham': sanpham})
+    het_hang = sanpham.soluong <= 0  # Kiểm tra nếu hết hàng
+    return render(request, 'item_detail.html', {'sanpham': sanpham, 'het_hang': het_hang})
+
 
 def court_booking1(request,sanid):
     san = get_object_or_404(San, pk=sanid)  # Lấy thông tin sân từ ID
@@ -102,12 +104,14 @@ def cart_detail(request):
 def add_to_cart(request):
     if request.method == 'POST':
         sanphamid = request.POST.get('sanpham_id')
+        next_url = request.POST.get('next', 'shop')  # Lấy URL tiếp theo hoặc quay về 'shop'
+        
         try:
             sanphamid = int(sanphamid)
             quantity = int(request.POST.get('quantity', 1))
             if quantity < 1:
                 messages.error(request, 'Số lượng phải lớn hơn 0.')
-                return redirect('shop')
+                return redirect(next_url)
 
             cart = request.session.get('cart', {})
             if sanphamid in cart:
@@ -117,12 +121,14 @@ def add_to_cart(request):
 
             request.session['cart'] = cart
             messages.success(request, 'Sản phẩm đã được thêm vào giỏ hàng.')
-            return redirect('cart_detail')
+            return redirect(next_url)  # Trả về trang trước
         except (ValueError, TypeError):
             messages.error(request, 'Dữ liệu không hợp lệ hoặc sản phẩm không tồn tại.')
-            return redirect('shop')
+            return redirect(next_url)
 
     return redirect('shop')
+
+
 def generate_unique_id():
     # Lấy ID lớn nhất hiện có trong bảng KhachHang
     last_id = Khachhang.objects.aggregate(max_id=models.Max('khachhangid'))['max_id']
@@ -293,18 +299,33 @@ def generate_Hoadon_id():
 def court_history(request):
     return render(request, 'court_history.html')
 
+from django.http import JsonResponse
+
 def update_cart(request, product_id):
-    if request.method == 'POST':
-        quantity = int(request.POST.get('quantity', 1))
+    if request.method == "POST":
+        action = request.POST.get('action')
         cart = request.session.get('cart', {})
-        if product_id in cart:
-            if quantity > 0:
-                cart[product_id] = quantity
-            else:
-                del cart[product_id]
+
+        if str(product_id) in cart:
+            if action == "increase":
+                cart[str(product_id)] += 1
+            elif action == "decrease" and cart[str(product_id)] > 1:
+                cart[str(product_id)] -= 1
+            elif action == "remove":
+                del cart[str(product_id)]
+        else:
+            # Nếu sản phẩm chưa có trong giỏ hàng, thêm mới
+            cart[str(product_id)] = 1
+
         request.session['cart'] = cart
         messages.success(request, 'Giỏ hàng đã được cập nhật.')
-    return redirect('cart_detail')
+
+        # Phản hồi JSON cho AJAX nếu có
+        if request.is_ajax():
+            return JsonResponse({'status': 'success', 'cart_total': sum(cart.values())})
+
+    return redirect(request.META.get('HTTP_REFERER', 'cart_detail'))
+
 
 def remove_from_cart(request, product_id):
     cart = request.session.get('cart', {})
@@ -329,6 +350,13 @@ def checkout(request):
     try:
         taikhoan = Taikhoan.objects.get(taikhoanid=taikhoan_id)
         khachhang = Khachhang.objects.get(taikhoan=taikhoan)
+        if not khachhang.diachi or not khachhang.sdt:
+            messages.error(request, "Vui lòng cập nhật địa chỉ và số điện thoại trước khi thanh toán.")
+            return redirect('profile')
+
+    except (Taikhoan.DoesNotExist, Khachhang.DoesNotExist):
+        messages.error(request, "Không tìm thấy thông tin khách hàng. Vui lòng cập nhật tài khoản.")
+        return redirect('profile')
     except (Taikhoan.DoesNotExist, Khachhang.DoesNotExist):
         messages.error(request, "Không tìm thấy thông tin khách hàng. Vui lòng cập nhật tài khoản.")
         return redirect('profile')
@@ -341,7 +369,7 @@ def checkout(request):
         try:
             product = Sanpham.objects.get(pk=sanphamid)
             subtotal = Decimal(str(product.giatien)) * Decimal(quantity)  # Fix lỗi Decimal
-            cart_items.append({'product': product, 'quantity': quantity, 'subtotal': subtotal})
+            cart_items.append({'product': product, 'quantity': quantity, 'subtotal': subtotal   })
             total_price += subtotal
         except Sanpham.DoesNotExist:
             continue  # Bỏ qua sản phẩm không tồn tại
@@ -407,40 +435,6 @@ def remove_from_cart(request, product_id):
 from django.shortcuts import redirect
 from .models import CartItem
 
-def update_cart(request, product_id):
-    if request.method == "POST":
-        action = request.POST.get('action')
-        quantity = request.POST.get('quantity')
-
-        # Logic để cập nhật giỏ hàng
-        cart = request.session.get('cart', {})
-        if str(product_id) in cart:
-            if action == "increase":
-                cart[str(product_id)] += 1
-            elif action == "decrease" and cart[str(product_id)] > 1:
-                cart[str(product_id)] -= 1
-            elif action == "remove":  # Thêm logic để xóa sản phẩm
-                del cart[str(product_id)]
-
-        request.session['cart'] = cart
-        messages.success(request, 'Giỏ hàng đã được cập nhật.')
-    return redirect('cart_detail')  # Hoặc đường dẫn phù hợp đến trang giỏ hàng
-def update_cart(request, product_id):
-    if request.method == "POST":
-        action = request.POST.get('action')
-        cart = request.session.get('cart', {})
-
-        if str(product_id) in cart:
-            if action == "increase":
-                cart[str(product_id)] += 1
-            elif action == "decrease" and cart[str(product_id)] > 1:
-                cart[str(product_id)] -= 1
-            elif action == "remove":
-                del cart[str(product_id)]
-
-        request.session['cart'] = cart
-        messages.success(request, 'Giỏ hàng đã được cập nhật.')
-    return redirect('cart_detail')
 def cart_detail(request):
     cart = request.session.get('cart', {})
     sanpham_list = []
@@ -488,15 +482,3 @@ def hoadon_detail(request, hoadonid):
         'chitiet_list': chitiet_list,
         'total_sum': total_sum,  # Tổng tiền của hóa đơn
     })
-def checkout(request):
-    return render(request, "checkout.html")
-
-def checkout(request):
-    cart = request.session.get("cart", [])  # Lấy giỏ hàng từ session
-    total_price = sum(item["subtotal"] for item in cart) if cart else 0
-
-    context = {
-        "cart_items": cart,
-        "total_price": total_price,
-    }
-    return render(request, "shop/checkout.html", context)  # Đảm bảo đường dẫn đúng
