@@ -74,29 +74,35 @@
 </div>
 
 
-    <!-- Danh sách sân -->
-    <div class="container my-5">
-        <div class="row g-4">
-            {% for san in page_obj %}
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm">
-                    <a href="{% url 'court_booking1' %}?san_id={{ san.id }}">
-                        <img src="{% static san.imageurl %}" class="card-img-top" alt="{{ san.tensan }}" onerror="this.src='https://via.placeholder.com/300x200';">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ san.tensan }}</h5>
-                        <p class="card-text">Địa chỉ: {{ san.diachi }}</p>
-                        <p class="card-text">Số lượng sân: {{ san.soluongsan }}</p>
-                        <h5 class="text-success">Giá thuê: {{ san.giathue }} VND</h5>
-                        <a href="{% url 'court_booking1' %}?san_id={{ san.id }}" class="btn btn-primary">Đặt ngay</a>
-                    </div>
+   <!-- Danh sách sân -->
+   <div class="container my-5">
+    <div class="row g-4">
+        {% for san in page_obj %}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'court_booking1'  sanid=san.sanid %}">
+                    <img src="{% static san.imageurl %}" class="card-img-top" alt="{{ san.tensan }}" onerror="this.src='https://via.placeholder.com/300x200';">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ san.tensan }}</h5>
+                    <p class="card-text">Địa chỉ: {{ san.diachi }}</p>
+                    <p class="card-text">Số lượng sân: {{ san.soluongsan }}</p>
+                    <h5 class="text-success">Giá thuê: {{ san.giathue }} VND</h5>
+                    {% if san.sanid %}
+                        <a href="{% url 'court_booking1' sanid=san.sanid %}" class="btn btn-primary">Đặt ngay</a>
+                    {% else %}
+                        <p>ID sân không khả dụng.</p>
+                    {% endif %}
+
                 </div>
             </div>
-            {% empty %}
-            <p class="text-center">Không có sân cầu lông nào được tìm thấy.</p>
-            {% endfor %}
         </div>
+        {% empty %}
+        <p class="text-center">Không có sân cầu lông nào được tìm thấy.</p>
+        {% endfor %}
     </div>
+</div>
+
 
     <!-- Phân trang -->
     <div class="container pagination-container">

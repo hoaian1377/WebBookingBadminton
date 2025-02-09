@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
-from django.http import HttpResponseRedirect
-from .models import Sanpham, San, Taikhoan,Khachhang,Chitiethoadon,Hoadon
+from django.http import HttpResponseRedirect,HttpResponse
+from .models import Sanpham, San, Taikhoan,Khachhang,Chitiethoadon,Hoadon,Datsan
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -11,6 +11,8 @@ from django.shortcuts import redirect
 from .models import CartItem
 from django.db import transaction
 from decimal import Decimal
+from django.utils.dateparse import parse_date
+from datetime import datetime
 from django.shortcuts import render
 
 import random
@@ -39,9 +41,35 @@ def item_detail(request, pk):
     sanpham = get_object_or_404(Sanpham, pk=pk)
     return render(request, 'item_detail.html', {'sanpham': sanpham})
 
-def court_booking1(request, sansan):  # Đặt tên tham số hợp lý
-    san = get_object_or_404(San, sansan=sansan)  # Truy vấn bằng khóa chính
-    return render(request, 'court_booking1.html', {'San': san})  # Truyền đúng biến
+def court_booking1(request,sanid):
+    san = get_object_or_404(San, pk=sanid)  # Lấy thông tin sân từ ID
+    danh_sach_san = San.objects.all()  # Lấy danh sách các sân
+
+    if request.method == "POST":
+        ngaydat = request.POST.get("date")  # Lấy ngày đặt từ form
+        thoigianbatdau = request.POST.get("duration")  # Lấy giờ bắt đầu
+        thoigianketthuc = request.POST.get("time")  # Lấy thời gian kết thúc
+        customer_name = request.POST.get("customer_name")  # Tên người đặt
+
+        if ngaydat and thoigianbatdau and thoigianketthuc and customer_name:
+            ngay_dat_obj = parse_date(ngaydat)
+            bat_dau_obj = datetime.strptime(thoigianbatdau, "%H:%M").time()
+            ket_thuc_obj = datetime.strptime(thoigianketthuc, "%H:%M").time()
+
+            # Lưu vào DB
+            dat_san = Datsan(
+                san=san,
+                customer_name=customer_name,
+                ngaydat=ngay_dat_obj,
+                thoigianbatdau=bat_dau_obj,
+                thoigianketthuc=ket_thuc_obj,
+                trangthai="pending",
+            )
+            dat_san.save()
+            return redirect("court_history")  # Chuyển hướng đến trang lịch sử đặt sân
+
+    return render(request, 'court_booking1.html', {"san": san, "danh_sach_san": danh_sach_san})
+
 
 def cart_detail(request):
     cart = request.session.get('cart', {})
@@ -264,9 +292,6 @@ def generate_Hoadon_id():
 
 def court_history(request):
     return render(request, 'court_history.html')
-
-def court_booking1(request):
-    return render(request, 'court_booking1.html')
 
 def update_cart(request, product_id):
     if request.method == 'POST':
