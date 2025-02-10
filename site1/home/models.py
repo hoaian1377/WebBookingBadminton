@@ -240,3 +240,16 @@ class CartItem(models.Model):
     class Meta:
         db_table = 'cart_item'  # Tên bảng trong cơ sở dữ liệu
         
+class Lichsudatsan(models.Model):
+    lichsuid = models.AutoField(db_column='LichSuID', primary_key=True)  # Field name made lowercase.
+    khachhangid = models.ForeignKey(Khachhang, models.DO_NOTHING, db_column='KhachHangID')  # Field name made lowercase.
+    datsanid = models.ForeignKey(Datsan, models.DO_NOTHING, db_column='DatSanID')  # Field name made lowercase.
+    thoigiandat = models.DateTimeField(db_column='ThoiGianDat', blank=True, null=True)  # Field name made lowercase.
+    thoigianbatdau = models.TimeField(db_column='ThoiGianBatDau')  # Field name made lowercase.
+    thoigianketthuc = models.TimeField(db_column='ThoiGianKetThuc')  # Field name made lowercase.
+    trangthai = models.CharField(db_column='TrangThai', max_length=250, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
+    thanhtien = models.DecimalField(db_column='ThanhTien', max_digits=10, decimal_places=2)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'LichSuDatSan'
