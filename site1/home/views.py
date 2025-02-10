@@ -482,3 +482,50 @@ def hoadon_detail(request, hoadonid):
         'chitiet_list': chitiet_list,
         'total_sum': total_sum,  # Tổng tiền của hóa đơn
     })
+from django.shortcuts import render, redirect
+from .models import Datsan, Lichsudatsan, Khachhang
+from django.contrib.auth.decorators import login_required
+from datetime import datetime, timedelta
+
+@login_required
+def dat_san(request):
+    if request.method == "POST":
+        khachhang = Khachhang.objects.get(user=request.user)
+        san = request.POST.get("san")
+        thoigiandat = datetime.now()
+        thoigianbatdau = request.POST.get("thoigianbatdau")
+        thoigianketthuc = request.POST.get("thoigianketthuc")
+        trangthai = "Đã đặt"
+        thanhtien = request.POST.get("thanhtien")
+
+        # Tạo đơn đặt sân mới
+        dat_san_moi = Datsan.objects.create(
+            khachhang=khachhang,
+            san=san,
+            ngay_dat=thoigiandat
+        )
+
+        # Lưu vào lịch sử đặt sân
+        Lichsudatsan.objects.create(
+            khachhangid=khachhang,
+            datsanid=dat_san_moi,
+            thoigiandat=thoigiandat,
+            thoigianbatdau=thoigianbatdau,
+            thoigianketthuc=thoigianketthuc,
+            trangthai=trangthai,
+            thanhtien=thanhtien
+        )
+
+        # Chuyển hướng đến trang lịch sử đặt sân
+        return redirect("lich_su_dat_san")
+
+    return render(request, "court_booking1.html")
+
+
+@login_required
+def lich_su_dat_san(request):
+    khachhang = Khachhang.objects.get(user=request.user)
+    lich_su = Lichsudatsan.objects.filter(khachhangid=khachhang).order_by("-thoigiandat")
+
+    return render(request, "court_history.html", {"lich_su": lich_su})
+

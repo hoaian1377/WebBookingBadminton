@@ -1,27 +1,36 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block contents %} 
 <link href="{% static 'app/css/court_history.css' %}" rel="stylesheet">
+
 <div class="table-container">
     <div class="table">
         <div class="row header">
             <div class="cell">Tên Người Đặt</div>
-            <div class="cell">Thời Gian</div>
+            <div class="cell">Thời Gian Đặt</div>
             <div class="cell">Sân</div>
+            <div class="cell">Thời Gian Bắt Đầu</div>
+            <div class="cell">Thời Gian Kết Thúc</div>
             <div class="cell">Trạng Thái Thanh Toán</div>
+            <div class="cell">Thành Tiền</div>
         </div>
-        {% for booking in bookings %}
+        {% for booking in lich_su %}
         <div class="row">
-            <div class="cell">{{ booking.customer_name }}</div>
-            <div class="cell">{{ booking.booking_time }}</div>
-            <div class="cell">{{ booking.court }}</div>
-            <div class="cell">{{ booking.payment_status }}</div>
+            <div class="cell">{{ booking.khachhangid.ten }}</div>
+            <div class="cell">{{ booking.thoigiandat }}</div>
+            <div class="cell">{{ booking.datsanid.san }}</div>
+            <div class="cell">{{ booking.thoigianbatdau }}</div>
+            <div class="cell">{{ booking.thoigianketthuc }}</div>
+            <div class="cell">{{ booking.trangthai }}</div>
+            <div class="cell">{{ booking.thanhtien }}</div>
         </div>
         {% empty %}
         <div class="row">
-            <div class="cell no-data" colspan="4">Không có dữ liệu</div>
+            <div class="cell no-data" colspan="7">Không có dữ liệu</div>
         </div>
         {% endfor %}
     </div>
 </div>
+
 {% endblock contents %}

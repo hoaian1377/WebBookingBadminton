@@ -4,7 +4,7 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 from .views import update_cart
-
+from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
@@ -31,7 +31,9 @@ urlpatterns = [
     path('hoadon/<str:hoadonid>/', views.hoadon_detail, name='hoadon_detail'),
     path("checkout/", views.checkout, name="checkout"),
     path("shop/checkout/", views.checkout, name="checkout"),
-    
+    path("dat-san/", views.dat_san, name="dat_san"),
+    path("lich-su-dat-san/", views.lich_su_dat_san, name="lich_su_dat_san"),
+
 
     
 ]
