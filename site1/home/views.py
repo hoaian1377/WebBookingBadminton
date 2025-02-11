@@ -510,7 +510,9 @@ def court_booking1(request, sanid):
     return render(request, 'court_booking1.html', {'san': san})
 
 
+
 def court_history(request):
+    """ Lấy dữ liệu lịch sử đặt sân và tính tổng tiền từng sân. """
     taikhoan_id = request.session.get('taikhoanid')
     if not taikhoan_id:
         messages.error(request, "Bạn chưa đăng nhập! Vui lòng đăng nhập để xem lịch sử.")
@@ -523,7 +525,23 @@ def court_history(request):
         messages.error(request, "Không tìm thấy thông tin khách hàng.")
         return redirect('profile')
 
-    lich_su = Datsan.objects.filter(khachhangid=khachhang).select_related('sanid').order_by('-thoigianbatdau')
+    # Lấy danh sách đặt sân của khách hàng hiện tại
+    lich_su = Datsan.objects.filter(khachhangid=khachhang).select_related('sanid').order_by('-thoigiandat')
+
+    # Cập nhật tổng tiền cho từng lịch sử đặt sân
+    for booking in lich_su:
+        if booking.sanid:
+            giathue = booking.sanid.giathue  # Lấy giá thuê sân từ model `San`
+            
+            # Chuyển đổi thời gian bắt đầu và kết thúc thành dạng datetime
+            thoigianbatdau = datetime.combine(datetime.today(), booking.thoigianbatdau)
+            thoigianketthuc = datetime.combine(datetime.today(), booking.thoigianketthuc)
+            
+            # Tính thời lượng đặt sân (theo giờ)
+            thoiluong = (thoigianketthuc - thoigianbatdau).total_seconds() / 3600
+            
+            # Tính tổng tiền = giá thuê x thời lượng
+            booking.tongtien = round(giathue * thoiluong, 0)
 
     return render(request, 'court_history.html', {'lich_su': lich_su})
 
