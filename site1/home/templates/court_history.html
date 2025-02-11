@@ -1,33 +1,51 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load humanize %}
 {% block contents %} 
 <link href="{% static 'app/css/court_history.css' %}" rel="stylesheet">
 
 <div class="table-container">
+    <h2 class="table-title">Lịch Sử Đặt Sân</h2>
+
     <div class="table">
         <div class="row header">
             <div class="cell">Tên Người Đặt</div>
-            <div class="cell">Thời Gian Đặt</div>
+            <div class="cell">Ngày Đặt</div>
             <div class="cell">Sân</div>
             <div class="cell">Thời Gian Bắt Đầu</div>
             <div class="cell">Thời Gian Kết Thúc</div>
-            <div class="cell">Trạng Thái Thanh Toán</div>
-            <div class="cell">Thành Tiền</div>
+            <div class="cell">Trạng Thái</div>
+            <div class="cell">Tổng Tiền</div>
         </div>
+
         {% for booking in lich_su %}
         <div class="row">
-            <div class="cell">{{ booking.khachhangid.ten }}</div>
-            <div class="cell">{{ booking.thoigiandat }}</div>
-            <div class="cell">{{ booking.datsanid.san }}</div>
-            <div class="cell">{{ booking.thoigianbatdau }}</div>
-            <div class="cell">{{ booking.thoigianketthuc }}</div>
-            <div class="cell">{{ booking.trangthai }}</div>
-            <div class="cell">{{ booking.thanhtien }}</div>
+            <div class="cell">{{ booking.khachhangid.hoten }}</div> <!-- Đúng với models -->
+            <div class="cell">{{ booking.thoigiandat|date:"d/m/Y H:i" }}</div>
+            <div class="cell">{{ booking.sanid.tensan }}</div> <!-- Đúng với models -->
+            <div class="cell">{{ booking.thoigianbatdau|time:"H:i" }}</div>
+            <div class="cell">{{ booking.thoigianketthuc|time:"H:i" }}</div>
+            <div class="cell">
+                {% if booking.trangthai == "Đã thanh toán" %}
+                    <span class="badge bg-success">Đã thanh toán</span>
+                {% elif booking.trangthai == "Chưa thanh toán" %}
+                    <span class="badge bg-warning">Chưa thanh toán</span>
+                {% else %}
+                    <span class="badge bg-danger">Hủy</span>
+                {% endif %}
+            </div>
+        
+            <div class="cell">
+                {% if booking.tongtien %}
+                    {{ booking.tongtien|floatformat:0|intcomma }} VNĐ
+                {% else %}
+                    0 VNĐ
+                {% endif %}
+            </div>
         </div>
         {% empty %}
-        <div class="row">
-            <div class="cell no-data" colspan="7">Không có dữ liệu</div>
+        <div class="row no-data">
+            <div class="cell">Không có dữ liệu đặt sân</div>
         </div>
         {% endfor %}
     </div>

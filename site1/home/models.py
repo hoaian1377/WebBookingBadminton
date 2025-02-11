@@ -21,16 +21,18 @@ class Chitiethoadon(models.Model):
 
 
 class Datsan(models.Model):
-    datsanid = models.OneToOneField('San', models.DO_NOTHING, db_column='DatSanID', primary_key=True)  # Field name made lowercase. The composite primary key (DatSanID, DatSanID) found, that is not supported. The first column is selected.
+    datsanid = models.AutoField(db_column='DatSanID', primary_key=True)  # Field name made lowercase.
     thoigianbatdau = models.TimeField(db_column='ThoiGianBatDau', blank=True, null=True)  # Field name made lowercase.
     thoigianketthuc = models.TimeField(db_column='ThoiGianKetThuc', blank=True, null=True)  # Field name made lowercase.
     trangthai = models.CharField(db_column='TrangThai', max_length=255, db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
-
+    sanid = models.ForeignKey('San', models.DO_NOTHING, db_column='SanID', blank=True, null=True)  # Field name made lowercase.
+    khachhangid = models.ForeignKey('Khachhang', models.DO_NOTHING, db_column='KhachHangID', blank=True, null=True)  # Field name made lowercase.
+    tongtien = models.DecimalField(max_digits=10, decimal_places=2, default=0)  # Đảm bảo có dòng này
+    thoigiandat = models.DateTimeField(auto_now_add=True)  # Thêm dòng này
     class Meta:
         managed = False
         db_table = 'DatSan'
-        unique_together = (('datsanid', 'datsanid'),)
-
+        
 
 class Hoadon(models.Model):
     hoadonid = models.IntegerField(db_column='HoaDonID', primary_key=True)  # Field name made lowercase.
@@ -240,17 +242,4 @@ class CartItem(models.Model):
     class Meta:
         db_table = 'cart_item'  # Tên bảng trong cơ sở dữ liệu
         
-class Lichsudatsan(models.Model):
-    lichsuid = models.AutoField(db_column='LichSuID', primary_key=True)  # Field name made lowercase.
-    khachhangid = models.ForeignKey(Khachhang, models.DO_NOTHING, db_column='KhachHangID')  # Field name made lowercase.
-    datsanid = models.ForeignKey(Datsan, models.DO_NOTHING, db_column='DatSanID')  # Field name made lowercase.
-    thoigiandat = models.DateTimeField(db_column='ThoiGianDat', blank=True, null=True)  # Field name made lowercase.
-    thoigianbatdau = models.TimeField(db_column='ThoiGianBatDau')  # Field name made lowercase.
-    thoigianketthuc = models.TimeField(db_column='ThoiGianKetThuc')  # Field name made lowercase.
-    trangthai = models.CharField(db_column='TrangThai', max_length=250, db_collation='SQL_Latin1_General_CP1_CI_AS')  # Field name made lowercase.
-    thanhtien = models.DecimalField(db_column='ThanhTien', max_digits=10, decimal_places=2)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'LichSuDatSan'
         

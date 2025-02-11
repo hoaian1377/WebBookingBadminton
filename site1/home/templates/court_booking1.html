@@ -1,250 +1,136 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+
 {% block contents %}
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{% static 'app/css/style.css' %}" rel="stylesheet">
     <title>Đặt Sân Cầu Lông</title>
     
-    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'app/css/style.css' %}" rel="stylesheet">
+
     <style>
         body {
             background-color: #f8f9fa;
             font-family: Arial, sans-serif;
         }
-
         .container {
             max-width: 1100px;
             margin: 30px auto;
         }
-
         .court-image img {
             width: 100%;
             height: auto;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        .court-info, .review-qa-section {
+        .court-info, .booking-form {
             background: #fff;
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        .booking-form input, .booking-form select, .booking-form textarea, .booking-form button {
+        .booking-form input, .booking-form select, .booking-form button {
             width: 100%;
             margin-top: 10px;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-
         .booking-form button {
             background-color: #007bff;
             color: #fff;
             border: none;
             transition: background-color 0.3s;
         }
-
         .booking-form button:hover {
             background-color: #0056b3;
         }
-
-        .review-section h2, .qa-section h2 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        .average-rating {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .average-rating div {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .average-rating .rating-stars {
-            font-size: 36px;
-            color: #FFD700;
-        }
-
-        .rating-breakdown {
-            margin-top: 20px;
-        }
-
-        .rating-breakdown div {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-        }
-
-        .rating-breakdown .progress {
-            width: 70%;
-        }
-        
-            body {
-                background-color: #f8f9fa;
-                font-family: Arial, sans-serif;
-            }
-    
-            .container {
-                max-width: 1100px;
-                margin: 30px auto;
-                padding: 15px;
-            }
-    
-            .court-image img {
-                width: 100%;
-                height: auto;
-                border-radius: 10px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            }
-    
-            .court-info, .booking-form {
-                background: #fff;
-                border-radius: 10px;
-                padding: 14px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                margin-top: 0px;
-            }
-    
-            .booking-form input, .booking-form select, .booking-form textarea, .booking-form button {
-                width: 100%;
-                margin-top: 10px;
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-            }
-    
-            .booking-form button {
-                background-color: #007bff;
-                color: #fff;
-                border: none;
-                transition: background-color 0.3s;
-            }
-    
-            .booking-form button:hover {
-                background-color: #0056b3;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="row mb-4">
-                <!-- Image Section -->
-                <div class="col-lg-7 court-image">
-                    <img src="{% static san.imageurl %}" alt="{{san.tensan}}">
-                </div>
-    
-                <!-- Info Section -->
-                <div class="col-lg-5 court-info">
-                    <h1 class="mb-3">Thông tin sân</h1>
-                    <h2>{{san.tensan}}</h2>
-                    <p><strong>Giờ mở cửa:</strong> 6h - 23h</p>
-                    <p><strong>Số sân thi đấu:</strong> {{san.soluongsan|floatformat}}</p>
-                    <p><strong>Giá sân:</strong> {{san.giathue|floatformat:0|intcomma}}</p>
-                    <p><strong>Dịch vụ tiện ích:</strong></p>
-                        {{san.description}}
-                </div>
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sân Cầu Lông -->
+        <div class="row mb-4">
+            <!-- Hình ảnh sân -->
+            <div class="col-lg-7 court-image">
+                <img src="{% static san.imageurl %}" alt="{{ san.tensan }}">
             </div>
-    
-            <!-- Booking Form Section -->
-            <div class="row mb-4">
-                <div class="col-lg-12 booking-form">
-                    <h2 class="mb-3">Đặt sân theo yêu cầu</h2>
-                    <form>
-                        <div class="form-group">
-                            <label for="date">Chọn ngày:</label>
-                            <input type="date" id="date" name="date" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="time">Thời gian:</label>
-                            <select id="time" name="time">
-                                <option value="1.5">1 giờ</option>
-                                <option value="1.5">1.5 giờ</option>
-                                <option value="1.5">2 giờ</option>
-                                <!-- Add more options as needed -->
-                            </select>
-                            <label for="duration">Thời gian Chi Tiết:</label>
-                            <input id="duration" type="time" min="00:00" max="23:59">
-
-                        </div>
-                        <div class="form-group">
-                            <label for="notes">Ghi chú:</label>
-                            <textarea id="notes" name="notes"></textarea>
-                        </div>
-                        <button type="submit">Đặt sân</button>
-                    </form>
-                </div>
-            </div>
-      
-    
-        <!-- Review and QA Section -->
-        <div class="row review-qa-section">
-            <!-- Review Section -->
-            <div class="col-lg-6 review-section">
-                <h2 class="text-primary">Đánh giá sân cầu lông</h2>
-                <div class="average-rating d-flex align-items-center mb-3">
-                    <span class="me-2 fs-4">Trung bình</span>
-                    <span class="rating-stars fs-3">5.0 ★</span>
-                    <button class="btn btn-primary ms-auto">Đánh giá và nhận xét</button>
-                </div>
-                <div class="rating-breakdown">
-                    <div class="mb-2 d-flex align-items-center">
-                        <span class="me-2 fs-5">5 ★</span>
-                        <div class="progress w-75">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <span class="ms-2 fs-5">100%</span>
-                    </div>
-                    <div class="mb-2 d-flex align-items-center">
-                        <span class="me-2 fs-5">4 ★</span>
-                        <div class="progress w-75">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <span class="ms-2 fs-5">80%</span>
-                    </div>
-                    <div class="mb-2 d-flex align-items-center">
-                        <span class="me-2 fs-5">3 ★</span>
-                        <div class="progress w-75">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <span class="ms-2 fs-5">50%</span>
-                    </div>
-                    <div class="mb-2 d-flex align-items-center">
-                        <span class="me-2 fs-5">2 ★</span>
-                        <div class="progress w-75">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <span class="ms-2 fs-5">30%</span>
-                    </div>
-                    <div class="mb-2 d-flex align-items-center">
-                        <span class="me-2 fs-5">1 ★</span>
-                        <div class="progress w-75">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 10%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <span class="ms-2 fs-5">10%</span>
-                    </div>
-                </div>
-            </div>
-        
-            <!-- Q&A Section -->
-            <div class="col-lg-6 qa-section">
-                <h2 class="text-primary">Hỏi đáp</h2>
-                <textarea class="form-control mb-2" placeholder="Mời bạn để lại bình luận" rows="4"></textarea>
-                <button class="btn btn-primary w-100">Gửi bình luận</button>
+            <!-- Thông tin sân -->
+            <div class="col-lg-5 court-info">
+                <h1 class="mb-3">Thông tin sân</h1>
+                <h2>{{ san.tensan }}</h2>
+                <p><strong>Giờ mở cửa:</strong> 6h - 23h</p>
+                <p><strong>Số sân thi đấu:</strong> {{ san.soluongsan|floatformat }}</p>
+                <p><strong>Giá thuê:</strong> {{ san.giathue|floatformat:0|intcomma }} VND</p>
+                <p><strong>Dịch vụ tiện ích:</strong></p>
+                <p>{{ san.description }}</p>
             </div>
         </div>
+
+        <!-- Form Đặt Sân -->
+        <form method="POST" action="{% url 'court_booking1' san.sanid %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="date">Chọn ngày:</label>
+                <input type="date" id="date" name="date" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="time">Thời gian bắt đầu:</label>
+                <input id="time" type="time" name="thoigianbatdau" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="duration">Thời lượng:</label>
+                <select id="duration" name="duration" class="form-control">
+                    <option value="1">1 giờ</option>
+                    <option value="1.5">1.5 giờ</option>
+                    <option value="2">2 giờ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="end_time">Thời gian kết thúc:</label>
+                <input id="end_time" type="time" class="form-control" disabled>
+            </div>
+            <input type="hidden" id="thoigianketthuc" name="thoigianketthuc">
+            <button type="submit" class="btn btn-primary">Đặt sân</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("time").addEventListener("change", updateEndTime);
+        document.getElementById("duration").addEventListener("change", updateEndTime);
         
+        // Gán ngày hiện tại mặc định vào input date
+        document.addEventListener("DOMContentLoaded", function () {
+            let today = new Date().toISOString().split("T")[0];
+            document.getElementById("date").value = today;
+        });
+    
+        function updateEndTime() {
+            let startTime = document.getElementById("time").value;
+            let duration = parseFloat(document.getElementById("duration").value);
+    
+            if (startTime && duration) {
+                let [hours, minutes] = startTime.split(":").map(Number);
+                let endMinutes = minutes + duration * 60;
+                let endHours = hours + Math.floor(endMinutes / 60);
+                endMinutes = endMinutes % 60;
+    
+                let endTime = `${String(endHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}`;
+    
+                // Hiển thị thời gian kết thúc trên input disabled
+                document.getElementById("end_time").value = endTime;
+                // Gán vào input hidden để gửi form
+                document.getElementById("thoigianketthuc").value = endTime;
+            }
+        }
+    </script>
+    
 </body>
 </html>
-{% endblock contents %}
+{% endblock %}

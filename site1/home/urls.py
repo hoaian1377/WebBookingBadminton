@@ -31,11 +31,7 @@ urlpatterns = [
     path('hoadon/<str:hoadonid>/', views.hoadon_detail, name='hoadon_detail'),
     path("checkout/", views.checkout, name="checkout"),
     path("shop/checkout/", views.checkout, name="checkout"),
-    path("dat-san/", views.dat_san, name="dat_san"),
-    path("lich-su-dat-san/", views.lich_su_dat_san, name="lich_su_dat_san"),
 
-
-    
 ]
 
 

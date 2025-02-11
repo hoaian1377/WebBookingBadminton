@@ -12,7 +12,9 @@ from .models import CartItem
 from django.db import transaction
 from decimal import Decimal
 from django.utils.dateparse import parse_date
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.utils.timezone import now
+from django.http import JsonResponse
 from django.shortcuts import render
 
 import random
@@ -41,37 +43,6 @@ def item_detail(request, pk):
     sanpham = get_object_or_404(Sanpham, pk=pk)
     het_hang = sanpham.soluong <= 0  # Kiểm tra nếu hết hàng
     return render(request, 'item_detail.html', {'sanpham': sanpham, 'het_hang': het_hang})
-
-
-def court_booking1(request,sanid):
-    san = get_object_or_404(San, pk=sanid)  # Lấy thông tin sân từ ID
-    danh_sach_san = San.objects.all()  # Lấy danh sách các sân
-
-    if request.method == "POST":
-        ngaydat = request.POST.get("date")  # Lấy ngày đặt từ form
-        thoigianbatdau = request.POST.get("duration")  # Lấy giờ bắt đầu
-        thoigianketthuc = request.POST.get("time")  # Lấy thời gian kết thúc
-        customer_name = request.POST.get("customer_name")  # Tên người đặt
-
-        if ngaydat and thoigianbatdau and thoigianketthuc and customer_name:
-            ngay_dat_obj = parse_date(ngaydat)
-            bat_dau_obj = datetime.strptime(thoigianbatdau, "%H:%M").time()
-            ket_thuc_obj = datetime.strptime(thoigianketthuc, "%H:%M").time()
-
-            # Lưu vào DB
-            dat_san = Datsan(
-                san=san,
-                customer_name=customer_name,
-                ngaydat=ngay_dat_obj,
-                thoigianbatdau=bat_dau_obj,
-                thoigianketthuc=ket_thuc_obj,
-                trangthai="pending",
-            )
-            dat_san.save()
-            return redirect("court_history")  # Chuyển hướng đến trang lịch sử đặt sân
-
-    return render(request, 'court_booking1.html', {"san": san, "danh_sach_san": danh_sach_san})
-
 
 def cart_detail(request):
     cart = request.session.get('cart', {})
@@ -136,6 +107,12 @@ def generate_unique_id():
         return 1  # Nếu bảng trống, bắt đầu từ 1
     return last_id + 1  # ID tiếp theo
 
+def Datsan_id():
+    # Lấy ID lớn nhất hiện có trong bảng KhachHang
+    last_id = Datsan.objects.aggregate(max_id=models.Max('datsanid'))['max_id']
+    if last_id is None:
+        return 1  # Nếu bảng trống, bắt đầu từ 1
+    return last_id + 1  # ID tiếp theo
 
 def register(request):
     if request.method == 'POST':
@@ -296,10 +273,7 @@ def generate_Hoadon_id():
     return last_id + 1  # ID tiếp theo
 
 
-def court_history(request):
-    return render(request, 'court_history.html')
 
-from django.http import JsonResponse
 
 def update_cart(request, product_id):
     if request.method == "POST":
@@ -482,50 +456,74 @@ def hoadon_detail(request, hoadonid):
         'chitiet_list': chitiet_list,
         'total_sum': total_sum,  # Tổng tiền của hóa đơn
     })
-from django.shortcuts import render, redirect
-from .models import Datsan, Lichsudatsan, Khachhang
-from django.contrib.auth.decorators import login_required
-from datetime import datetime, timedelta
 
-@login_required
-def dat_san(request):
+def court_booking1(request, sanid):
+    san = get_object_or_404(San, sanid=sanid)
+
+    taikhoan_id = request.session.get('taikhoanid')
+    if not taikhoan_id:
+        messages.error(request, "Bạn chưa đăng nhập! Vui lòng đăng nhập để đặt sân.")
+        return redirect('login')
+
+    try:
+        taikhoan = Taikhoan.objects.get(taikhoanid=taikhoan_id)
+        khachhang = Khachhang.objects.get(taikhoan=taikhoan)
+    except (Taikhoan.DoesNotExist, Khachhang.DoesNotExist):
+        messages.error(request, "Không tìm thấy thông tin khách hàng.")
+        return redirect('profile')
+
     if request.method == "POST":
-        khachhang = Khachhang.objects.get(user=request.user)
-        san = request.POST.get("san")
-        thoigiandat = datetime.now()
-        thoigianbatdau = request.POST.get("thoigianbatdau")
-        thoigianketthuc = request.POST.get("thoigianketthuc")
-        trangthai = "Đã đặt"
-        thanhtien = request.POST.get("thanhtien")
+        print("Dữ liệu POST:", request.POST)  # Debug
 
-        # Tạo đơn đặt sân mới
-        dat_san_moi = Datsan.objects.create(
-            khachhang=khachhang,
-            san=san,
-            ngay_dat=thoigiandat
-        )
+        thoigianbatdau_str = request.POST.get("thoigianbatdau")
+        duration_str = request.POST.get("duration")
 
-        # Lưu vào lịch sử đặt sân
-        Lichsudatsan.objects.create(
-            khachhangid=khachhang,
-            datsanid=dat_san_moi,
-            thoigiandat=thoigiandat,
-            thoigianbatdau=thoigianbatdau,
-            thoigianketthuc=thoigianketthuc,
-            trangthai=trangthai,
-            thanhtien=thanhtien
-        )
+        if not thoigianbatdau_str or not duration_str:
+            messages.error(request, "Vui lòng chọn thời gian đặt sân.")
+            return redirect('court_booking1', sanid=sanid)
 
-        # Chuyển hướng đến trang lịch sử đặt sân
-        return redirect("lich_su_dat_san")
+        try:
+            thoigianbatdau = datetime.strptime(thoigianbatdau_str, "%H:%M").time()
+            duration = float(duration_str)  # Chuyển đổi thời lượng thành số giờ
+            thoigianketthuc = (datetime.combine(datetime.today(), thoigianbatdau) + timedelta(hours=duration)).time()
 
-    return render(request, "court_booking1.html")
+            print(f"Thoigianbatdau: {thoigianbatdau}, Thoigianketthuc: {thoigianketthuc}")  # Debug
+
+            datsan = Datsan.objects.create(
+                sanid=san,
+                khachhangid=khachhang,
+                thoigianbatdau=thoigianbatdau,
+                thoigianketthuc=thoigianketthuc,
+                trangthai="Chưa thanh toán"
+            )
+
+            print(f"Đặt sân thành công: {datsan.datsanid}")  # Debug
+
+            messages.success(request, "Đặt sân thành công! Đang chờ xác nhận.")
+            return redirect('court_history')
+
+        except Exception as e:
+            print("Lỗi khi lưu vào DB:", str(e))  # Debug lỗi
+            messages.error(request, "Đã xảy ra lỗi khi đặt sân!")
+            return redirect('court_booking1', sanid=sanid)
+
+    return render(request, 'court_booking1.html', {'san': san})
 
 
-@login_required
-def lich_su_dat_san(request):
-    khachhang = Khachhang.objects.get(user=request.user)
-    lich_su = Lichsudatsan.objects.filter(khachhangid=khachhang).order_by("-thoigiandat")
+def court_history(request):
+    taikhoan_id = request.session.get('taikhoanid')
+    if not taikhoan_id:
+        messages.error(request, "Bạn chưa đăng nhập! Vui lòng đăng nhập để xem lịch sử.")
+        return redirect('login')
 
-    return render(request, "court_history.html", {"lich_su": lich_su})
+    try:
+        taikhoan = Taikhoan.objects.get(taikhoanid=taikhoan_id)
+        khachhang = Khachhang.objects.get(taikhoan=taikhoan)
+    except (Taikhoan.DoesNotExist, Khachhang.DoesNotExist):
+        messages.error(request, "Không tìm thấy thông tin khách hàng.")
+        return redirect('profile')
+
+    lich_su = Datsan.objects.filter(khachhangid=khachhang).select_related('sanid').order_by('-thoigianbatdau')
+
+    return render(request, 'court_history.html', {'lich_su': lich_su})
 
