@@ -18,6 +18,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 import random
+import re
 
 def shop(request):
     sanpham_list = Sanpham.objects.filter(trangthai='còn hàng')
@@ -124,6 +125,16 @@ def register(request):
         # Kiểm tra mật khẩu
         if password != confirm_password:
             messages.error(request, 'Mật khẩu không khớp.')
+            return render(request, 'register.html')
+
+        # Kiểm tra độ dài mật khẩu
+        if len(password) < 8:
+            messages.error(request, 'Mật khẩu phải có ít nhất 8 ký tự.')
+            return render(request, 'register.html')
+
+        # Kiểm tra mật khẩu có ít nhất một chữ cái, một số và một ký tự đặc biệt
+        if not re.search(r'[A-Za-z]', password) or not re.search(r'\d', password) or not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+            messages.error(request, 'Mật khẩu phải chứa ít nhất một chữ cái, một số và một ký tự đặc biệt.')
             return render(request, 'register.html')
 
         # Kiểm tra tên đăng nhập đã tồn tại
