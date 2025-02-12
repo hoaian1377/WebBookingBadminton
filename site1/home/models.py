@@ -28,7 +28,7 @@ class Datsan(models.Model):
     sanid = models.ForeignKey('San', models.DO_NOTHING, db_column='SanID', blank=True, null=True)  # Field name made lowercase.
     khachhangid = models.ForeignKey('Khachhang', models.DO_NOTHING, db_column='KhachHangID', blank=True, null=True)  # Field name made lowercase.
     tongtien = models.DecimalField(max_digits=10, decimal_places=2, default=0)  # Đảm bảo có dòng này
-    thoigiandat = models.DateTimeField(auto_now_add=True)  # Thêm dòng này
+    thoigiandat = models.DateTimeField(db_column='ThoiGianDat', blank=True, null=True)  # Thêm dòng này
     class Meta:
         managed = False
         db_table = 'DatSan'

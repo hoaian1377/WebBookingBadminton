@@ -74,11 +74,12 @@
         </div>
 
         <!-- Form Đặt Sân -->
-        <form method="POST" action="{% url 'court_booking1' san.sanid %}">
+        <form method="POST" action="{% url 'court_booking1' san.sanid %}" class="booking-form">
             {% csrf_token %}
             <div class="form-group">
                 <label for="date">Chọn ngày:</label>
                 <input type="date" id="date" name="date" class="form-control" required>
+                <p><strong>Ngày đặt sân:</strong> <span id="selected_date"></span></p>
             </div>
             <div class="form-group">
                 <label for="time">Thời gian bắt đầu:</label>
@@ -90,6 +91,12 @@
                     <option value="1">1 giờ</option>
                     <option value="1.5">1.5 giờ</option>
                     <option value="2">2 giờ</option>
+                    <option value="2.5">2.5 giờ</option>
+                    <option value="3">3 giờ</option>
+                    <option value="3.5">3.5 giờ</option>
+                    <option value="4">4 giờ</option>
+                    <option value="4.5">4.5 giờ</option>
+                    <option value="5">5 giờ</option>
                 </select>
             </div>
             <div class="form-group">
@@ -104,33 +111,28 @@
     <script>
         document.getElementById("time").addEventListener("change", updateEndTime);
         document.getElementById("duration").addEventListener("change", updateEndTime);
-        
-        // Gán ngày hiện tại mặc định vào input date
-        document.addEventListener("DOMContentLoaded", function () {
-            let today = new Date().toISOString().split("T")[0];
-            document.getElementById("date").value = today;
-        });
-    
+
         function updateEndTime() {
             let startTime = document.getElementById("time").value;
             let duration = parseFloat(document.getElementById("duration").value);
-    
-            if (startTime && duration) {
+
+            if (startTime && !isNaN(duration)) {
                 let [hours, minutes] = startTime.split(":").map(Number);
-                let endMinutes = minutes + duration * 60;
-                let endHours = hours + Math.floor(endMinutes / 60);
-                endMinutes = endMinutes % 60;
-    
-                let endTime = `${String(endHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}`;
-    
-                // Hiển thị thời gian kết thúc trên input disabled
-                document.getElementById("end_time").value = endTime;
-                // Gán vào input hidden để gửi form
-                document.getElementById("thoigianketthuc").value = endTime;
+                let endTime = new Date();
+                endTime.setHours(hours);
+                endTime.setMinutes(minutes);
+                endTime.setMinutes(endTime.getMinutes() + duration * 60);
+
+                let endHours = String(endTime.getHours()).padStart(2, '0');
+                let endMinutes = String(endTime.getMinutes()).padStart(2, '0');
+                let formattedEndTime = `${endHours}:${endMinutes}`;
+
+                document.getElementById("end_time").value = formattedEndTime;
+                document.getElementById("thoigianketthuc").value = formattedEndTime;
             }
         }
+
     </script>
-    
 </body>
 </html>
 {% endblock %}

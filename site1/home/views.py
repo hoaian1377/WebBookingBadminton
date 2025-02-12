@@ -456,6 +456,10 @@ def hoadon_detail(request, hoadonid):
         'chitiet_list': chitiet_list,
         'total_sum': total_sum,  # Tổng tiền của hóa đơn
     })
+from datetime import datetime, timedelta
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .models import Datsan, San, Khachhang, Taikhoan
 
 def court_booking1(request, sanid):
     san = get_object_or_404(San, sanid=sanid)
@@ -475,25 +479,28 @@ def court_booking1(request, sanid):
     if request.method == "POST":
         print("Dữ liệu POST:", request.POST)  # Debug
 
+        ngaychoi_str = request.POST.get("date")  # Lấy ngày chơi
         thoigianbatdau_str = request.POST.get("thoigianbatdau")
         duration_str = request.POST.get("duration")
 
-        if not thoigianbatdau_str or not duration_str:
-            messages.error(request, "Vui lòng chọn thời gian đặt sân.")
+        if not ngaychoi_str or not thoigianbatdau_str or not duration_str:
+            messages.error(request, "Vui lòng chọn đầy đủ ngày và thời gian đặt sân.")
             return redirect('court_booking1', sanid=sanid)
 
         try:
+            ngaychoi = datetime.strptime(ngaychoi_str, "%Y-%m-%d").date()  # Chuyển ngày chơi thành kiểu date
             thoigianbatdau = datetime.strptime(thoigianbatdau_str, "%H:%M").time()
             duration = float(duration_str)  # Chuyển đổi thời lượng thành số giờ
-            thoigianketthuc = (datetime.combine(datetime.today(), thoigianbatdau) + timedelta(hours=duration)).time()
+            thoigianketthuc = (datetime.combine(ngaychoi, thoigianbatdau) + timedelta(hours=duration)).time()
 
-            print(f"Thoigianbatdau: {thoigianbatdau}, Thoigianketthuc: {thoigianketthuc}")  # Debug
+            print(f"Ngày chơi: {ngaychoi}, Thời gian bắt đầu: {thoigianbatdau}, Thời gian kết thúc: {thoigianketthuc}")  # Debug
 
             datsan = Datsan.objects.create(
                 sanid=san,
                 khachhangid=khachhang,
                 thoigianbatdau=thoigianbatdau,
                 thoigianketthuc=thoigianketthuc,
+                thoigiandat=ngaychoi,  # Lưu ngày chơi vào đây!
                 trangthai="Chưa thanh toán"
             )
 
@@ -510,7 +517,6 @@ def court_booking1(request, sanid):
     return render(request, 'court_booking1.html', {'san': san})
 
 
-
 def court_history(request):
     """ Lấy dữ liệu lịch sử đặt sân và tính tổng tiền từng sân. """
     taikhoan_id = request.session.get('taikhoanid')
@@ -525,23 +531,36 @@ def court_history(request):
         messages.error(request, "Không tìm thấy thông tin khách hàng.")
         return redirect('profile')
 
-    # Lấy danh sách đặt sân của khách hàng hiện tại
+    # Lấy danh sách đặt sân của khách hàng
     lich_su = Datsan.objects.filter(khachhangid=khachhang).select_related('sanid').order_by('-thoigiandat')
 
-    # Cập nhật tổng tiền cho từng lịch sử đặt sân
     for booking in lich_su:
         if booking.sanid:
             giathue = booking.sanid.giathue  # Lấy giá thuê sân từ model `San`
-            
+
+            # Nếu `thoigiandat` bị None, dùng ngày hiện tại
+            if booking.thoigiandat is None:
+                booking.thoigiandat = datetime.now()
+                booking.save()  # Lưu lại để tránh lỗi lần sau
+
             # Chuyển đổi thời gian bắt đầu và kết thúc thành dạng datetime
-            thoigianbatdau = datetime.combine(datetime.today(), booking.thoigianbatdau)
-            thoigianketthuc = datetime.combine(datetime.today(), booking.thoigianketthuc)
-            
+            ngay_choi = booking.thoigiandat.date()
+            thoigianbatdau = datetime.combine(ngay_choi, booking.thoigianbatdau)
+            thoigianketthuc = datetime.combine(ngay_choi, booking.thoigianketthuc)
+
+            # Nếu giờ kết thúc nhỏ hơn giờ bắt đầu (qua đêm), cộng thêm 1 ngày
+            if thoigianketthuc < thoigianbatdau:
+                thoigianketthuc += timedelta(days=1)
+
             # Tính thời lượng đặt sân (theo giờ)
             thoiluong = (thoigianketthuc - thoigianbatdau).total_seconds() / 3600
-            
-            # Tính tổng tiền = giá thuê x thời lượng
-            booking.tongtien = round(giathue * thoiluong, 0)
+
+            # Tính tổng tiền
+            tongtien = round(giathue * thoiluong, 0)
+
+            # Lưu vào database nếu tổng tiền chưa cập nhật
+            if booking.tongtien != tongtien:
+                booking.tongtien = tongtien
+                booking.save()
 
     return render(request, 'court_history.html', {'lich_su': lich_su})
-
