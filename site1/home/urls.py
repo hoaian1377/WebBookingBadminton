@@ -30,7 +30,8 @@ urlpatterns = [
     path('update_cart/<int:product_id>/', update_cart, name='update_cart'),
     path('hoadon/<str:hoadonid>/', views.hoadon_detail, name='hoadon_detail'),
     path("checkout/", views.checkout, name="checkout"),
-    path("shop/checkout/", views.checkout, name="checkout"),
+    path("shop/checkout/", views.checkout, name="checkout"),\
+    path('court_history/xoa_dat_san/<int:id>/', views.xoa_dat_san, name='xoa_dat_san'),
 
 ]
 

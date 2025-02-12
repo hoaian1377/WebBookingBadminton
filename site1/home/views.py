@@ -564,3 +564,11 @@ def court_history(request):
                 booking.save()
 
     return render(request, 'court_history.html', {'lich_su': lich_su})
+from .models import Datsan  # Đảm bảo bạn import mô hình đúng
+
+def xoa_dat_san(request, id):
+    if request.method == 'POST':
+        booking = get_object_or_404(Datsan, datsanid=id)  # Sử dụng datsanid để tìm bản ghi
+        booking.delete()
+        messages.success(request, "Đã xóa đặt sân thành công!")
+        return redirect('court_history')  # Quay về trang lịch sử đặt sân

@@ -19,6 +19,7 @@
                     <th>Thời Gian Kết Thúc</th>
                     <th>Trạng Thái</th>
                     <th>Tổng Tiền</th>
+                    <th>Hành Động</th> <!-- Cột mới -->
                 </tr>
             </thead>
             <tbody>
@@ -40,7 +41,14 @@
                         {% endif %}
                     </td>
                     <td>{{ booking.tongtien|default:0|floatformat:0|intcomma }} VNĐ</td>
+                    <td>
+                    <form action="{% url 'xoa_dat_san' booking.datsanid %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </td>
                 </tr>
+                
                 {% empty %}
                 <tr>
                     <td colspan="7" class="text-center text-muted">Không có dữ liệu đặt sân</td>
