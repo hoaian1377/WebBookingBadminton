@@ -36,22 +36,23 @@
                             <span class="badge bg-success">Đã thanh toán</span>
                         {% elif booking.trangthai == "Chưa thanh toán" %}
                             <span class="badge bg-warning text-dark">Chưa thanh toán</span>
+                        {% elif booking.trangthai == "Đang xác nhận hủy" %}
+                            <span class="badge bg-primary">Đang xác nhận hủy</span>
                         {% else %}
                             <span class="badge bg-danger">Hủy</span>
                         {% endif %}
                     </td>
                     <td>{{ booking.tongtien|default:0|floatformat:0|intcomma }} VNĐ</td>
                     <td>
-                    <form action="{% url 'xoa_dat_san' booking.datsanid %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
-                    </form>
-                </td>
+                        <form action="{% url 'xoa_dat_san' booking.datsanid %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                        </form>
+                    </td>
                 </tr>
-                
                 {% empty %}
                 <tr>
-                    <td colspan="7" class="text-center text-muted">Không có dữ liệu đặt sân</td>
+                    <td colspan="8" class="text-center text-muted">Không có dữ liệu đặt sân</td>
                 </tr>
                 {% endfor %}
             </tbody>

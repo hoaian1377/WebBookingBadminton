@@ -580,6 +580,10 @@ from .models import Datsan  # Đảm bảo bạn import mô hình đúng
 def xoa_dat_san(request, id):
     if request.method == 'POST':
         booking = get_object_or_404(Datsan, datsanid=id)  # Sử dụng datsanid để tìm bản ghi
-        booking.delete()
-        messages.success(request, "Đã xóa đặt sân thành công!")
+        
+        # Cập nhật trạng thái thành "Đang xác nhận hủy"
+        booking.trangthai = "Đang xác nhận hủy"
+        booking.save()  # Lưu thay đổi vào cơ sở dữ liệu
+
+        messages.success(request, "Đang xác nhận hủy đặt sân thành công!")
         return redirect('court_history')  # Quay về trang lịch sử đặt sân
