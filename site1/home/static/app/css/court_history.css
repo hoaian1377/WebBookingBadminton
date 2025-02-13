@@ -1,60 +1,28 @@
-/* Table Container */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; 
+    padding: 20px;
+}
+
 .table-container {
     width: 100%;
-    margin: 20px auto;
     max-width: 1200px;
-    border-collapse: collapse;
+    margin: 20px auto;
+    flex-grow: 1; 
 }
 
-/* Table Layout */
-.table {
-    display: table;
-    width: 100%;
-    border: 1px solid #ddd;
-    border-spacing: 0;
-    text-align: left;
-    font-family: Arial, sans-serif;
-}
-
-.table .header {
-    background-color: #007bff;
+footer {
+    background-color: #003366;
     color: white;
-    font-weight: bold;
-    display: table-row;
-}
-
-.table .row {
-    display: table-row;
-}
-
-.table .cell {
-    display: table-cell;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-/* Row Hover */
-.table .row:hover {
-    background-color: #f1f1f1;
-}
-
-/* No Data Row */
-.cell.no-data {
     text-align: center;
-    color: gray;
-    font-style: italic;
-}
-
-/* Responsive Table */
-@media (max-width: 768px) {
-    .table .cell {
-        display: block;
-        text-align: right;
-        padding: 8px;
-    }
-    .table .cell::before {
-        content: attr(data-label);
-        float: left;
-        font-weight: bold;
-    }
+    padding: 10px 20px;
+    width: 100%;
+    margin-top: auto;
 }
