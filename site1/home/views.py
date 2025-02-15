@@ -467,11 +467,7 @@ def hoadon_detail(request, hoadonid):
         'chitiet_list': chitiet_list,
         'total_sum': total_sum,  # Tổng tiền của hóa đơn
     })
-from datetime import datetime, timedelta
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from .models import Datsan, San, Khachhang, Taikhoan
-
+    
 def court_booking1(request, sanid):
     san = get_object_or_404(San, sanid=sanid)
 
@@ -587,3 +583,36 @@ def xoa_dat_san(request, id):
 
         messages.success(request, "Đang xác nhận hủy đặt sân thành công!")
         return redirect('court_history')  # Quay về trang lịch sử đặt sân
+
+
+
+
+def huy_hoadon(request, hoadon_id):
+    try:
+        # Lấy hóa đơn cần hủy
+        hoadon = get_object_or_404(Hoadon, hoadonid=hoadon_id)
+
+        # Kiểm tra xem hóa đơn đã được thanh toán hay chưa
+        if hoadon.trangthai == "Đã hủy":
+            messages.error(request, "Hóa đơn này đã bị hủy trước đó.")
+            return redirect("profile")
+
+        # Lấy danh sách các sản phẩm trong hóa đơn
+        chitiethoadons = Chitiethoadon.objects.filter(hoadonid=hoadon)
+
+        # Hoàn trả lại số lượng sản phẩm vào kho
+        for chitiet in chitiethoadons:
+            sanpham = chitiet.sanphamid
+            sanpham.soluong += chitiet.soluong
+            sanpham.save()
+
+        # Cập nhật trạng thái hóa đơn thành "Đã hủy"
+        hoadon.trangthai = "Đã hủy"
+        hoadon.save()
+
+        messages.success(request, "Hủy hóa đơn thành công, số lượng sản phẩm đã được hoàn lại kho.")
+        return redirect("profile")
+
+    except Exception as e:
+        messages.error(request, f"Lỗi khi hủy hóa đơn: {str(e)}")
+        return redirect("profile")

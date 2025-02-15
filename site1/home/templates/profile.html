@@ -1,66 +1,76 @@
 {% extends "base.html" %}
 {% load static %} 
 {% load humanize %}
+
 {% block contents %}
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="{% static 'app/css/profile.css' %}" rel="stylesheet" />
     <title>Thông Tin Tài Khoản</title>
-  </head>
-  <body>
+</head>
+<body>
     <div class="container">
-      <!-- Thông Tin Khách Hàng -->
-       {% if request.session.taikhoanid %}
-      <div class="account-info">
-        <h3>Thông Tin Tài Khoản</h3>
-        <p><span>Xin chào,</span> {{request.session.username}}</p>
-        <p><span>Email:</span> {{khachhang.email|default:"Chưa Xác Định" }}</p> 
-        <p><span>Họ tên:</span> {{khachhang.hoten|default:"Chưa Xác Định" }}</p>
-        <p><span>Số ĐT:</span> {{khachhang.sdt|default:"Chưa Xác Định" }}</p>
-        <p><span>Địa chỉ:</span> {{khachhang.diachi|default:"Chưa Xác Định"}}</p>
-        <a href="{% url 'profile1' %}" class="edit-button">Sửa Thông Tin</a>
-      </div>
-      {% endif %}
-      <!-- Bảng Đơn Hàng -->
-      <div class="order-section">
-        <h3>Đơn Hàng Của Bạn</h3>
-        {% if hoadons %}
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Mã Hóa Đơn</th>
-                    <th>Thời Gian</th>
-                    <th>Phương Thức Thanh Toán</th>
-                    <th>Tổng Tiền</th>
-                    <th>Trạng Thái</th>
-                    <th>Chi Tiết</th>
-                </tr>
-            </thead>
-            <tbody>
-              {% for hoadon in hoadons %}
-              <tr>
-                  <td>{{ hoadon.hoadonid }}</td>
-                  <td>{{ hoadon.thoigian }}</td>
-                  <td>{{ hoadon.phuongthucthanhtoan }}</td>
-                  <td>{{ hoadon.total|floatformat:0|intcomma }}</td>
-                  <td>{{ hoadon.trangthai }}</td>
-                  <td>
-                      <a href="{% url 'hoadon_detail' hoadon.hoadonid %}">Xem Chi Tiết</a>
-                  </td>
-              </tr>
-          {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <p>Tổng số hóa đơn: {{ hoadons.count }}</p>
-
+        <!-- Thông Tin Khách Hàng -->
+        {% if request.session.taikhoanid %}
+        <div class="account-info">
+            <h3>Thông Tin Tài Khoản</h3>
+            <p><span>Xin chào,</span> {{ request.session.username }}</p>
+            <p><span>Email:</span> {{ khachhang.email|default:"Chưa Xác Định" }}</p> 
+            <p><span>Họ tên:</span> {{ khachhang.hoten|default:"Chưa Xác Định" }}</p>
+            <p><span>Số ĐT:</span> {{ khachhang.sdt|default:"Chưa Xác Định" }}</p>
+            <p><span>Địa chỉ:</span> {{ khachhang.diachi|default:"Chưa Xác Định" }}</p>
+            <a href="{% url 'profile1' %}" class="edit-button">Sửa Thông Tin</a>
+        </div>
         {% endif %}
-      </div>
+        
+        <!-- Bảng Đơn Hàng -->
+        <div class="order-section">
+            <h3>Đơn Hàng Của Bạn</h3>
+            {% if hoadons %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Mã Hóa Đơn</th>
+                        <th>Thời Gian</th>
+                        <th>Phương Thức Thanh Toán</th>
+                        <th>Tổng Tiền</th>
+                        <th>Trạng Thái</th>
+                        <th>Chi Tiết</th>
+                        <th>Hủy Đơn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for hoadon in hoadons %}
+                    <tr>
+                        <td>{{ hoadon.hoadonid }}</td>
+                        <td>{{ hoadon.thoigian }}</td>
+                        <td>{{ hoadon.phuongthucthanhtoan }}</td>
+                        <td>{{ hoadon.total|floatformat:0|intcomma }}</td>
+                        <td>{{ hoadon.trangthai }}</td>
+                        <td>
+                            <a href="{% url 'hoadon_detail' hoadon.hoadonid %}">Xem Chi Tiết</a>
+                        </td>
+                        <td>
+                            {% if hoadon.trangthai|lower == "chờ xác nhận" %}
+                                <a href="{% url 'huy_hoadon' hoadon.hoadonid %}" 
+                                   onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này không?');" 
+                                   class="cancel-button">Hủy Đơn</a>
+                            {% else %}
+                                <span class="disabled-button">Không thể hủy</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>Tổng số hóa đơn: {{ hoadons.count }}</p>
+            {% endif %}
+        </div>
     </div>
-  </body>
-
+</body>
 </html>
 {% endblock contents %}
