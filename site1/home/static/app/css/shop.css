@@ -158,3 +158,20 @@ body {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
+.btn-logout {
+    background: #dc2626; /* Màu đỏ đậm */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid #b91c1c; /* Viền đỏ đậm */
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(220, 38, 38, 0.5); /* Đổ bóng nhẹ */
+}
+
+.btn-logout:hover {
+    background: #b91c1c; /* Màu tối hơn khi hover */
+    transform: scale(1.05);
+}

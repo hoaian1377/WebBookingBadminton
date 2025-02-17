@@ -212,9 +212,9 @@ def badminton_court_booking(request):
         DanhSachSan = DanhSachSan.filter(diachi__icontains=address_filter)
     if price_filter:
         if price_filter == 'cheap':
-            DanhSachSan = DanhSachSan.filter(giathue__lt=100000)
+            DanhSachSan = DanhSachSan.filter(giathue__lt=150000)
         elif price_filter == 'medium':
-            DanhSachSan = DanhSachSan.filter(giathue__gte=100000, giathue__lt=500000)
+            DanhSachSan = DanhSachSan.filter(giathue__gte=150000, giathue__lt=500000)
         elif price_filter == 'vip':
             DanhSachSan = DanhSachSan.filter(giathue__gte=500000)
     if name_filter:
@@ -225,6 +225,7 @@ def badminton_court_booking(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'badminton_court_booking.html', {'page_obj': page_obj})
+
 
 def home(request):
     return render(request, 'home.html')

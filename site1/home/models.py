@@ -8,6 +8,11 @@
 from django.db import models
 from django.utils.timezone import now  
 
+
+
+
+
+
 class Chitiethoadon(models.Model):
     chitiethoadonid = models.AutoField(db_column='ChiTietHoaDonID', primary_key=True)  # Field name made lowercase.
     hoadonid = models.ForeignKey('Hoadon', models.DO_NOTHING, db_column='HoaDonID')  # Field name made lowercase.
