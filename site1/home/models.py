@@ -10,7 +10,17 @@ from django.utils.timezone import now
 
 
 
+class Danhgia(models.Model):
+    danhgiaid = models.AutoField(db_column='DanhGiaID', primary_key=True)  # Field name made lowercase.
+    khachhangid = models.ForeignKey('Khachhang', models.DO_NOTHING, db_column='KhachHangID', blank=True, null=True)  # Field name made lowercase.
+    sanid = models.ForeignKey('San', models.DO_NOTHING, db_column='SanID', blank=True, null=True)  # Field name made lowercase.
+    sanphamid = models.ForeignKey('Sanpham', models.DO_NOTHING, db_column='SanPhamID', blank=True, null=True)  # Field name made lowercase.
+    noidung = models.TextField(db_column='NoiDung', db_collation='SQL_Latin1_General_CP1_CI_AS', blank=True, null=True)  # Field name made lowercase.
+    sosao = models.IntegerField(db_column='SoSao', blank=True, null=True)  # Field name made lowercase.
 
+    class Meta:
+        managed = False
+        db_table = 'DanhGia'
 
 
 class Chitiethoadon(models.Model):

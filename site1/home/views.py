@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect,HttpResponse
-from .models import Sanpham, San, Taikhoan,Khachhang,Chitiethoadon,Hoadon,Datsan
+from .models import Sanpham, San, Taikhoan,Khachhang,Chitiethoadon,Hoadon,Datsan,Danhgia
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import models
@@ -41,9 +42,28 @@ def shop(request):
     return render(request, 'shop.html', {'sanpham': sanpham_page, 'cart': cart})
 
 def item_detail(request, pk):
-    sanpham = get_object_or_404(Sanpham, pk=pk)
-    het_hang = sanpham.soluong <= 0  # Kiểm tra nếu hết hàng
-    return render(request, 'item_detail.html', {'sanpham': sanpham, 'het_hang': het_hang})
+    sanpham = get_object_or_404(Sanpham, pk=pk)  
+    danhgias = Danhgia.objects.filter(sanphamid=sanpham).select_related('khachhangid').order_by('-danhgiaid')  
+    het_hang = sanpham.soluong <= 0  
+
+    # Lấy thông tin khách hàng từ session
+    khachhang = None
+    taikhoan_id = request.session.get("taikhoanid")
+    if taikhoan_id:
+        try:
+            taikhoan = Taikhoan.objects.get(taikhoanid=taikhoan_id)
+            khachhang = Khachhang.objects.get(taikhoan=taikhoan)
+        except (Taikhoan.DoesNotExist, Khachhang.DoesNotExist):
+            khachhang = None
+
+    return render(request, 'item_detail.html', {
+        'sanpham': sanpham,
+        'het_hang': het_hang,
+        'danhgias': danhgias,
+        'khachhang': khachhang  # Truyền khách hàng vào context
+    })
+
+
 
 def cart_detail(request):
     cart = request.session.get('cart', {})
@@ -236,6 +256,8 @@ def forgot_password(request):
 def support(request):
     return HttpResponseRedirect("https://docs.google.com/forms/d/e/1FAIpQLSdsZGwFck63-cPDZcW8gZyyMAhf2UyYaOINuByEgwbMvtTm3A/viewform")
 
+
+
 def profile1(request):
     taikhoan_id = request.session.get('taikhoanid')
 
@@ -248,16 +270,28 @@ def profile1(request):
     if request.method == 'POST':
         hoten = request.POST.get('name')
         sdt = request.POST.get('phone')
-        diachi=request.POST.get('diachi')
+        diachi = request.POST.get('diachi')
+
+        # Kiểm tra số điện thoại
+        if not sdt.isdigit():
+            messages.error(request, "Số điện thoại phải là số!")
+            return redirect('profile1')
+
         khachhang.hoten = hoten
         khachhang.sdt = sdt
-        khachhang.diachi=diachi
-        khachhang.save()  
+        khachhang.diachi = diachi
 
-        messages.success(request, "Cập nhật thông tin thành công!")
-        return redirect('profile')
+        try:
+            khachhang.full_clean()  # Kiểm tra tính hợp lệ của dữ liệu
+            khachhang.save()
+            messages.success(request, "Cập nhật thông tin thành công!")
+            return redirect('profile')
+        except ValidationError as e:
+            messages.error(request, f"Lỗi khi cập nhật thông tin: {e}")
+            return redirect('profile1')
 
     return render(request, 'profile1.html', {'khachhang': khachhang})
+
 
 def profile(request):
     taikhoan_id = request.session.get('taikhoanid')
@@ -572,7 +606,7 @@ def court_history(request):
                 booking.save()
 
     return render(request, 'court_history.html', {'lich_su': lich_su})
-from .models import Datsan  # Đảm bảo bạn import mô hình đúng
+
 
 def xoa_dat_san(request, id):
     if request.method == 'POST':
@@ -617,3 +651,55 @@ def huy_hoadon(request, hoadon_id):
     except Exception as e:
         messages.error(request, f"Lỗi khi hủy hóa đơn: {str(e)}")
         return redirect("profile")
+
+
+
+
+def add_review(request, sanpham_id):
+    """Thêm đánh giá cho sản phẩm."""
+    try:
+        sanpham = Sanpham.objects.get(sanphamid=sanpham_id)
+    except Sanpham.DoesNotExist:
+        messages.error(request, "Sản phẩm không tồn tại.")
+        return redirect('product_list')
+
+    if request.method == "POST":
+        sosao = request.POST.get("sosao")
+        noidung = request.POST.get("noidung")
+
+        if not sosao or not noidung:
+            messages.error(request, "Vui lòng nhập đầy đủ số sao và nội dung.")
+            return render(request, 'item_detail.html', {'sanpham': sanpham})
+
+        # Lấy ID tài khoản từ session
+        taikhoan_id = request.session.get('taikhoanid')
+        if not taikhoan_id:
+            messages.error(request, "Bạn chưa đăng nhập! Vui lòng đăng nhập để đánh giá sản phẩm.")
+            return redirect('login')
+
+        # Kiểm tra khách hàng từ tài khoản ID
+        try:
+            taikhoan = Taikhoan.objects.get(taikhoanid=taikhoan_id)
+            khachhang = Khachhang.objects.get(taikhoan=taikhoan)
+
+            if not khachhang.diachi or not khachhang.sdt:
+                messages.error(request, "Vui lòng cập nhật địa chỉ và số điện thoại trước khi đánh giá.")
+                return redirect('profile')
+
+        except (Taikhoan.DoesNotExist, Khachhang.DoesNotExist):
+            messages.error(request, "Không tìm thấy thông tin khách hàng. Vui lòng cập nhật tài khoản.")
+            return redirect('profile')
+
+        # Tạo đánh giá
+        Danhgia.objects.create(
+            sanphamid=sanpham,
+            khachhangid=khachhang,
+            sosao=sosao,
+            noidung=noidung
+        )
+
+        messages.success(request, "Đánh giá của bạn đã được thêm thành công!")
+        return redirect('item_detail', pk=sanpham_id)
+
+    return render(request, 'item_detail.html', {'sanpham': sanpham})
+
