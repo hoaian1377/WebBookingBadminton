@@ -1,100 +1,118 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #e6f7ff; /* Xanh nhạt */
-    color: #fff;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #e6f7ff; /* Xanh nhạt */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100vh;
+  width: 100%;
+}
 
+.container {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.85); /* Đen mờ hơn */
+  padding: 30px; /* Khoảng cách nội dung với viền */
+  box-shadow: none; /* Loại bỏ bóng để trông tự nhiên hơn */
+  text-align: left; /* Căn nội dung về bên trái */
+  min-height: 60vh; /* Chiều cao tối thiểu bằng màn hình */
+}
+
+h3 {
+  color: #4fc3f7; /* Xanh nhạt */
+  border-bottom: 3px solid #4fc3f7;
+  padding-bottom: 8px;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+.account-info p {
+  margin-top: 12px;
+  font-size: 16px;
+  color: #ffffff; /* Chữ trắng */
+}
+
+.account-info p span {
+  font-weight: bold;
+  color: #4fc3f7; /* Xanh nhạt */
+}
+
+.edit-button {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 18px;
+  color: #000;
+  background: #4fc3f7; /* Nút xanh nhạt */
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background 0.3s ease, transform 0.2s ease;
+  font-weight: bold;
+}
+
+.edit-button:hover {
+  background: #33b2e0;
+  transform: scale(1.05);
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  border-radius: 0; /* Loại bỏ bo góc để phù hợp với toàn màn hình */
+}
+
+table th, table td {
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Đường viền trắng mờ */
+  padding: 14px;
+  text-align: center;
+}
+
+table th {
+  background: #4fc3f7; /* Nền xanh nhạt */
+  color: #000; /* Chữ đen */
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+table td {
+  background: rgba(255, 255, 255, 0.1); /* Nền trắng mờ */
+  color: #ffffff; /* Chữ trắng */
+}
+
+table .no-orders {
+  text-align: center;
+  color: #cccccc;
+  font-style: italic;
+}
+
+table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.2); /* Hover sáng hơn */
+}
+
+@media (max-width: 600px) {
   .container {
-    height: auto;
-    width:  auto;
-    background: rgba(0, 0, 0, 0.8); /* Đen mờ */
-    padding: 20px 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  h3 {
-    color: #4fc3f7; /* Xanh nhạt */
-    border-bottom: 2px solid #4fc3f7;
-    padding-bottom: 8px;
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-  }
-
-  .account-info p {
-    margin-top: 10px;
-    color: #ffffff; /* Chữ trắng */
-  }
-
-  .account-info p span {
-    font-weight: bold;
-    color: #4fc3f7; /* Xanh nhạt */
-  }
-
-  .edit-button {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 16px;
-    color: #000;
-    background: #4fc3f7; /* Nút xanh nhạt */
-    text-decoration: none;
-    border-radius: 8px;
-    transition: background 0.3s ease;
-    font-weight: bold;
-  }
-
-  .edit-button:hover {
-    background: #33b2e0;
-  }
-
-  table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    border-radius: 8px;
-    overflow: hidden;
+      padding: 15px; /* Giảm padding trên màn hình nhỏ */
   }
 
   table th, table td {
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Đường viền trắng mờ */
-    padding: 12px 15px;
-    text-align: center;
-  }
-
-  table th {
-    background: #4fc3f7; /* Nền xanh nhạt */
-    color: #000; /* Chữ đen */
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
-  table td {
-    background: rgba(255, 255, 255, 0.1); /* Nền trắng mờ */
-    color: #ffffff; /* Chữ trắng */
-  }
-
-  table .no-orders {
-    text-align: center;
-    color: #cccccc;
-    font-style: italic;
-  }
-
-  table tbody tr:hover {
-    background: rgba(255, 255, 255, 0.2); /* Hover sáng hơn */
-  }
-
-  @media (max-width: 600px) {
-    .container {
-      padding: 15px;
-    }
-
-    table th, table td {
       font-size: 14px;
       padding: 10px;
-    }
   }
+}
+
+footer {
+  background-color: #003366;
+  color: white;
+  text-align: center;
+  padding: 12px 20px;
+  width: 100%;
+  margin-top: auto;
+  position: relative;
+}
