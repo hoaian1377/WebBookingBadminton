@@ -321,6 +321,10 @@ def generate_Hoadon_id():
 
 
 
+from django.http import JsonResponse
+from django.shortcuts import redirect
+from django.contrib import messages
+
 def update_cart(request, product_id):
     if request.method == "POST":
         action = request.POST.get('action')
@@ -340,8 +344,8 @@ def update_cart(request, product_id):
         request.session['cart'] = cart
         messages.success(request, 'Giỏ hàng đã được cập nhật.')
 
-        # Phản hồi JSON cho AJAX nếu có
-        if request.is_ajax():
+        # Kiểm tra nếu request là AJAX
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return JsonResponse({'status': 'success', 'cart_total': sum(cart.values())})
 
     return redirect(request.META.get('HTTP_REFERER', 'cart_detail'))
