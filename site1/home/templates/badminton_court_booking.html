@@ -48,16 +48,17 @@
 
     <!-- Form tìm kiếm -->
 <!-- Form tìm kiếm -->
+<!-- Form tìm kiếm -->
 <div class="container my-5">
     <h3 class="text-center mb-4">Danh sách các sân cầu lông</h3>
     <form method="get" action="{% url 'badminton_court_booking' %}">
         <div class="row mb-3">
             <!-- Tìm kiếm địa chỉ -->
-            <div class="col-md-5">
+            <div class="col-md-3">
                 <input type="text" name="address" value="{{ request.GET.address }}" placeholder="Nhập địa chỉ sân" class="form-control">
             </div>
             <!-- Tìm kiếm theo giá -->
-            <div class="col-md-5">
+            <div class="col-md-2">
                 <select name="price" class="form-control">
                     <option value="">Chọn mức giá</option>
                     <option value="cheap" {% if request.GET.price == 'cheap' %}selected{% endif %}>Rẻ</option>
@@ -65,13 +66,26 @@
                     <option value="vip" {% if request.GET.price == 'vip' %}selected{% endif %}>VIP</option>
                 </select>
             </div>
-            <!-- Nút tìm kiếm -->
+            <!-- Chọn ngày -->
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
+                <input type="date" name="date" value="{{ request.GET.date }}" class="form-control">
+            </div>
+            <!-- Chọn thời gian bắt đầu -->
+            <div class="col-md-2">
+                <input type="time" name="start_time" value="{{ request.GET.start_time }}" class="form-control">
+            </div>
+            <!-- Chọn thời gian kết thúc -->
+            <div class="col-md-2">
+                <input type="time" name="end_time" value="{{ request.GET.end_time }}" class="form-control">
+            </div>
+            <!-- Nút tìm kiếm -->
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-primary w-100">Tìm</button>
             </div>
         </div>
     </form>
 </div>
+
 
 
    <!-- Danh sách sân -->

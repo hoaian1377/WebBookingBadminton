@@ -222,6 +222,7 @@ def logout_view(request):
         messages.success(request, 'Bạn đã đăng xuất thành công.')
     return redirect('/')
 
+
 def badminton_court_booking(request):
     DanhSachSan = San.objects.all()
     address_filter = request.GET.get('address', '').strip()
