@@ -78,13 +78,16 @@ WSGI_APPLICATION = 'site1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'DLBMT (2)',
-        'User':'',
-        'Password':'',
-        'Host':'DESKTOP-8LHJJ0H', 
+        'NAME': 'DLBMT',  # Database chính
+        'USER': '',  # Nếu dùng SQL Authentication thì điền USER & PASSWORD
+        'PASSWORD': '',
+        'HOST': 'DESKTOP-AV5VHME',
         'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',  # Kiểm tra driver bạn đã cài đặt
-            'trust_connection' : 'yes'
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'trusted_connection': 'yes',  # Nếu dùng Windows Authentication
+        },
+        'TEST': {
+            'NAME': 'DLBMT',  # Test trực tiếp trên database chính
         },
     }
 }
