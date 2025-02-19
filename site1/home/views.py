@@ -10,6 +10,9 @@ from django.core.paginator import Paginator
 from django.db import models
 from django.shortcuts import redirect
 from .models import CartItem
+import io
+import qrcode
+import urllib.parse
 from django.db import transaction
 from decimal import Decimal
 from django.utils.dateparse import parse_date
@@ -25,7 +28,6 @@ from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import San, Taikhoan, Khachhang, Datsan
-
 import random
 import re
 
@@ -328,12 +330,6 @@ def generate_Hoadon_id():
     return last_id + 1  # ID tiếp theo
 
 
-
-
-from django.http import JsonResponse
-from django.shortcuts import redirect
-from django.contrib import messages
-
 def update_cart(request, product_id):
     if request.method == "POST":
         action = request.POST.get('action')
@@ -465,8 +461,7 @@ def remove_from_cart(request, product_id):
         messages.success(request, 'Sản phẩm đã được xóa khỏi giỏ hàng.')
     request.session['cart'] = cart
     return redirect('cart_detail')  # Điều hướng lại đến trang giỏ hàng
-from django.shortcuts import redirect
-from .models import CartItem
+
 
 def cart_detail(request):
     cart = request.session.get('cart', {})
@@ -516,10 +511,6 @@ def hoadon_detail(request, hoadonid):
         'total_sum': total_sum,  # Tổng tiền của hóa đơn
     })
     
-from datetime import datetime, timedelta
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
-from .models import San, Taikhoan, Khachhang, Datsan
 
 def court_booking1(request, sanid):
     san = get_object_or_404(San, sanid=sanid)
@@ -727,4 +718,47 @@ def add_review(request, sanpham_id):
         return redirect('item_detail', pk=sanpham_id)
 
     return render(request, 'item_detail.html', {'sanpham': sanpham})
+
+
+def payment(request, datsanid):
+    datsan = get_object_or_404(Datsan, datsanid=datsanid)  # Kiểm tra ID
+
+    if request.method == "POST":
+        payment_method = request.POST.get("payment_method")  # Lấy phương thức thanh toán từ form
+
+        if payment_method == "qr_code":
+            datsan.trangthai = "Đã thanh toán"
+            messages.success(request, "Thanh toán thành công qua QR Code!")
+        else:
+            datsan.trangthai = "Chưa thanh toán"
+            messages.info(request, "Sân đã được đặt nhưng chưa thanh toán!")
+
+        datsan.save()
+        return redirect('court_history')  # Điều hướng về lịch sử đặt sân
+
+    return render(request, 'payment.html', {'datsan': datsan})
+
+
+
+
+
+
+def generate_qr(request, datsanid):  # Đúng tên tham số
+    datsan = get_object_or_404(Datsan, pk=datsanid)
+
+    # Tính tổng tiền thuê sân
+    duration = (datsan.thoigianketthuc.hour - datsan.thoigianbatdau.hour) + \
+               (datsan.thoigianketthuc.minute - datsan.thoigianbatdau.minute) / 60
+    total_price = int(duration * datsan.sanid.giathue)
+
+    # Nội dung QR Code
+    qr_data = f"Thanh toán {total_price} VND cho sân {datsan.sanid.tensan}"
+
+    # Tạo QR Code
+    qr = qrcode.make(qr_data)
+    buffer = io.BytesIO()
+    qr.save(buffer, format="PNG")
+    buffer.seek(0)
+
+    return HttpResponse(buffer.getvalue(), content_type="image/png")
 

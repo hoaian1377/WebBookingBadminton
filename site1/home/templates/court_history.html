@@ -44,11 +44,16 @@
                     </td>
                     <td>{{ booking.tongtien|default:0|floatformat:0|intcomma }} VNĐ</td>
                     <td>
-                        <form action="{% url 'xoa_dat_san' booking.datsanid %}" method="post">
+                        {% if booking.trangthai == "Chưa thanh toán" %}
+                            <a href="{% url 'payment' booking.datsanid %}" class="btn btn-primary btn-sm">Thanh toán</a>
+                        {% endif %}
+                        
+                        <form action="{% url 'xoa_dat_san' booking.datsanid %}" method="post" class="d-inline">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Hủy</button>
                         </form>
                     </td>
+                    
                 </tr>
                 {% empty %}
                 <tr>

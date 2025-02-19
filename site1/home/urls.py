@@ -34,6 +34,8 @@ urlpatterns = [
     path('court_history/xoa_dat_san/<int:id>/', views.xoa_dat_san, name='xoa_dat_san'),
     path('huy-hoadon/<int:hoadon_id>/', views.huy_hoadon, name='huy_hoadon'),
     path('add_review/<int:sanpham_id>/', views.add_review, name='add_review'),
+    path('payment/<int:datsanid>/', views.payment, name='payment'),  # Trang thanh toán
+    path("generate_qr/<int:datsanid>/", views.generate_qr, name="generate_qr"),  # Thêm URL này
 
 
 ]

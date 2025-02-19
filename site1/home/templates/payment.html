@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block contents %}
+<link rel="stylesheet" type="text/css" href="{% static 'app/css/payment.css' %}">
+
+<style>
+    .payment-container {
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 20px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .payment-info {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+    .payment-methods h4 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    .payment-options {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .qr-payment,
+    .direct-payment {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        text-align: center;
+        background: #f9f9f9;
+    }
+    .qr-payment img {
+        width: 150px;
+        height: 150px;
+        margin-top: 10px;
+    }
+    .btn-success {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="payment-container">
+    <h2 class="title">Thanh Toán Đặt Sân</h2>
+    <div class="payment-info">
+        <p><strong>Sân:</strong> {{ datsan.sanid.tensan }}</p>
+        <p><strong>Thời gian:</strong> {{ datsan.thoigianbatdau|time:"H:i" }} - {{ datsan.thoigianketthuc|time:"H:i" }}</p>
+        <p><strong>Ngày chơi:</strong> {{ datsan.thoigiandat|date:"d/m/Y" }}</p>
+        <p><strong>Giá thuê:</strong> {{ datsan.sanid.giathue }} VND</p>
+    </div>
+
+    <div class="payment-methods">
+        <h4>Chọn phương thức thanh toán</h4>
+        <div class="payment-options">
+            <div class="qr-payment">
+                <p>Quét mã QR để thanh toán</p>
+                <img id="qr-image" src="{% url 'generate_qr' datsan.datsanid %}" alt="QR Code Thanh Toán">
+                <form method="POST" action="{% url 'payment' datsan.datsanid %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="payment_method" value="qr_code">
+                    <button type="submit" class="btn btn-success">Hoàn thành thanh toán</button>
+                </form>
+            </div>
+            
+            <div class="direct-payment">
+                <p>Thanh toán trực tiếp khi đến sân</p>
+                <form method="POST" action="{% url 'payment' datsan.datsanid %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="payment_method" value="cash">
+                    <button type="submit" class="btn btn-success">Xác nhận</button>
+                </form>
+            </div>            
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let qrImage = document.getElementById("qr-image");
+        fetch("{% url 'generate_qr' datsan.datsanid %}")
+            .then(response => response.json())
+            .then(data => {
+                qrImage.src = data.qr_url;
+            })
+            .catch(error => console.error("Lỗi tải mã QR:", error));
+    });
+</script>
+{% endblock %}
