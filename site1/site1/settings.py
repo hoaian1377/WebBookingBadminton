@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'site1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'DLBMT',  # Database chính
+        'NAME': 'QLSCL',  # Database chính
         'USER': '',  # Nếu dùng SQL Authentication thì điền USER & PASSWORD
         'PASSWORD': '',
-        'HOST': 'DESKTOP-AV5VHME',
+        'HOST': 'DESKTOP-8LHJJ0H',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
             'trusted_connection': 'yes',  # Nếu dùng Windows Authentication
