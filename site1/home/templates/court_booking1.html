@@ -66,7 +66,19 @@
 
 .btn-logout:hover {
     background: #b91c1c; /* Màu tối hơn khi hover */
-    transform: scale(1.05);
+    transform:
+}
+.alert {
+    font-size: 20px; /* Tăng kích thước chữ */
+    font-weight: bold; /* Làm đậm chữ */
+    text-align: center; /* Căn giữa nội dung */
+    padding: 20px; /* Tăng khoảng cách bên trong */
+}
+
+.alert-warning {
+    background-color: #ffcc00; /* Màu vàng nổi bật */
+    color: black;
+    border: 2px solid #ffa500; /* Viền cam để dễ thấy */
 }
     </style>
 </head>
@@ -89,6 +101,15 @@
                 <p>{{ san.description }}</p>
             </div>
         </div>
+           <!-- Thông báo lỗi -->
+           {% if messages %}
+           {% for message in messages %}
+               <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                   {{ message }}
+                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+               </div>
+           {% endfor %}
+       {% endif %}
 
         <!-- Form Đặt Sân -->
         <form method="POST" action="{% url 'court_booking1' san.sanid %}" class="booking-form">
